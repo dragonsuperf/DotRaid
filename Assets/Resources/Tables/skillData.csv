@@ -1,0 +1,6 @@
+id,name,type,AOE,target,power,duration,mp,castspeed,cooldown
+skill_00,bash,attack_target,FALSE,enemy,100,0,50,0.2,5.0
+skill_01,fireball,attack_aoe,TRUE,enemy,150,0,70,0.8,7.5
+skill_02,minor heal,heal_target,FALSE,friend,100,0,50,0.5,6
+skill_03,regeneration,heal_continue,FALSE,friend,30,5,50,0.6,7.0
+skill_04,mass curse,debuf_aoe,TRUE,enemy,10,5,40,1.1,8.0

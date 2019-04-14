@@ -1,0 +1,7 @@
+id,name,level,max_hp,dp,atk,speed
+test_001,fighter,1,1500,50,85,0.8
+test_002,thief,1,800,30,125,1.4
+test_003,wizard,1,600,30,110,0.9
+test_004,paladin,1,1100,40,80,0.7
+test_005,cleric,1,900,35,90,0.9
+test_006,boss,1,71850,50,70,1
