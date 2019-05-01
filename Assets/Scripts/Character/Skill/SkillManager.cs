@@ -21,21 +21,32 @@ public class SkillManager : Singleton<SkillManager>
     }
 
     /// <summary>
-    /// 스킬 생성함 프리팹이름이 스킬이름이어야함
+    /// 스킬 생성함 프리팹이름이 스킬클래스 이름이어야함
     /// </summary>
     /// <typeparam name="T">스킬 객체만 ㅇㅋ</typeparam>
     public void Create<T>() where T : Skill
     {
         Type type = typeof(T);
         T loadPrefab = null;
-        loadPrefab = Resources.Load("Skill/" + type.ToString().ToLower() ) as T;
-        _skillDict.Add(_skillCount, Instantiate<T>(loadPrefab, _skillRoot.transform).GetComponent<Skill>() );
+        loadPrefab = Resources.Load<T>("Skill/" + type.ToString());
+        if (loadPrefab == null)
+        {
+            Debug.Log("스킬 안만들어짐");
+            return;
+        }
+        Skill newSkill = Instantiate<T>(loadPrefab, _skillRoot.transform).GetComponent<Skill>();
+        _skillDict.Add(_skillCount, newSkill);
+        
+        newSkill.OnSet(_skillCount);
+        Debug.Log("스킬 생성 " + type.ToString() + " 스킬번호 : " + _skillCount);
+        _skillCount++; // TODO 키 유니크하게 관리해야함
     }
 
-    public bool Delete(int idx)
+    public bool Remove(int idx)
     {
         if (HasSkill(idx))
         {
+            _skillDict[idx].OnRemove();
             Destroy(_skillDict[idx].gameObject);
             _skillDict.Remove(idx);
             return true;
@@ -50,11 +61,17 @@ public class SkillManager : Singleton<SkillManager>
         else return true;
     }
 
+    private List<int> _keyList;
     /// <summary>
     /// 스킬 전부 여기서 업데이트 하게 함
     /// </summary>
     private void Update()
     {
-        //for - _skillDict - update
+        _keyList = new List<int>(_skillDict.Keys);
+
+        for (int i = 0; i< _keyList.Count; ++i)
+        {
+            _skillDict[_keyList[i]].OnUpdate();
+        }
     }
 }
