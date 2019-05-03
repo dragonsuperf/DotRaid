@@ -5,11 +5,11 @@ using UnityEngine;
 /// <summary>
 /// 롤처럼 범위 있는 스킬
 /// </summary>
-public class RangeSkill : Skill
+public class RangeSkillBase : Skill
 {
-    public override void OnSet(int idx)
+    public override void OnSet(object data)
     {
-        base.OnSet(idx);
+        _data = (SkillData)data;
     }
 
     public override void OnUpdate()

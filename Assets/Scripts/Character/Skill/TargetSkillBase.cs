@@ -5,11 +5,11 @@ using UnityEngine;
 /// <summary>
 /// 타겟팅 되는 스킬
 /// </summary>
-public class TargetSkill : Skill
+public class TargetSkillBase : Skill
 {
-    public override void OnSet(int idx)
+    public override void OnSet(object data)
     {
-        base.OnSet(idx);
+        _data = (SkillData)data;
     }
 
     public override void OnUpdate()

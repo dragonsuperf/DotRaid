@@ -2,26 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestSkill : TargetSkill
+public class TestSkill : TargetSkillBase
 {
-    public override void OnSet(int idx)
+    public override void OnSet(object idx)
     {
         base.OnSet(idx);
+        _data.createEffectCallback = CustomAction;
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
-
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            SkillManager.Instance.Remove(_idx);
-        }
     }
 
     public override void OnRemove()
     {
         base.OnRemove();
-        Debug.Log(_idx + " 번 스킬 지워짐");
+        Debug.Log(_data.idx + " 번 스킬 지워짐");
+    }
+
+    private void CustomAction()
+    {
+        Debug.Log("이펙트 생성");
     }
 }
