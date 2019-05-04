@@ -7,6 +7,10 @@ using UnityEngine;
 /// </summary>
 public class TargetSkillBase : Skill
 {
+    [Header("EFFECT INFO")]
+    [SerializeField] private Effect _ceateEffect = null;
+    [SerializeField] private Effect _destoryEffect = null;
+
     public override void OnSet(object data)
     {
         _data = (SkillData)data;
@@ -20,6 +24,11 @@ public class TargetSkillBase : Skill
     public override void OnRemove()
     {
         base.OnRemove();
+    }
+    
+    protected void CreateEffect()
+    {
+        
     }
 
     protected virtual void CreatePosition(Vector2 position)

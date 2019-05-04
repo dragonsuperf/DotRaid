@@ -63,4 +63,9 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     protected virtual void Start()
     {
     }
+
+    public void OnSet()
+    {
+
+    }
 }

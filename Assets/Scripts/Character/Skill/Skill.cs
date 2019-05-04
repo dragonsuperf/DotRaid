@@ -7,7 +7,6 @@ using System.Collections.Generic;
 /// </summary>
 public class SkillData
 {
-    public int idx = -1;
     public int player_idx = -1;
     public List<Effect> effect = null;
     public Action createEffectCallback = null; //생성 이펙트
@@ -17,9 +16,10 @@ public class SkillData
 public class Skill : MonoBehaviour
 {
     //스킬 id임
+    protected int _idx = -1;
     protected SkillData _data;
     public SkillData Data { get { return _data; } private set { } }
-    
+    public int IDX { get { return _idx; } set { _idx = value; } }
     /// <summary>
     /// 초기화임
     /// </summary>

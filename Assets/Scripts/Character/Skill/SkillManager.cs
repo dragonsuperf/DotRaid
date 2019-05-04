@@ -26,8 +26,9 @@ public class SkillManager : Singleton<SkillManager>
     /// 스킬 생성함 프리팹이름이 스킬클래스 이름이어야함
     /// </summary>
     /// <typeparam name="T">스킬 객체만 ㅇㅋ</typeparam>
-    public void Create<T>() where T : Skill
+    public void Create<T>(SkillData skillData) where T : Skill
     {
+        if (skillData == null) return;
         Type type = typeof(T);
         T loadPrefab = null;
         loadPrefab = Resources.Load<T>("Skill/" + type.ToString());
@@ -37,11 +38,8 @@ public class SkillManager : Singleton<SkillManager>
             return;
         }
         Skill newSkill = Instantiate<T>(loadPrefab, _skillRoot.transform).GetComponent<Skill>();
+        newSkill.IDX = _skillCount;
         _skillDict.Add(_skillCount, newSkill);
-        
-        SkillData skillData = new SkillData();
-        skillData.idx = _skillCount;
-        skillData.player_idx = 1; //지금 캐릭터 못구함
 
         newSkill.OnSet(skillData);
         newSkill.Data.createEffectCallback.SafeInvoke();
