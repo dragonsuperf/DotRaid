@@ -10,7 +10,6 @@ public class SkillManager : Singleton<SkillManager>
 {
     //스킬 다 가지고 있음
     private Dictionary<int, Skill> _skillDict = new Dictionary<int, Skill>();
-    private GameManager _gameManager;
     private int _skillCount = 0;
 
     private GameObject _skillRoot = null;
@@ -19,7 +18,6 @@ public class SkillManager : Singleton<SkillManager>
     {
         base.Start();
         _skillRoot = new GameObject("SkillRoot");
-        _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     /// <summary>
