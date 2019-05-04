@@ -29,7 +29,7 @@ public class SkillManager : Singleton<SkillManager>
         if (skillData == null) return;
         Type type = typeof(T);
         T loadPrefab = null;
-        loadPrefab = Resources.Load<T>("Skill/" + type.ToString());
+        loadPrefab = Resources.Load<T>("Prefabs/Skill/" + type.ToString());
         if (loadPrefab == null)
         {
             Debug.Log("스킬 안만들어짐");
@@ -41,7 +41,7 @@ public class SkillManager : Singleton<SkillManager>
 
         newSkill.OnSet(skillData);
         newSkill.Data.createEffectCallback.SafeInvoke();
-        Debug.Log("스킬 생성 " + type.ToString() + " 스킬번호 : " + _skillCount + " " + skillData.player_idx);
+        Debug.Log("스킬 생성 " + type.ToString() + " 스킬번호 : " + _skillCount + "/ 플레이어 번호 :" + skillData.player_idx);
         _skillCount++; // TODO 키 유니크하게 관리해야함
     }
 

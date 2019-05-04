@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TestSkill : TargetSkillBase
 {
-    public override void OnSet(object idx)
+    public override void OnSet(object data)
     {
-        base.OnSet(idx);
+        base.OnSet(data);
         _data.createEffectCallback = CreateEffect;
     }
 
@@ -19,5 +19,11 @@ public class TestSkill : TargetSkillBase
     {
         base.OnRemove();
         Debug.Log(_idx + " 번 스킬 지워짐");
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+            SkillManager.Instance.Remove(this._idx);
     }
 }
