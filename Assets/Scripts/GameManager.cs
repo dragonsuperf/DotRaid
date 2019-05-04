@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         effectManager.AddEffectToPool("blast", defaultBlastEffect, 10);
+        InputListener.Instance.OnSet();
+        SkillManager.Instance.OnSet();
     }
 
     // Update is called once per frame
