@@ -8735,11 +8735,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chracters:
-  - {fileID: 42308392}
-  - {fileID: 1090649051}
-  - {fileID: 408915724}
-  - {fileID: 341726526}
-  - {fileID: 1906897898}
+  - {fileID: 42308394}
+  - {fileID: 1090649052}
+  - {fileID: 408915729}
+  - {fileID: 1906897900}
+  - {fileID: 341726528}
   boss: {fileID: 728732407}
   effectManager: {fileID: 2098974691}
   defaultBlastEffect: {fileID: 1854040807}

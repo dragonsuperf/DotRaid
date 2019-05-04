@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject[] chracters;
+    public Character[] chracters;
     public GameObject boss;
     public EffectManager effectManager;
     public Effect defaultBlastEffect;
@@ -23,6 +23,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public GameObject[] GetChars() => chracters;
+    public Character[] GetChars() => chracters;
     public GameObject GetBoss() => boss;
 }

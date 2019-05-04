@@ -38,7 +38,7 @@ public class Character : MonoBehaviour
 
     GameManager gameManager;
     public GameObject boss;
-    public GameObject[] characters;
+    public Character[] characters;
    
     Transform currentTarget;
     

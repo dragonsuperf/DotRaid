@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     protected GameObject forceTarget; // currentTaget보다 우선시되는 타겟
     protected EffectManager em;
     Animator ani;
-    GameObject[] characters;
+    Character[] characters;
     bool isLookLeft = true;
 
     float attackDelay = 0.0f;
@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour
 
     protected GameObject GetRandomTarget()
     {
-        return characters[UnityEngine.Random.Range(0, characters.Length)];
+        return characters[UnityEngine.Random.Range(0, characters.Length)].gameObject;
     }
 
     protected void MoveToPosition(Vector2 position)
