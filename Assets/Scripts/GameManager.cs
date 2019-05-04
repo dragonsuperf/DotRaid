@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public Character[] chracters;
     public GameObject boss;
@@ -10,10 +10,10 @@ public class GameManager : MonoBehaviour
     public Effect defaultBlastEffect;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         effectManager.AddEffectToPool("blast", defaultBlastEffect, 10);
-        InputListener.Instance.OnSet();
         SkillManager.Instance.OnSet();
     }
 

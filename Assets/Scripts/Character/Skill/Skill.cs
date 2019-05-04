@@ -2,6 +2,11 @@
 using System;
 using System.Collections.Generic;
 
+public enum eSkill
+{
+    TestSkill = 0
+}
+
 public enum eTargetState
 {
     Enemy = 0,

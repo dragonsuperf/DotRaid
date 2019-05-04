@@ -282,6 +282,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aca0c7e401e5144aa3ee22703b016c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skill_first: 0
+  skill_second: 0
   boss: {fileID: 0}
   characters: []
   point: {fileID: 0}
@@ -1401,6 +1403,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be8fa2dc34c56b94aa1d6dd8ff88e0de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skill_first: 0
+  skill_second: 0
   boss: {fileID: 0}
   characters: []
   point: {fileID: 0}
@@ -1927,6 +1931,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449e0f1a3c69eaa4bb4040949c9beb7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skill_first: 0
+  skill_second: 0
   boss: {fileID: 0}
   characters: []
   point: {fileID: 0}
@@ -2897,6 +2903,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5237680db0a1a14a90bfdcf7117cf1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skill_first: 0
+  skill_second: 0
   boss: {fileID: 0}
   characters: []
   point: {fileID: 0}
@@ -8701,6 +8709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1707572307}
   - component: {fileID: 1707572308}
+  - component: {fileID: 1707572309}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -8743,6 +8752,18 @@ MonoBehaviour:
   boss: {fileID: 728732407}
   effectManager: {fileID: 2098974691}
   defaultBlastEffect: {fileID: 1854040807}
+--- !u!114 &1707572309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707572306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eabc5acd6a93e3479d3781bee5fbba6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1756810893
 GameObject:
   m_ObjectHideFlags: 0
@@ -13814,6 +13835,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192cf59a223ff8648a6c7b1d5ff62766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skill_first: 0
+  skill_second: 0
   boss: {fileID: 0}
   characters: []
   point: {fileID: 0}

@@ -32,6 +32,11 @@ public enum CharacterState
 
 public class Character : MonoBehaviour
 {
+    [Header("Use Skill")]
+    public eSkill skill_first;
+    public eSkill skill_second;
+    [Space(15)]
+
     protected Animator ani;
     EffectManager effectmanager;
     float distance;
