@@ -39,7 +39,7 @@ public class Character : MonoBehaviour
 
     protected Animator ani;
     EffectManager effectmanager;
-    CharSelectManager charSelectManager;
+    InputListener _inputListener;
     float distance;
 
     GameManager gameManager;
@@ -76,7 +76,7 @@ public class Character : MonoBehaviour
         GetStat();
         ani = this.GetComponent<Animator>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        charSelectManager = GameObject.Find("CharSelectManager").GetComponent<CharSelectManager>();
+        _inputListener = GameManager.Instance.GetComponent<InputListener>();
         charState = CharacterState.idle;
         boss = gameManager.GetBoss();
         characters = gameManager.GetChars();
@@ -116,7 +116,7 @@ public class Character : MonoBehaviour
 
     void MoveAndAttack()
     {
-        if (charSelectManager.selectedUnits.Contains(this))
+        if (_inputListener.selectedUnits.Contains(this))
         {
             if (Input.GetMouseButtonUp(1))
             {
