@@ -4,26 +4,22 @@ using UnityEngine;
 
 public class CharSelectManager : MonoBehaviour
 {
-    GameManager gameManager;
-    public UIManager uiManager;
-    public GameObject selectedUnit;
+    [SerializeField] private UIHelper _uiHelper;
+
     public GameObject[] selector;
-    public List<Character> selectedUnits = new List<Character>();
-    RaycastHit hit;
-    private Vector3 mouseDownPoint, currentDownPoint;
+    
     public bool isSelecting = false;
-    Vector3 mousePosition;
-    public Character[] characters;
+
+    public List<Character> selectedUnits = new List<Character>();
+
+    private Character[] characters;
+    private Vector3 mousePosition;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-
-        characters = gameManager.GetChars();
+        characters = GameManager.Instance.GetChars();
         selector = new GameObject[characters.Length];
 
         for (int i = 0; i < selector.Length; i++)
@@ -91,17 +87,20 @@ public class CharSelectManager : MonoBehaviour
     {
         if (isSelecting)
         {
-            var rect = uiManager.GetSelectRect(mousePosition, Input.mousePosition);
-            uiManager.DrawSelectRect(rect, new Color(0.8f, 0.8f, 0.95f, 0.25f));
-            uiManager.DrawSelectRectBorder(rect, 2, new Color(0.8f, 0.8f, 0.95f));
+            var rect = _uiHelper.GetSelectRect(mousePosition, Input.mousePosition);
+            _uiHelper.DrawSelectRect(rect, new Color(0.8f, 0.8f, 0.95f, 0.25f));
+            _uiHelper.DrawSelectRectBorder(rect, 2, new Color(0.8f, 0.8f, 0.95f));
         }
     }
 
+    /// <summary>
+    /// 사각형 안에 있는거 확인?
+    /// </summary>
     public void IsWithinSelectionBounds()
     {
         var camera = Camera.main;
         var viewportBounds =
-            uiManager.GetViewportBounds(camera, mousePosition, Input.mousePosition);
+            _uiHelper.GetViewportBounds(camera, mousePosition, Input.mousePosition);
 
         for (int i = 0; i < characters.Length; i++)
         {
@@ -111,7 +110,6 @@ public class CharSelectManager : MonoBehaviour
                 //characters[i].transform.Find("arrowSelector").gameObject.SetActive(true);
             }
         }
-
     }
 
 }

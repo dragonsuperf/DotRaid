@@ -18,6 +18,12 @@ public class InputListener : MonoBehaviour
 
     private eSkill _skill;
 
+    //----------
+    [SerializeField] private UIHelper _uiHelper;
+    public bool isSelecting = false; //인스펙터 표기용
+    public List<Character> selectedUnits = new List<Character>(); //선택된 캐릭터 인스펙터 표기용
+    private Vector3 mousePosition;
+
     private void Start()
     {
         _charactors = GameManager.Instance.GetChars();
@@ -25,21 +31,82 @@ public class InputListener : MonoBehaviour
 
     void Update()
     {
+        SelectCharactorWithBound();
         SelectCharactor();
         SkillInput();
     }
 
+    void OnGUI()
+    {
+        if (isSelecting)
+        {
+            var rect = _uiHelper.GetSelectRect(mousePosition, Input.mousePosition);
+            _uiHelper.DrawSelectRect(rect, new Color(0.8f, 0.8f, 0.95f, 0.25f));
+            _uiHelper.DrawSelectRectBorder(rect, 2, new Color(0.8f, 0.8f, 0.95f));
+        }
+    }
+
+    private void SelectCharactorWithBound()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            isSelecting = true;
+            mousePosition = Input.mousePosition;
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (isSelecting)
+            {
+                selectedUnits.Clear();
+                IsWithinSelectionBounds();
+            }
+            isSelecting = false;
+        }
+    }
+
+    /// <summary>
+    /// 캐릭터 고름 1~5번으루
+    /// </summary>
     private void SelectCharactor()
     {
         if (_state == InputState.None)
         {
             int preIdx = _selectCharactorIdx;
             //1~5번으로 캐릭터 고름
-            if (Input.GetKeyDown(KeyCode.Alpha1)) _selectCharactorIdx = 0;
-            if (Input.GetKeyDown(KeyCode.Alpha2)) _selectCharactorIdx = 1;
-            if (Input.GetKeyDown(KeyCode.Alpha3)) _selectCharactorIdx = 2;
-            if (Input.GetKeyDown(KeyCode.Alpha4)) _selectCharactorIdx = 3;
-            if (Input.GetKeyDown(KeyCode.Alpha5)) _selectCharactorIdx = 4;
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                selectedUnits.Clear();
+                _selectCharactorIdx = 0;
+                selectedUnits.Add(_charactors[0]);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                selectedUnits.Clear();
+                _selectCharactorIdx = 1;
+                selectedUnits.Add(_charactors[1]);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                selectedUnits.Clear();
+                _selectCharactorIdx = 2;
+                selectedUnits.Add(_charactors[2]);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                selectedUnits.Clear();
+                _selectCharactorIdx = 3;
+                selectedUnits.Add(_charactors[3]);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                selectedUnits.Clear();
+                _selectCharactorIdx = 4;
+                selectedUnits.Add(_charactors[4]);
+            }
+
             if (preIdx != _selectCharactorIdx) Debug.Log(_selectCharactorIdx + " 바뀜 ");
         }
     }
@@ -68,6 +135,24 @@ public class InputListener : MonoBehaviour
             //플레이어 한테 스킬 정보를 받아서 그 스킬을 생성해야 함
             SkillManager.Instance.Create(_skill, info);
             _state = InputState.None;
+        }
+    }
+    /// <summary>
+    /// 사각형 안에 있는거 확인?
+    /// </summary>
+    public void IsWithinSelectionBounds()
+    {
+        var camera = Camera.main;
+        var viewportBounds =
+            _uiHelper.GetViewportBounds(camera, mousePosition, Input.mousePosition);
+
+        for (int i = 0; i < _charactors.Length; i++)
+        {
+            if (viewportBounds.Contains(camera.WorldToViewportPoint(_charactors[i].transform.position)))
+            {
+                selectedUnits.Add(_charactors[i]);
+                //characters[i].transform.Find("arrowSelector").gameObject.SetActive(true);
+            }
         }
     }
 }
