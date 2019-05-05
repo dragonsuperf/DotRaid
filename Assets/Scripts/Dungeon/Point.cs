@@ -88,6 +88,31 @@ public class Point
         return new Point(a.X - other.X, a.Y - other.Y);
     }
 
+    //public static bool operator ==(Point a, Point b)
+    //{
+    //    //if (b == null) return false;
+    //    return (a.X == b.X && a.Y == b.Y);
+    //}
+
+    //public static bool operator !=(Point a, Point b)
+    //{
+
+    //    return (a.X != b.X || a.Y != b.Y);
+    //}
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null) return false;
+
+        Point p = obj as Point;
+        return (X == p.X) && (Y == p.Y);
+    }
+
+    public override int GetHashCode()
+    {
+        return X ^ Y;
+    }
+
     public override string ToString()
     {
         return string.Format("Point x: {0}, y: {1}", this.X, this.Y);

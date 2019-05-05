@@ -179,19 +179,22 @@ public class DungeonCreator : Singleton<DungeonCreator>
 
         // base
         DungeonRoom room = CreateARoom(createPt, "room", roomStack, mapArray);
+        room.SetRoomCoord(createPt.X, createPt.Y);
         roomDict.Add(createPt, room);
+
         depth--;
 
         // enter door
         if (fromPt == null)
         {
             room.gameObject.name = "Origin Room";
-            //room.setDoorProperties(OppositeDoorNumber(enterDir), false, DoorDir.None);
         }
         else
         {
             room.setDoorProperties(OppositeDoorNumber(enterDir), true, DoorDir.StartWay);
-            room.Doors[OppositeDoorNumber(enterDir)].SetNextRoom(roomDict[fromPt]); 
+
+            room.Doors[OppositeDoorNumber(enterDir)].SetPrevRoom(roomDict[fromPt]);
+            roomDict[fromPt].Doors[enterDir].SetNextRoom(room);
         }
 
         fromPt = new Point(createPt);
@@ -214,6 +217,7 @@ public class DungeonCreator : Singleton<DungeonCreator>
                     break;
                 }
                 room.setDoorProperties(OppositeDoorNumber(outDir), true, DoorDir.BossWay);
+                //room.Doors[OppositeDoorNumber(outDir)].SetNextRoom(roomDict[createPt]);
                 //Debug.Log("out dir is " + outDir + ", enter dir is " + enterDir);
                 break;
             }

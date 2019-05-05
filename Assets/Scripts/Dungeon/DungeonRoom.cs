@@ -31,6 +31,8 @@ public class DungeonRoom : MonoBehaviour
     public DoorDir LeftDoorWay;
 
     public Point RoomCoord { get; private set; }
+    public DungeonRoom NextRoom;
+    public DungeonRoom PrevRoom;
 
     [SerializeField] private GameObject[] DoorObjects = new GameObject[4];
 
@@ -116,11 +118,13 @@ public class Door
     public void SetNextRoom(DungeonRoom room)
     {
         NextRoom = room;
+        Parent.NextRoom = room;
     }
 
     public void SetPrevRoom(DungeonRoom room)
     {
         PrevRoom = room;
+        Parent.PrevRoom = room;
     }
 
     public Door(DungeonRoom parent)

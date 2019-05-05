@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : Singleton<MonoBehaviour>
 {
     public GameObject[] chracters;
+    public List<GameObject> heroes = new List<GameObject>();
     public GameObject boss;
     public EffectManager effectManager;
     public Effect defaultBlastEffect;
@@ -14,6 +15,7 @@ public class GameManager : Singleton<MonoBehaviour>
     public Vector3 currentCameraPosition;
 
     private Point currentRoomKey;
+    private DungeonRoom currentRoom;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -45,7 +47,8 @@ public class GameManager : Singleton<MonoBehaviour>
 
         foreach(GameObject ch in chracters)
         {
-            GameObject heros = Instantiate(ch, startPosition, Quaternion.identity, this.gameObject.transform);
+            GameObject hero = Instantiate(ch, startPosition, Quaternion.identity, this.gameObject.transform);
+            heroes.Add(hero);
         }
         Camera.main.gameObject.transform.position = startPosition;
     }
@@ -58,6 +61,7 @@ public class GameManager : Singleton<MonoBehaviour>
             {
                 startPosition = room.Value.gameObject.transform.position;
                 currentRoomKey = room.Key;
+                currentRoom = DungeonCreator.Instance.Rooms[currentRoomKey];
                 continue;
             }
             if (room.Value.gameObject.name == "Boss Room")
@@ -70,23 +74,35 @@ public class GameManager : Singleton<MonoBehaviour>
 
     public void FindNextRoom()
     {
-        Debug.Log(DungeonCreator.Instance.Rooms is null);
+        if (currentRoom.NextRoom == null) return;
 
-        foreach(KeyValuePair<Point, DungeonRoom> room in DungeonCreator._instance.Rooms)
+        DungeonRoom nextRoom = currentRoom.NextRoom;
+        Debug.Log("Current Room: " + currentRoomKey + ", Next Room: " + nextRoom.RoomCoord);
+
+        Vector3 move = currentRoom.transform.position - nextRoom.transform.position;
+        foreach(GameObject ch in heroes)
         {
-            foreach(Door door in room.Value.Doors)
-            {
-                if(door.DoorToWay == DoorDir.BossWay)
-                {
-                    Debug.Log(room.Value.ToString());
-                    return;
-                }
-            }
+            Debug.Log(ch.gameObject.transform.position);
+            ch.gameObject.transform.position -= move;
+            Debug.Log(ch.gameObject.transform.position);
         }
-        return;
+        Camera.main.transform.position = nextRoom.transform.position;
+
+        currentRoom = nextRoom;
+        currentRoomKey = currentRoom.RoomCoord;
     }
     
-
+    //public void MoveCharacters()
+    //{
+    //    Vector3 move = new Vector3(20f, 20f, 0f);
+    //    foreach (GameObject ch in chracters)
+    //    {
+    //        Debug.Log(ch.name);
+    //        Debug.Log(ch.gameObject.transform.position);
+    //        ch.gameObject.transform.position += move;
+    //        Debug.Log(ch.gameObject.transform.position);
+    //    }
+    //}
 
 
 }
