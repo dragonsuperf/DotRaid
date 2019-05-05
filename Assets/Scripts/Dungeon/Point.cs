@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Point
 {
@@ -69,6 +70,12 @@ public class Point
             case 3: return new Point(-1, 0);
         }
         return null;
+    }
+
+    public static Point GetRandomWay(Point origin)
+    {
+        int way = Random.Range(0, 4);
+        return Point.WayToPoint(way) + origin;
     }
 
     public static Point operator +(Point a, Point other)

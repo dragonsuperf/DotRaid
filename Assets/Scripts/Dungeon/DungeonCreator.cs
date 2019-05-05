@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class DungeonCreator : MonoBehaviour
+public class DungeonCreator : Singleton<DungeonCreator>
 {
     [SerializeField] private DungeonRoom roomPrefab;
     private float mapWidth, mapHeight;
@@ -11,96 +11,99 @@ public class DungeonCreator : MonoBehaviour
     private bool[,] mapArray;
     private int beforeCoorX, beforeCoorY;
     private int coorX, coorY;
+
     private Dictionary<Point, DungeonRoom> roomDict = new Dictionary<Point, DungeonRoom>();
+    public Dictionary<Point, DungeonRoom> Rooms
+    {
+        get { return roomDict; }
+    }
     private int roomNumber = 0;
     private Point CurrPoint, PrevPoint;
-
-    [SerializeField] private DungeonRoom originRoom;
-
-    private void Awake()
+    
+    protected override void Awake()
     {
         InitRooms();
-        int depth = 10;
-        CreateDungeonRooms(ref depth, new Point(10, 10), new Point(10, 11), true);
-        //CreateDungeon(10, 2);
-        //CreateToWayDirection(2, 10, originRoom);
+        //int depth = 10;
+        //int level = 0;
+        Point origin = new Point(10, 10);
+        //CreateDungeonRooms(ref level, ref depth, origin, Point.GetRandomWay(origin), true);
+
+
+
+        CreateRooms(10, origin, null, -1, -1, true);
     }
 
-    private void CreateToWayDirection(int globalDirection, int depth, DungeonRoom from)
-    {
-        if (depth <= 0) return;
+    //private void CreateToWayDirection(int globalDirection, int depth, DungeonRoom from)
+    //{
+    //    if (depth <= 0) return;
 
-        while (true)
-        {
-            Point createdPt = Point.WayToPoint(globalDirection);
-            if (!mapArray[CurrPoint.X + createdPt.X, CurrPoint.Y + createdPt.Y])
-            {
-                mapArray[CurrPoint.X + createdPt.X, CurrPoint.Y + createdPt.Y] = true;
-                break;
-            }
-            else
-            {
-                continue;
-            }
-        }
-
-
+    //    while (true)
+    //    {
+    //        Point createdPt = Point.WayToPoint(globalDirection);
+    //        if (!mapArray[CurrPoint.X + createdPt.X, CurrPoint.Y + createdPt.Y])
+    //        {
+    //            mapArray[CurrPoint.X + createdPt.X, CurrPoint.Y + createdPt.Y] = true;
+    //            break;
+    //        }
+    //        else
+    //        {
+    //            continue;
+    //        }
+    //    }
 
 
+    //    depth--;
+    //    CreateToWayDirection(globalDirection, depth, from);
+    //}
 
+    //private void CreateToWay(int way, int depth)
+    //{
+    //    if (depth <= 0) return;
 
-        depth--;
-        CreateToWayDirection(globalDirection, depth, from);
-    }
+    //    int[] wayArray = new int[] { };
+    //    switch (way)
+    //    {
+    //        case 0:
+    //            wayArray = new int[] { 1, 2, 3 };
+    //            break;
+    //        case 1:
+    //            wayArray = new int[] { 0, 2, 3 };
+    //            break;
+    //        case 2:
+    //            wayArray = new int[] { 0, 1, 3 };
+    //            break;
+    //        case 3:
+    //            wayArray = new int[] { 0, 1, 2 };
+    //            break;
+    //    }
+    //    // way 방향의 랜덤 point를 구함.
+    //    Point createDir = null;
+    //    int num;
+    //    while (true)
+    //    {   
+    //        num = wayArray[Random.Range(0, 3)];
+    //        num = OppositeDoorNumber(num);
+    //        createDir = Point.WayToPoint(num);
+    //        if (!mapArray[CurrPoint.X + createDir.X, CurrPoint.X + createDir.Y]) break;
 
-    private void CreateToWay(int way, int depth)
-    {
-        if (depth <= 0) return;
+    //        if (mapArray[CurrPoint.X + 0, CurrPoint.X + 1] &&
+    //            mapArray[CurrPoint.X + 1, CurrPoint.X + 0] &&
+    //            mapArray[CurrPoint.X + 0, CurrPoint.X - 1] &&
+    //            mapArray[CurrPoint.X - 1, CurrPoint.X + 0])
+    //        {
+    //            print("all blocks");
+    //            return;
+    //        }
 
-        int[] wayArray = new int[] { };
-        switch (way)
-        {
-            case 0:
-                wayArray = new int[] { 1, 2, 3 };
-                break;
-            case 1:
-                wayArray = new int[] { 0, 2, 3 };
-                break;
-            case 2:
-                wayArray = new int[] { 0, 1, 3 };
-                break;
-            case 3:
-                wayArray = new int[] { 0, 1, 2 };
-                break;
-        }
-        // way 방향의 랜덤 point를 구함.
-        Point createDir = null;
-        int num;
-        while (true)
-        {   
-            num = wayArray[Random.Range(0, 3)];
-            num = OppositeDoorNumber(num);
-            createDir = Point.WayToPoint(num);
-            if (!mapArray[CurrPoint.X + createDir.X, CurrPoint.X + createDir.Y]) break;
-
-            if (mapArray[CurrPoint.X + 0, CurrPoint.X + 1] &&
-                mapArray[CurrPoint.X + 1, CurrPoint.X + 0] &&
-                mapArray[CurrPoint.X + 0, CurrPoint.X - 1] &&
-                mapArray[CurrPoint.X - 1, CurrPoint.X + 0])
-            {
-                print("all blocks");
-                return;
-            }
-
-        }
-        print(num);
-        print(createDir.ToString());
-        CurrPoint = CurrPoint + createDir;
-        mapArray[CurrPoint.X, CurrPoint.Y] = true;
-        CreateARoom(CurrPoint.X, CurrPoint.Y, "name");
-        depth--;
-        CreateToWay(way, depth);
-    }
+    //    }
+    //    print(num);
+    //    print(createDir.ToString());
+    //    CurrPoint = CurrPoint + createDir;
+    //    mapArray[CurrPoint.X, CurrPoint.Y] = true;
+    //    CreateARoom(CurrPoint.X, CurrPoint.Y, "name");
+    //    depth--;
+    //    CreateToWay(way, depth);
+    //}
 
     private void InitRooms()
     {
@@ -122,13 +125,15 @@ public class DungeonCreator : MonoBehaviour
         coorY = 9;
     }
 
-    private void CreateDungeonRooms(ref int depth, Point createPt, Point fromPt, bool first)
+    private void CreateDungeonRooms(ref int level, ref int depth, Point createPt, Point fromPt, bool first)
     {
-        if (depth <= 0) return;
+        if (level > depth) return;
 
-        DungeonRoom room = CreateARoom(createPt, "name", roomStack, mapArray);
+        // create room.
+        DungeonRoom room = CreateARoom(createPt, "room" + level, roomStack, mapArray);
         int doorway = Point.PointToPointWay(fromPt, createPt);
         room.DoorOpen(OppositeDoorNumber(doorway));
+        room.SetDoorDir(OppositeDoorNumber(doorway), DoorDir.StartWay);
         roomDict.Add(createPt, room);
 
         // create point
@@ -136,96 +141,180 @@ public class DungeonCreator : MonoBehaviour
         while (true)
         {
             int way = Random.Range(0, 4);
-            createPt = new Point(Point.WayToPoint(way) + fromPt);
+            createPt = Point.GetRandomWay(fromPt);
             if(!mapArray[createPt.X, createPt.Y])
             {
                 break;
             }
         }
+        Debug.Log(createPt);
 
         if (first)
         {
             first = false;
             room.gameObject.name = "Origin Room";
             room.DoorClose(OppositeDoorNumber(doorway));
+            room.SetDoorDir(OppositeDoorNumber(doorway), DoorDir.None);
         }
 
-        depth--;
-        if (depth > 0)
+        level++;
+        if (level < depth)
         {
             int opendoor = Point.PointToPointWay(fromPt, createPt);
             room.DoorOpen(opendoor);
+            room.SetDoorDir(opendoor, DoorDir.BossWay);
         }
-        else
+        else if(level == depth)
         {
             room.gameObject.name = "Boss Room";
         }
 
 
-        CreateDungeonRooms(ref depth, createPt, fromPt, first);
+        CreateDungeonRooms(ref level, ref depth, createPt, fromPt, first);
     }
 
-    private void CreateDungeon(int depth, int branchCount)
+    public void CreateRooms(int depth, Point createPt, Point fromPt, int enterDir, int outDir, bool isMain)
     {
-        if (depth < 1 || depth > 100) return;
-        
-        int from = 0;
-        for(int i = 0; i < depth; i++)
+        if (depth <= 0) return;
+
+        // base
+        DungeonRoom room = CreateARoom(createPt, "room", roomStack, mapArray);
+        roomDict.Add(createPt, room);
+        depth--;
+
+        // enter door
+        if (fromPt == null)
         {
-            CreateRoom(ref from);
-            if (HasBranch(ref branchCount))
-            {
-                //check 4way
-                List<int> list = new List<int>();
-                if (!mapArray[beforeCoorX, beforeCoorY + 1]) list.Add(0);
-                if (!mapArray[beforeCoorX + 1, beforeCoorY]) list.Add(1);
-                if (!mapArray[beforeCoorX, beforeCoorY - 1]) list.Add(2);
-                if (!mapArray[beforeCoorX - 1, beforeCoorY]) list.Add(3);
-                int way = Random.Range(0, list.Count);
-                Debug.Log("list count : " + list.Count);
-                DungeonRoom room = null;
-                switch (way)
-                {
-                    case 0:
-                        room = CreateARoom(beforeCoorX, beforeCoorY + 1, "branch room");
-                        mapArray[coorX, coorY + 1] = true;
-                        break;
-                    case 1:
-                        room = CreateARoom(beforeCoorX + 1, beforeCoorY, "branch room");
-                        mapArray[coorX + 1, coorY] = true;
-                        break;
-                    case 2:
-                        room = CreateARoom(beforeCoorX, beforeCoorY - 1, "branch room");
-                        mapArray[coorX, coorY - 1] = true;
-                        break;
-                    case 3:
-                        room = CreateARoom(beforeCoorX - 1, beforeCoorY, "branch room");
-                        mapArray[coorX - 1, coorY] = true;
-                        break;
-                }
-                room.DoorOpen(OppositeDoorNumber(way));
-            }
-            
+            room.gameObject.name = "Origin Room";
+            //room.setDoorProperties(OppositeDoorNumber(enterDir), false, DoorDir.None);
         }
-    }
+        else
+        {
+            room.setDoorProperties(OppositeDoorNumber(enterDir), true, DoorDir.StartWay);
+            room.Doors[OppositeDoorNumber(enterDir)].SetNextRoom(roomDict[fromPt]); 
+        }
 
-    private void CreateRoom(ref int from)
-    {
-        string name = string.Format("number: {0} room", ++roomNumber);
-        DungeonRoom createdRoom = CreateARoom(new Point(coorX, coorY), name, roomStack, mapArray);
+        fromPt = new Point(createPt);
         while (true)
         {
-            int dir = Random.Range(0, 3);
-            if (IsCorrectWay(dir, from, mapArray))
+            int way = Random.Range(0, 4);
+            createPt = Point.WayToPoint(way) + fromPt;
+            if (!mapArray[createPt.X, createPt.Y])
             {
-                createdRoom.DoorOpen(OppositeDoorNumber(from));
-                from = dir;
-                createdRoom.DoorOpen(from);
-                roomDict.Add(new Point(coorX, coorY), createdRoom);
+                enterDir = way;
+                outDir = OppositeDoorNumber(enterDir);
+                if (depth == 0 && isMain)
+                {
+                    room.name = "Boss Room";
+                    break;
+                }
+                else if(depth == 0 && !isMain)
+                {
+                    room.name = "Last Room";
+                    break;
+                }
+                room.setDoorProperties(OppositeDoorNumber(outDir), true, DoorDir.BossWay);
+                //Debug.Log("out dir is " + outDir + ", enter dir is " + enterDir);
                 break;
             }
         }
+
+        CreateRooms(depth, createPt, fromPt, enterDir, outDir, isMain);
+
+        // create branch
+        if (depth == 5 && isMain)
+        {
+            Point currPt = fromPt;
+            // find empty point
+       
+            int count = 0;
+            if (!mapArray[fromPt.X + 1, fromPt.Y]) count++;
+            if (!mapArray[fromPt.X - 1, fromPt.Y]) count++;
+            if (!mapArray[fromPt.X, fromPt.Y + 1]) count++;
+            if (!mapArray[fromPt.X, fromPt.Y - 1]) count++;
+
+            if(count > 0)
+            {
+                while (true)
+                {
+                    int way = Random.Range(0, 4);
+                    createPt = Point.WayToPoint(way) + fromPt;
+                    if (!mapArray[createPt.X, createPt.Y])
+                    {
+                        enterDir = way;
+                        outDir = OppositeDoorNumber(enterDir);
+                        room.setDoorProperties(OppositeDoorNumber(outDir), true, DoorDir.BossWay);
+                        break;
+                    }
+                }
+            }
+
+            CreateRooms(depth, createPt, fromPt, enterDir, outDir, false);
+        }
+
     }
+
+    //private void CreateDungeon(int depth, int branchCount)
+    //{
+    //    if (depth < 1 || depth > 100) return;
+        
+    //    int from = 0;
+    //    for(int i = 0; i < depth; i++)
+    //    {
+    //        CreateRoom(ref from);
+    //        if (HasBranch(ref branchCount))
+    //        {
+    //            //check 4way
+    //            List<int> list = new List<int>();
+    //            if (!mapArray[beforeCoorX, beforeCoorY + 1]) list.Add(0);
+    //            if (!mapArray[beforeCoorX + 1, beforeCoorY]) list.Add(1);
+    //            if (!mapArray[beforeCoorX, beforeCoorY - 1]) list.Add(2);
+    //            if (!mapArray[beforeCoorX - 1, beforeCoorY]) list.Add(3);
+    //            int way = Random.Range(0, list.Count);
+    //            Debug.Log("list count : " + list.Count);
+    //            DungeonRoom room = null;
+    //            switch (way)
+    //            {
+    //                case 0:
+    //                    room = CreateARoom(beforeCoorX, beforeCoorY + 1, "branch room");
+    //                    mapArray[coorX, coorY + 1] = true;
+    //                    break;
+    //                case 1:
+    //                    room = CreateARoom(beforeCoorX + 1, beforeCoorY, "branch room");
+    //                    mapArray[coorX + 1, coorY] = true;
+    //                    break;
+    //                case 2:
+    //                    room = CreateARoom(beforeCoorX, beforeCoorY - 1, "branch room");
+    //                    mapArray[coorX, coorY - 1] = true;
+    //                    break;
+    //                case 3:
+    //                    room = CreateARoom(beforeCoorX - 1, beforeCoorY, "branch room");
+    //                    mapArray[coorX - 1, coorY] = true;
+    //                    break;
+    //            }
+    //            room.DoorOpen(OppositeDoorNumber(way));
+    //        }
+            
+    //    }
+    //}
+
+    //private void CreateRoom(ref int from)
+    //{
+    //    string name = string.Format("number: {0} room", ++roomNumber);
+    //    DungeonRoom createdRoom = CreateARoom(new Point(coorX, coorY), name, roomStack, mapArray);
+    //    while (true)
+    //    {
+    //        int dir = Random.Range(0, 3);
+    //        if (IsCorrectWay(dir, from, mapArray))
+    //        {
+    //            createdRoom.DoorOpen(OppositeDoorNumber(from));
+    //            from = dir;
+    //            createdRoom.DoorOpen(from);
+    //            roomDict.Add(new Point(coorX, coorY), createdRoom);
+    //            break;
+    //        }
+    //    }
+    //}
 
     private DungeonRoom CreateARoom(int x, int y, string name)
     {
@@ -244,7 +333,11 @@ public class DungeonCreator : MonoBehaviour
         room.gameObject.name = name;
         room.gameObject.SetActive(true);
         room.transform.parent = this.transform;
-        room.gameObject.transform.position = new Vector3(pt.X * mapWidth, pt.Y * mapHeight);
+        room.transform.position = new Vector3(pt.X * mapWidth, pt.Y * mapHeight);
+        room.LeftDoorWay = DoorDir.None;
+        room.RightDoorWay = DoorDir.None;
+        room.UpperDoorWay = DoorDir.None;
+        room.BottomDoorWay = DoorDir.None;
         array[pt.X, pt.Y] = true;
         return room;
     }
@@ -306,8 +399,4 @@ public class DungeonCreator : MonoBehaviour
 
 }
 
-public enum Direction
-{
-    FORWARD, LEFT, RIGHT
-};
 

@@ -7395,6 +7395,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemap: {fileID: 430658497566372259}
   tilemapRend: {fileID: 3484437493468261748}
+  DoorDirs: 
+  UpperDoorWay: 0
+  BottomDoorWay: 0
+  RightDoorWay: 0
+  LeftDoorWay: 0
+  DoorObjects:
+  - {fileID: 5063800510463124777}
+  - {fileID: 6823227658952843313}
+  - {fileID: 4091237155313590578}
+  - {fileID: 3601789535081320686}
   UpperDoorObj: {fileID: 5063800510463124777}
   RightDoorObj: {fileID: 6823227658952843313}
   BottomDoorObj: {fileID: 4091237155313590578}
@@ -7410,7 +7420,7 @@ GameObject:
   - component: {fileID: 5880602804890860102}
   - component: {fileID: 8214664351539678650}
   m_Layer: 0
-  m_Name: centerPos (3)
+  m_Name: leftDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7489,7 +7499,7 @@ GameObject:
   - component: {fileID: 8425338886189057274}
   - component: {fileID: 5812022115733997892}
   m_Layer: 0
-  m_Name: centerPos (2)
+  m_Name: bottomDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7568,7 +7578,7 @@ GameObject:
   - component: {fileID: 701540377561857180}
   - component: {fileID: 6865361593398329042}
   m_Layer: 0
-  m_Name: centerPos
+  m_Name: upperDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7647,7 +7657,7 @@ GameObject:
   - component: {fileID: 5468043564146751590}
   - component: {fileID: 5256071209842995565}
   m_Layer: 0
-  m_Name: centerPos (1)
+  m_Name: rightDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
