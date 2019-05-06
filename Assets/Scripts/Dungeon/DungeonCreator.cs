@@ -251,11 +251,9 @@ public class DungeonCreator : Singleton<DungeonCreator>
                         break;
                     }
                 }
+                CreateRooms(depth, createPt, fromPt, enterDir, outDir, false);
             }
-
-            CreateRooms(depth, createPt, fromPt, enterDir, outDir, false);
         }
-
     }
 
     //private void CreateDungeon(int depth, int branchCount)
