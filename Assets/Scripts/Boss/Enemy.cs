@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
     Character[] characters;
     bool isLookLeft = true;
 
+    protected float fullHP;
     float attackDelay = 0.0f;
     // Start is called before the first frame update
     protected virtual void Start()
@@ -49,6 +50,7 @@ public class Enemy : MonoBehaviour
         em = gameManager.effectManager;
         characters = gameManager.GetChars();
         currentTarget = GetClosest(); // 첫번째 공격타겟 
+        fullHP = stat.hp;
     }
 
     // Update is called once per frame

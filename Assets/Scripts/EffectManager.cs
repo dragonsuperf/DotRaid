@@ -39,7 +39,7 @@ public class EffectManager : MonoBehaviour
 
     public void PlayEffectOnPosition(string key, Vector2 pos, float lifeTime)
     {
-        List<Effect> curList;
+        List<Effect> curList = new List<Effect>();
         effectPool.TryGetValue(key, out curList);
         if (curList.Count > 0)
         {
@@ -55,7 +55,7 @@ public class EffectManager : MonoBehaviour
 
     public void PlayEffectOnPosition(string key, Vector2 pos, float lifeTime, Quaternion rotate)
     {
-        List<Effect> curList;
+        List<Effect> curList = new List<Effect>();
         effectPool.TryGetValue(key, out curList);
         if (curList.Count > 0)
         {
