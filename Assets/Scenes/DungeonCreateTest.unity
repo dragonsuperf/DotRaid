@@ -237,11 +237,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chracters:
-  - {fileID: 8632173303461905188, guid: 15c288310689947209a90e5b65dbac78, type: 3}
-  - {fileID: 7552278642472358201, guid: c4df442955bf142c88e300095a731165, type: 3}
-  - {fileID: 610872245602763553, guid: 5ac6b9383178143c3aaecea1686266a7, type: 3}
-  - {fileID: 5039303618422879481, guid: bfe598e3672d14a66bc25a7fcd7b74a7, type: 3}
-  - {fileID: 792969578175566498, guid: 8c7cf938cfb50457181f93ec3df7604d, type: 3}
+  - {fileID: 8632173303461905190, guid: 15c288310689947209a90e5b65dbac78, type: 3}
+  - {fileID: 7552278642472358215, guid: c4df442955bf142c88e300095a731165, type: 3}
+  - {fileID: 610872245602763558, guid: 5ac6b9383178143c3aaecea1686266a7, type: 3}
+  - {fileID: 5039303618422879487, guid: bfe598e3672d14a66bc25a7fcd7b74a7, type: 3}
+  - {fileID: 792969578175566527, guid: 8c7cf938cfb50457181f93ec3df7604d, type: 3}
   heroes: []
   boss: {fileID: 17334417}
   effectManager: {fileID: 1075391841}
@@ -914,11 +914,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6578630686280255966, guid: d53462eed61514aae82d7057a8350045,
-        type: 3}
-      propertyPath: m_Name
-      value: Boss
-      objectReference: {fileID: 0}
     - target: {fileID: 6578630686280255957, guid: d53462eed61514aae82d7057a8350045,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -973,6 +968,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6578630686280255966, guid: d53462eed61514aae82d7057a8350045,
+        type: 3}
+      propertyPath: m_Name
+      value: Boss
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d53462eed61514aae82d7057a8350045, type: 3}
@@ -1066,11 +1066,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6591888489999818807, guid: bee3a4ea37fc14ea2b01e28465c5b9af,
-        type: 3}
-      propertyPath: m_Name
-      value: blast
-      objectReference: {fileID: 0}
     - target: {fileID: 6591888489999818800, guid: bee3a4ea37fc14ea2b01e28465c5b9af,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1125,6 +1120,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6591888489999818807, guid: bee3a4ea37fc14ea2b01e28465c5b9af,
+        type: 3}
+      propertyPath: m_Name
+      value: blast
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bee3a4ea37fc14ea2b01e28465c5b9af, type: 3}

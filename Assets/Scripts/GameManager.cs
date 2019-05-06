@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : Singleton<MonoBehaviour>
+public class GameManager : Singleton<GameManager>
 {
-    public GameObject[] chracters;
+    public Character[] chracters;
     public List<GameObject> heroes = new List<GameObject>();
     public GameObject boss;
     public EffectManager effectManager;
@@ -21,6 +21,8 @@ public class GameManager : Singleton<MonoBehaviour>
     protected override void Start()
     {
         base.Start();
+        setStartPoint();
+        setCharactersAndEnemy();
         effectManager.AddEffectToPool("blast", defaultBlastEffect, 10);
         SkillManager.Instance.OnSet();
     }
@@ -44,9 +46,9 @@ public class GameManager : Singleton<MonoBehaviour>
         boss.transform.position = bossRoomPosition;
         boss.SetActive(false);
 
-        foreach(GameObject ch in chracters)
+        foreach(Character ch in chracters)
         {
-            GameObject hero = Instantiate(ch, startPosition, Quaternion.identity, this.gameObject.transform);
+            GameObject hero = Instantiate(ch.gameObject, startPosition, Quaternion.identity, this.gameObject.transform);
             heroes.Add(hero);
         }
         Camera.main.gameObject.transform.position = startPosition;
@@ -76,14 +78,11 @@ public class GameManager : Singleton<MonoBehaviour>
         if (currentRoom.NextRoom == null) return;
 
         DungeonRoom nextRoom = currentRoom.NextRoom;
-        Debug.Log("Current Room: " + currentRoomKey + ", Next Room: " + nextRoom.RoomCoord);
 
         Vector3 move = currentRoom.transform.position - nextRoom.transform.position;
         foreach(GameObject ch in heroes)
         {
-            Debug.Log(ch.gameObject.transform.position);
             ch.gameObject.transform.position -= move;
-            Debug.Log(ch.gameObject.transform.position);
         }
         Camera.main.transform.position = nextRoom.transform.position;
 
