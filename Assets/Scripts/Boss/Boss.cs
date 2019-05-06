@@ -9,6 +9,8 @@ public class Boss : Enemy
 {
     public GameObject[] mobPrefab;
 
+    [SerializeField] private Image _hpBar;
+
     public Effect afterImage;
     public Projectile proj;
 
@@ -34,12 +36,13 @@ public class Boss : Enemy
         if (forceTarget != null)
             MoveToPosition(chargePoint);
 
+        _hpBar.fillAmount = stat.hp / fullHP;
+
         base.Update();
     }
 
     void ThrowFiveProjectile()
     {
-        //currentTarget.transform.RotateAround(transform.position, 30.0f);
         for(int i = 0; i < 5; i++)
         {
             Projectile p = Instantiate(proj);

@@ -21,10 +21,10 @@ public class GameManager : Singleton<GameManager>
     protected override void Start()
     {
         base.Start();
-        setStartPoint();
-        setCharactersAndEnemy();
         effectManager.AddEffectToPool("blast", defaultBlastEffect, 10);
         SkillManager.Instance.OnSet();
+        setStartPoint();
+        setCharactersAndEnemy();
     }
 
     // Update is called once per frame
