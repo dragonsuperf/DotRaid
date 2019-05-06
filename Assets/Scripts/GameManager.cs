@@ -20,10 +20,9 @@ public class GameManager : Singleton<MonoBehaviour>
     // Start is called before the first frame update
     protected override void Start()
     {
-        setStartPoint();
-        setCharactersAndEnemy();
+        base.Start();
         effectManager.AddEffectToPool("blast", defaultBlastEffect, 10);
-
+        SkillManager.Instance.OnSet();
     }
 
     // Update is called once per frame
@@ -32,7 +31,7 @@ public class GameManager : Singleton<MonoBehaviour>
 
     }
 
-    public GameObject[] GetChars() => chracters;
+    public Character[] GetChars() => chracters;
     public GameObject GetBoss() => boss;
 
 

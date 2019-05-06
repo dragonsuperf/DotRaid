@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class TestSkill : TargetSkillBase
 {
-    public override void OnSet(object idx)
+    public override void OnSet(object data)
     {
-        base.OnSet(idx);
-        _data.createEffectCallback = CustomAction;
+        base.OnSet(data);
+        _data.createEffectCallback = CreateEffect;
     }
 
     public override void OnUpdate()
@@ -18,11 +18,12 @@ public class TestSkill : TargetSkillBase
     public override void OnRemove()
     {
         base.OnRemove();
-        Debug.Log(_data.idx + " 번 스킬 지워짐");
+        Debug.Log(_idx + " 번 스킬 지워짐");
     }
 
-    private void CustomAction()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("이펙트 생성");
+        if(collision.gameObject.tag == "Enemy")
+            SkillManager.Instance.Remove(this._idx);
     }
 }

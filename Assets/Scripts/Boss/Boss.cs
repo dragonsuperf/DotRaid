@@ -10,6 +10,7 @@ public class Boss : Enemy
     public GameObject[] mobPrefab;
 
     public Effect afterImage;
+    public Projectile proj;
 
     Vector2[] spawnPoint = { new Vector2(-13.0f, 6.0f), new Vector2(13.0f, 6.0f) };
     Vector2 chargePoint; // 돌진 대상 위치
@@ -22,6 +23,7 @@ public class Boss : Enemy
         pm.AddPattern("attack", 0.3f, 3.0f, 1.0f);
         pm.AddPattern("cast", 2.0f, 10.0f, 0.5f);
         pm.AddPattern("charge", 1.2f, 8.0f, 0.5f);
+        pm.AddPattern("shootcast", 2.0f, 8.0f, 0.5f);
 
         em.AddEffectToPool("bossAfterimage", afterImage);
     }
@@ -33,6 +35,16 @@ public class Boss : Enemy
             MoveToPosition(chargePoint);
 
         base.Update();
+    }
+
+    void ThrowFiveProjectile()
+    {
+        //currentTarget.transform.RotateAround(transform.position, 30.0f);
+        for(int i = 0; i < 5; i++)
+        {
+            Projectile p = Instantiate(proj);
+            p.Set(10.0f, 300.0f, transform.position, currentTarget.position, (-30.0f + (15.0f * i)));
+        }
     }
 
     void SummonSomething() // cast 패턴시 시전되는 소환 스킬

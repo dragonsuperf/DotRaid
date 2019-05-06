@@ -32,15 +32,21 @@ public enum CharacterState
 
 public class Character : MonoBehaviour
 {
+    [Header("Use Skill")]
+    public eSkill skill_first;
+    public eSkill skill_second;
+    [Space(15)]
+
     protected Animator ani;
     EffectManager effectmanager;
+    InputListener _inputListener;
     float distance;
 
     GameManager gameManager;
     public GameObject boss;
-    public GameObject[] characters;
+    public Character[] characters;
    
-    Transform currentTarget;
+    public Transform currentTarget;
     
     public GameObject point;
 
@@ -70,6 +76,7 @@ public class Character : MonoBehaviour
         GetStat();
         ani = this.GetComponent<Animator>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _inputListener = GameManager.Instance.GetComponent<InputListener>();
         charState = CharacterState.idle;
         boss = gameManager.GetBoss();
         characters = gameManager.GetChars();
@@ -84,17 +91,20 @@ public class Character : MonoBehaviour
         arrowStart.SetActive(false);
         point.SetActive(false);
 
-        
-
         StartCoroutine(AttackMotion(1 / this.stat.attackSpeed));
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        distance = Vector2.Distance(boss.transform.position, transform.position);
+        if(currentTarget != null)
+        {
+            distance = Vector2.Distance(currentTarget.transform.position, transform.position);
+        }
+
+        MoveAndAttack();
         Moving();
-        Attack();
+        Attacking();
         CharFlipping();
 
         if (this.ani.GetCurrentAnimatorStateInfo(0).IsName("attack"))
@@ -103,6 +113,96 @@ public class Character : MonoBehaviour
         }
     }
 
+
+    void MoveAndAttack()
+    {
+        if (_inputListener.selectedUnits.Contains(this))
+        {
+            if (Input.GetMouseButtonUp(1))
+            {
+                charState = CharacterState.move;
+                screenPoint = Camera.main.WorldToScreenPoint(transform.position);
+                Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+                curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
+            }
+
+            if (Input.GetKeyUp(KeyCode.S))
+            {
+                charState = CharacterState.idle;
+            }
+
+            if (Input.GetKeyUp(KeyCode.A))
+            {
+                StartCoroutine(Attack());
+            }
+        }
+    }
+
+
+    IEnumerator Attack()
+    {
+        yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
+        Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+        FocusAttack();
+    }
+
+    void FocusAttack()
+    {
+        Vector2 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Ray2D ray = new Ray2D(wp, Vector2.zero);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+
+        if (hit.collider.tag == "Enemy")
+        {
+            currentTarget = hit.collider.transform;
+        }
+    }
+
+
+    //---------------------캐릭터이동--------------------------//
+    void Moving()
+    {
+        if (charState == CharacterState.move)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, curPosition, stat.moveSpeed * Time.deltaTime);
+            currentTarget = null;
+            ani.SetBool("walk", true);
+
+            if (transform.position == curPosition) //강제 이동 끝나면 idle상태
+            {
+                charState = CharacterState.idle;
+                ani.SetBool("walk", false);
+            }
+        }
+
+        if (charState == CharacterState.chase)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, currentTarget.position, stat.moveSpeed * Time.deltaTime);
+            ani.SetBool("walk", true);
+        }
+    }
+
+    public void Attacking()
+    {
+        if (currentTarget != null)
+        {
+            if (charState != CharacterState.move && stat.attackRangeRadius > distance) //in attack range
+            {
+                charState = CharacterState.attack;
+            }
+            /*
+            else if (charState != CharacterState.hold && charState != CharacterState.move && stat.awareRangeRadius > distance) //in aware range
+            {
+                charState = CharacterState.chase;
+            }
+            */
+            else
+            {
+                charState = CharacterState.chase;
+            }
+        }
+    }
+    /*
     void OnMouseDown()
     {
         if (this.GetComponent<CircleCollider2D>()){
@@ -167,7 +267,7 @@ public class Character : MonoBehaviour
         point.SetActive(false);
         EndLine();
     }
-
+    */
     public static float GetAngle(Vector3 vStart, Vector3 vEnd)
     {
         Vector3 v = vEnd - vStart;
@@ -202,51 +302,9 @@ public class Character : MonoBehaviour
             }
         }
     }
- 
-    public void Attack()
-    {
 
-        if (charState != CharacterState.move && stat.attackRangeRadius > distance) //in attack range
-        {
-            charState = CharacterState.attack;
-        }
 
-        else if (charState != CharacterState.move && stat.awareRangeRadius > distance) //in aware range
-        {
-            charState = CharacterState.chase;
-        }
-
-    }
- 
-    //---------------------캐릭터이동--------------------------//
-    void Moving()
-    {
-        if (charState == CharacterState.move)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, curPosition, stat.moveSpeed * Time.deltaTime);
-            currentTarget = null;
-            ani.SetBool("walk", true);
-
-            if (transform.position == curPosition) //강제 이동 끝나면 idle상태
-            {
-                charState = CharacterState.idle;
-                ani.SetBool("walk", false);
-            }
-        }
-
-        if (charState == CharacterState.chase)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, boss.transform.position, stat.moveSpeed * Time.deltaTime);
-            ani.SetBool("walk", true);
-        }
-
-        if (charState == CharacterState.attack)
-        {
-            /*--------------------------------------수정 필요(쫄처리) ----------------------------------------*/
-            currentTarget = boss.transform;
-        }
-    }
-    
+    /*
     private void StartLine()
     {
         line.enabled = true;
@@ -260,7 +318,7 @@ public class Character : MonoBehaviour
         line.enabled = false;
         
     }
-
+    */
     private void NormalAttack()
     {
         if (currentTarget != null)

@@ -21,6 +21,11 @@ public class TargetSkillBase : Skill
     {
         base.OnRemove();
     }
+    
+    protected void CreateEffect()
+    {
+        
+    }
 
     protected virtual void CreatePosition(Vector2 position)
     {

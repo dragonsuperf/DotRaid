@@ -10,7 +10,6 @@ public class SkillManager : Singleton<SkillManager>
 {
     //스킬 다 가지고 있음
     private Dictionary<int, Skill> _skillDict = new Dictionary<int, Skill>();
-    private GameManager _gameManager;
     private int _skillCount = 0;
 
     private GameObject _skillRoot = null;
@@ -19,33 +18,28 @@ public class SkillManager : Singleton<SkillManager>
     {
         base.Start();
         _skillRoot = new GameObject("SkillRoot");
-        _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     /// <summary>
     /// 스킬 생성함 프리팹이름이 스킬클래스 이름이어야함
     /// </summary>
     /// <typeparam name="T">스킬 객체만 ㅇㅋ</typeparam>
-    public void Create<T>() where T : Skill
+    public void Create(eSkill skill, SkillData skillData)
     {
-        Type type = typeof(T);
-        T loadPrefab = null;
-        loadPrefab = Resources.Load<T>("Skill/" + type.ToString());
+        if (skillData == null) return;
+        GameObject loadPrefab = Resources.Load<GameObject>("Prefabs/Skill/" + skill.ToString());
         if (loadPrefab == null)
         {
             Debug.Log("스킬 안만들어짐");
             return;
         }
-        Skill newSkill = Instantiate<T>(loadPrefab, _skillRoot.transform).GetComponent<Skill>();
+        Skill newSkill = Instantiate(loadPrefab, _skillRoot.transform).GetComponent<Skill>();
+        newSkill.IDX = _skillCount;
         _skillDict.Add(_skillCount, newSkill);
-        
-        SkillData skillData = new SkillData();
-        skillData.idx = _skillCount;
-        skillData.player_idx = 1; //지금 캐릭터 못구함
 
         newSkill.OnSet(skillData);
         newSkill.Data.createEffectCallback.SafeInvoke();
-        Debug.Log("스킬 생성 " + type.ToString() + " 스킬번호 : " + _skillCount + " " + skillData.player_idx);
+        Debug.Log("스킬 생성 " + skill.ToString() + " 스킬번호 : " + _skillCount + "/ 플레이어 번호 :" + skillData.player_idx);
         _skillCount++; // TODO 키 유니크하게 관리해야함
     }
 
