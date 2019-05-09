@@ -22,6 +22,7 @@ public class InputListener : MonoBehaviour
     [SerializeField] private UIHelper _uiHelper;
     public bool isSelecting = false; //인스펙터 표기용
     public List<Character> selectedUnits = new List<Character>(); //선택된 캐릭터 인스펙터 표기용
+    public List<Character> selectTemp = new List<Character>(); //아무것도 선택안했을 때 선택된 캐릭터 남기기용
     private Vector3 mousePosition;
 
     private void Start()
@@ -57,8 +58,20 @@ public class InputListener : MonoBehaviour
         {
             if (isSelecting)
             {
-                selectedUnits.Clear();
+                
                 IsWithinSelectionBounds();
+
+                if(selectTemp.Count != 0) // 무언가 select 했을때
+                {
+                    selectedUnits.Clear();
+                    selectedUnits = new List<Character>(selectTemp);
+                    selectTemp.Clear();
+                }
+
+                else // select 안했을때 selectedUnits 그대로 가져감
+                {
+
+                }
             }
             isSelecting = false;
         }
@@ -150,7 +163,8 @@ public class InputListener : MonoBehaviour
         {
             if (viewportBounds.Contains(camera.WorldToViewportPoint(_charactors[i].transform.position)))
             {
-                selectedUnits.Add(_charactors[i]);
+                selectTemp.Add(_charactors[i]);
+                //selectedUnits.Add(_charactors[i]);
                 //characters[i].transform.Find("arrowSelector").gameObject.SetActive(true);
             }
         }
