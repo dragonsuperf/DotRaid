@@ -107,7 +107,6 @@ public class CharSelectManager : MonoBehaviour
             if (viewportBounds.Contains(camera.WorldToViewportPoint(characters[i].transform.position)))
             {
                 selectedUnits.Add(characters[i]);
-                //characters[i].transform.Find("arrowSelector").gameObject.SetActive(true);
             }
         }
     }

@@ -10,6 +10,7 @@ public struct CharacterStats
 {
     public string job;
     public string synergy;
+    public bool isSelect;
 
     public bool agro; //탱커 어그로 획득 여부
 
@@ -92,16 +93,19 @@ public class Character : MonoBehaviour
         point.SetActive(false);
 
         StartCoroutine(AttackMotion(1 / this.stat.attackSpeed));
+
+        
     }
 
     // Update is called once per frame
     protected virtual void Update()
-    {
-        if(currentTarget != null)
+    { 
+        if (currentTarget != null)
         {
             distance = Vector2.Distance(currentTarget.transform.position, transform.position);
         }
 
+        transform.Find("isSelect").gameObject.SetActive(stat.isSelect); // Select된 캐릭터 밑 원
         MoveAndAttack();
         Moving();
         Attacking();
