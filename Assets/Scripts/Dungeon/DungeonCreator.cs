@@ -28,7 +28,7 @@ public class DungeonCreator : Singleton<DungeonCreator>
         Point origin = new Point(10, 10);
         //CreateDungeonRooms(ref level, ref depth, origin, Point.GetRandomWay(origin), true);
 
-
+        
 
         CreateRooms(10, origin, null, -1, -1, true);
     }
@@ -113,8 +113,8 @@ public class DungeonCreator : Singleton<DungeonCreator>
             if(i == 0)
             {
                 map.transform.parent = this.transform;
-                mapWidth = map.GetComponent<Tilemap>().localBounds.size.x * 1.2f;
-                mapHeight = map.GetComponent<Tilemap>().localBounds.size.y * 1.2f;
+                mapWidth = map.GetComponent<Tilemap>().localBounds.size.x * 1.2f * 2.2f;
+                mapHeight = map.GetComponent<Tilemap>().localBounds.size.y * 1.2f * 2.2f;
                 map.transform.parent = null;
             }
             map.SetActive(false);
@@ -123,6 +123,7 @@ public class DungeonCreator : Singleton<DungeonCreator>
         mapArray = new bool[20, 20];
         coorX = 9;
         coorY = 9;
+        Debug.Log(mapWidth);
     }
 
     private void CreateDungeonRooms(ref int level, ref int depth, Point createPt, Point fromPt, bool first)
