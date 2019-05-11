@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
         base.Start();
         effectManager.AddEffectToPool("blast", defaultBlastEffect, 10);
         SkillManager.Instance.OnSet();
-        //setStartPoint();
+        setStartPoint();
         setCharactersAndEnemy();
     }
 
