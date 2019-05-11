@@ -36,7 +36,7 @@ public class Boss : Enemy
         if (forceTarget != null)
             MoveToPosition(chargePoint);
 
-        _hpBar.fillAmount = stat.hp / fullHP;
+        //_hpBar.fillAmount = stat.hp / fullHP;
 
         base.Update();
     }

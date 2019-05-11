@@ -14,7 +14,7 @@ public class InputListener : MonoBehaviour
 {
     private InputState _state = InputState.None;
     private int _selectCharactorIdx = 0;
-    private Character[] _charactors;
+    private List<Character> _charactors;
 
     private eSkill _skill;
 
@@ -170,7 +170,7 @@ public class InputListener : MonoBehaviour
         var viewportBounds =
             _uiHelper.GetViewportBounds(camera, mousePosition, Input.mousePosition);
 
-        for (int i = 0; i < _charactors.Length; i++)
+        for (int i = 0; i < _charactors.Count; i++)
         {
             if (viewportBounds.Contains(camera.WorldToViewportPoint(_charactors[i].transform.position)))
             {

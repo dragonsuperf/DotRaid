@@ -221,7 +221,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &42308393
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -352,7 +352,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 2.398798
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -1379,7 +1379,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &341726527
 Transform:
   m_ObjectHideFlags: 0
@@ -1458,7 +1458,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 4.523894
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -1825,7 +1825,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &408915725
 Transform:
   m_ObjectHideFlags: 0
@@ -1901,7 +1901,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 2.5909433
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -3138,7 +3138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1090649052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3269,7 +3269,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 2.3988078
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -8394,7 +8394,7 @@ GameObject:
   - component: {fileID: 1352382959}
   - component: {fileID: 1352382958}
   m_Layer: 0
-  m_Name: UIManager
+  m_Name: UIHelper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9162,6 +9162,7 @@ GameObject:
   - component: {fileID: 1707572307}
   - component: {fileID: 1707572308}
   - component: {fileID: 1707572309}
+  - component: {fileID: 1707572310}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -9196,18 +9197,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chracters:
-  - {fileID: 42308394}
-  - {fileID: 1090649052}
-  - {fileID: 408915729}
-  - {fileID: 1906897900}
-  - {fileID: 341726528}
+  - {fileID: 8632173303461905190, guid: 15c288310689947209a90e5b65dbac78, type: 3}
+  - {fileID: 610872245602763558, guid: 5ac6b9383178143c3aaecea1686266a7, type: 3}
+  - {fileID: 792969578175566527, guid: 8c7cf938cfb50457181f93ec3df7604d, type: 3}
+  - {fileID: 5039303618422879487, guid: bfe598e3672d14a66bc25a7fcd7b74a7, type: 3}
+  - {fileID: 7552278642472358215, guid: c4df442955bf142c88e300095a731165, type: 3}
   heroes: []
   boss: {fileID: 728732407}
   effectManager: {fileID: 2098974691}
   defaultBlastEffect: {fileID: 1854040807}
   startPosition: {x: 0, y: 0, z: 0}
   bossRoomPosition: {x: 0, y: 0, z: 0}
-  dungeonCreator: {fileID: 0}
+  dungeonCreator: {fileID: 1707572310}
   currentCameraPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1707572309
 MonoBehaviour:
@@ -9225,6 +9226,20 @@ MonoBehaviour:
   isSelecting: 0
   selectedUnits: []
   selectTemp: []
+--- !u!114 &1707572310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707572306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ca3982a3dccda4ba417091ead4da70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomPrefab: {fileID: 3826210395049913980, guid: 8d61741a708873744b2e8decb9985268,
+    type: 3}
 --- !u!1 &1756810893
 GameObject:
   m_ObjectHideFlags: 0
@@ -9311,7 +9326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 510c2aaf3990aef408c8f246203241a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uiHelper: {fileID: 0}
+  _uiHelper: {fileID: 1352382958}
   selector: []
   isSelecting: 0
   selectedUnits: []
@@ -14316,7 +14331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1906897899
 Transform:
   m_ObjectHideFlags: 0
@@ -14428,7 +14443,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 1.9624712
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0

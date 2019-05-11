@@ -12,7 +12,7 @@ public class CharSelectManager : MonoBehaviour
 
     public List<Character> selectedUnits = new List<Character>();
 
-    private Character[] characters;
+    private List<Character> characters;
     private Vector3 mousePosition;
 
 
@@ -20,7 +20,7 @@ public class CharSelectManager : MonoBehaviour
     void Start()
     {
         characters = GameManager.Instance.GetChars();
-        selector = new GameObject[characters.Length];
+        selector = new GameObject[characters.Count];
 
         for (int i = 0; i < selector.Length; i++)
         {
@@ -102,7 +102,7 @@ public class CharSelectManager : MonoBehaviour
         var viewportBounds =
             _uiHelper.GetViewportBounds(camera, mousePosition, Input.mousePosition);
 
-        for (int i = 0; i < characters.Length; i++)
+        for (int i = 0; i < characters.Count; i++)
         {
             if (viewportBounds.Contains(camera.WorldToViewportPoint(characters[i].transform.position)))
             {
