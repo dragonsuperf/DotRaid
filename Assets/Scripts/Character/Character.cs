@@ -72,6 +72,7 @@ public class Character : MonoBehaviour
     private float startPointY;
     private float charPointX;
     private float charPointY;
+    private bool isColliding;
     private GameObject arrowSelector;
     private GameObject arrowStart;
     private GameObject arrowEnd;
@@ -119,7 +120,7 @@ public class Character : MonoBehaviour
 
     // Update is called once per frame
     protected virtual void Update()
-    { 
+    {
         if (currentTarget != null)
         {
             distance = Vector2.Distance(currentTarget.transform.position, transform.position);
@@ -130,6 +131,7 @@ public class Character : MonoBehaviour
         Moving();
         Attacking();
         CharFlipping();
+        
 
         if (this.ani.GetCurrentAnimatorStateInfo(0).IsName("attack"))
         {
@@ -137,11 +139,28 @@ public class Character : MonoBehaviour
         }
 
         //----- 스킬 부르는 예시 캐스팅 바 다 차거나 애니메이션 끝날 때 이렇게하면 됨
-        if(skillStateData.hasCast == true)
+        if (skillStateData.hasCast == true)
         {
             Debug.Log("캐스트 트루임");
             skillStateData.skillMakeCallback.SafeInvoke();
             skillStateData.Clear();
+        }
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision) //목적지 근처 Colliding 판정위하여
+    {
+        if(collision.collider.tag == "Player")
+        {
+            isColliding = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision) //목적지 근처 Colliding 판정위하여
+    {
+        if (collision.collider.tag == "Player")
+        {
+            isColliding = false;
         }
     }
 
@@ -173,9 +192,26 @@ public class Character : MonoBehaviour
 
     IEnumerator Attack()
     {
-        yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
+        yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // wait for mouse button
+
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
-        FocusAttack();
+
+        Vector2 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Ray2D ray = new Ray2D(wp, Vector2.zero);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+
+        if(hit.collider.tag == "Enemy")
+        {
+            currentTarget = hit.collider.transform;
+        }
+        else
+        {
+            
+        }
+
+
+
+        //FocusAttack();
     }
 
     void FocusAttack()
@@ -201,6 +237,12 @@ public class Character : MonoBehaviour
             ani.SetBool("walk", true);
 
             if (transform.position == curPosition) //강제 이동 끝나면 idle상태
+            {
+                charState = CharacterState.idle;
+                ani.SetBool("walk", false);
+            }
+
+            if (Vector2.Distance(transform.position, curPosition) < 2 && isColliding) // 목적지 근처에서 Player끼리 Colliding 중이면 멈춤
             {
                 charState = CharacterState.idle;
                 ani.SetBool("walk", false);
