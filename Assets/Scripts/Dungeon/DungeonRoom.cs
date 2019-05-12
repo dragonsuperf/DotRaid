@@ -41,6 +41,18 @@ public class DungeonRoom : MonoBehaviour
     [SerializeField] private GameObject BottomDoorObj;
     [SerializeField] private GameObject LeftDoorObj;
 
+    public GameObject GetDoorObj(int num)
+    {
+        switch (num)
+        {
+            case 0: return UpperDoorObj;
+            case 1: return RightDoorObj;
+            case 2: return BottomDoorObj;
+            case 3: return LeftDoorObj;
+        }
+        return null;
+    }
+
     private void Awake()
     {
         DoorDirs.Add(UpperDoorWay);
@@ -58,6 +70,9 @@ public class DungeonRoom : MonoBehaviour
     {
         DoorObjects[number].SetActive(isOpen);
         Doors[number].SetDoorProperties(number, isOpen, doorDir);
+        Doors[number].DoorObject = GetDoorObj(number);
+        Doors[number].DoorObject.GetComponent<DoorControl>().Door = Doors[number];
+        Doors[number].DoorObject.GetComponent<DoorControl>().doorWay = number;
     }
 
     public void SetDoorDir(int dir, DoorDir way)
@@ -114,6 +129,7 @@ public class Door
     public Direction DoorDirection { get; private set; }
     public DungeonRoom PrevRoom { get; private set; }
     public DungeonRoom NextRoom { get; private set; }
+    public GameObject DoorObject;
 
     public void SetNextRoom(DungeonRoom room)
     {

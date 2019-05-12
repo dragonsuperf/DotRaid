@@ -4,30 +4,21 @@ using UnityEngine;
 
 public class DoorControl : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Door Door;
+    public int doorWay;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
-    }
-
-    private void OnMouseDown()
-    {
-        Debug.Log("click");
-    }
-
-    private void OnMouseOver()
-    {
-        Debug.Log("over");
+        if(collision.gameObject.tag == "Player" && DungeonManager.Instance.roomCleared)
+        {
+            DungeonRoom next = Door.NextRoom;
+            Debug.Log(next);
+            var characters = GameManager.Instance.heroes;
+            foreach(var ch in characters)
+            {
+                Vector3 position = next.GetDoorObj(DungeonCreator.Instance.OppositeDoorNumber(doorWay)).transform.position;
+                ch.gameObject.transform.position = position;
+            }
+        }
     }
 }

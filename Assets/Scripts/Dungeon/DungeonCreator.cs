@@ -123,7 +123,6 @@ public class DungeonCreator : Singleton<DungeonCreator>
         mapArray = new bool[20, 20];
         coorX = 9;
         coorY = 9;
-        Debug.Log(mapWidth);
     }
 
     private void CreateDungeonRooms(ref int level, ref int depth, Point createPt, Point fromPt, bool first)
@@ -377,7 +376,7 @@ public class DungeonCreator : Singleton<DungeonCreator>
         }
     }
 
-    private int OppositeDoorNumber(int way)
+    public int OppositeDoorNumber(int way)
     {
         switch (way)
         {
