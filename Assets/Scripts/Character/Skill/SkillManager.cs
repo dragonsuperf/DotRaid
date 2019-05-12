@@ -39,7 +39,7 @@ public class SkillManager : Singleton<SkillManager>
 
         newSkill.OnSet(skillData);
         newSkill.Data.createEffectCallback.SafeInvoke();
-        Debug.Log("스킬 생성 " + skill.ToString() + " 스킬번호 : " + _skillCount + "/ 플레이어 번호 :" + skillData.player_idx);
+        Debug.Log("스킬 생성 " + skill.ToString() + " 스킬번호 : " + _skillCount + "/ 플레이어 번호 :" + skillData.player_info.idx);
         _skillCount++; // TODO 키 유니크하게 관리해야함
     }
 

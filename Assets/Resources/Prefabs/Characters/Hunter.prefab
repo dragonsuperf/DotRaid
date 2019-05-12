@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5237680db0a1a14a90bfdcf7117cf1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill_first: 0
+  skill_first: 1
   skill_second: 0
   boss: {fileID: 0}
   characters: []

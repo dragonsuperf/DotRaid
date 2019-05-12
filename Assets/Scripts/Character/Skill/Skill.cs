@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public enum eSkill
 {
-    TestSkill = 0
+    TestSkill = 0,
+    Sniping
 }
 
 public enum eTargetState
@@ -18,14 +19,23 @@ public enum eSkillState
 {
     Target = 0,
     NonTarget,
-    Range
+    Range,
+    Target_Cast,
+    NonTarget_Cast,
+    Range_Cast
+}
+
+public class CasterInfo
+{
+    public int idx;
+    public Vector2 pos; //생성되는 위치가 됨
 }
 
 public class TargetInfo
 {
     public int idx;
     public eTargetState state;
-    public Vector2 pos; //생성시점 위치가 됨
+    public Vector2 pos; //생성시점 타겟 위치가 됨
 }
 
 /// <summary>
@@ -33,7 +43,7 @@ public class TargetInfo
 /// </summary>
 public class SkillData
 {
-    public int player_idx = -1;
+    public CasterInfo player_info = null;
     public TargetInfo target_info = null;
     public eSkillState state = eSkillState.Target;
     public List<Effect> effect = null;
