@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     protected GameObject forceTarget; // currentTaget보다 우선시되는 타겟
     protected EffectManager em;
     Animator ani;
-    Character[] characters;
+    List<Character> characters;
     bool isLookLeft = true;
 
     protected float fullHP;
@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour
 
     protected GameObject GetRandomTarget()
     {
-        return characters[UnityEngine.Random.Range(0, characters.Length)].gameObject;
+        return characters[UnityEngine.Random.Range(0, characters.Count)].gameObject;
     }
 
     protected void MoveToPosition(Vector2 position)
@@ -130,7 +130,7 @@ public class Enemy : MonoBehaviour
         Transform tMin = null;
         float minDist = Mathf.Infinity;
         Vector3 currentPos = transform.position;
-        for (int i = 0; i < characters.Length; i++)
+        for (int i = 0; i < characters.Count; i++)
         {
             float dist = Vector3.Distance(characters[i].transform.position, currentPos);
             if (dist < minDist)

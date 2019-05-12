@@ -25,6 +25,23 @@ public struct CharacterStats
     public int CastSpeed;
 }
 
+/// <summary>
+/// 스킬을 만드는 타이밍
+/// </summary>
+public class SkillStateData
+{
+    public bool hasAnimation = false; // 애니메이션 특성 동작에 스킬을 발사해야 할 수 있어서 임시로 만들어둠
+    public bool hasCast = false;
+    public Action skillMakeCallback = null;
+
+    public void Clear()
+    {
+        hasAnimation = false;
+        hasCast = false;
+        skillMakeCallback = null;
+    }
+}
+
 
 public enum CharacterState
 {
@@ -45,7 +62,7 @@ public class Character : MonoBehaviour
 
     GameManager gameManager;
     public GameObject boss;
-    public Character[] characters;
+    public List<Character> characters;
    
     public Transform currentTarget;
     
@@ -70,6 +87,9 @@ public class Character : MonoBehaviour
     private LineRenderer line;
     private int curStart = 0, curEnd = 1;
     public GameObject lineProto;
+
+    //이걸로 스킬 만드는 타이밍 조절
+    public SkillStateData skillStateData = new SkillStateData();
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -114,6 +134,14 @@ public class Character : MonoBehaviour
         if (this.ani.GetCurrentAnimatorStateInfo(0).IsName("attack"))
         {
             ani.SetBool("attack", false);
+        }
+
+        //----- 스킬 부르는 예시 캐스팅 바 다 차거나 애니메이션 끝날 때 이렇게하면 됨
+        if(skillStateData.hasCast == true)
+        {
+            Debug.Log("캐스트 트루임");
+            skillStateData.skillMakeCallback.SafeInvoke();
+            skillStateData.Clear();
         }
     }
 

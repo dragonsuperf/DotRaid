@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public Character[] chracters;
-    public List<GameObject> heroes = new List<GameObject>();
+    public List<Character> heroes = new List<Character>();
     public GameObject boss;
     public EffectManager effectManager;
     public Effect defaultBlastEffect;
@@ -33,7 +33,7 @@ public class GameManager : Singleton<GameManager>
 
     }
 
-    public Character[] GetChars() => chracters;
+    public List<Character> GetChars() => heroes;
     public GameObject GetBoss() => boss;
 
 
@@ -48,10 +48,10 @@ public class GameManager : Singleton<GameManager>
 
         foreach(Character ch in chracters)
         {
-            GameObject hero = Instantiate(ch.gameObject, startPosition, Quaternion.identity, this.gameObject.transform);
+            Character hero = Instantiate(ch.gameObject, startPosition, Quaternion.identity, this.gameObject.transform).GetComponent<Character>();
             heroes.Add(hero);
         }
-        Camera.main.gameObject.transform.position = startPosition;
+        Camera.main.gameObject.transform.position = new Vector3( startPosition.x, startPosition.y, Camera.main.gameObject.transform.position.z) ;
     }
 
     private void setStartPoint()
@@ -80,7 +80,7 @@ public class GameManager : Singleton<GameManager>
         DungeonRoom nextRoom = currentRoom.NextRoom;
 
         Vector3 move = currentRoom.transform.position - nextRoom.transform.position;
-        foreach(GameObject ch in heroes)
+        foreach(Character ch in heroes)
         {
             ch.gameObject.transform.position -= move;
         }
