@@ -90,17 +90,10 @@ public class GameManager : Singleton<GameManager>
         currentRoomKey = currentRoom.RoomCoord;
     }
     
-    //public void MoveCharacters()
-    //{
-    //    Vector3 move = new Vector3(20f, 20f, 0f);
-    //    foreach (GameObject ch in chracters)
-    //    {
-    //        Debug.Log(ch.name);
-    //        Debug.Log(ch.gameObject.transform.position);
-    //        ch.gameObject.transform.position += move;
-    //        Debug.Log(ch.gameObject.transform.position);
-    //    }
-    //}
+    public void MoveCameraToRoomPosition(DungeonRoom room)
+    {
+        Camera.main.transform.position = new Vector3(room.transform.position.x, room.transform.position.y, -10);
+    }
 
 
 }
