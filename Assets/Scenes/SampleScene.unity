@@ -33958,6 +33958,11 @@ PrefabInstance:
       propertyPath: m_UseAutoMass
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 679195455206118043, guid: 638ba891d5c8d2f409ff73c8d77a5532,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 679195455206118047, guid: 638ba891d5c8d2f409ff73c8d77a5532,
         type: 3}
       propertyPath: m_LocalPosition.x
