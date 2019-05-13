@@ -398,7 +398,7 @@ public class Character : MonoBehaviour
         if (currentTarget != null)
         {
             effectmanager.BlastOnPosition(currentTarget.position, 0.7f);
-            currentTarget.gameObject.GetComponent<Enemy>().stat.hp -= this.stat.attack;
+            currentTarget.gameObject.GetComponent<Enemy>().TakeDamage(this.stat.attack);
         }
         else
             Debug.Log("attack fail");
