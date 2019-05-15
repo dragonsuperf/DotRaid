@@ -17,6 +17,9 @@ public class GameManager : Singleton<GameManager>
     private Point currentRoomKey;
     private DungeonRoom currentRoom;
 
+    public GameObject[] Enemies;
+    public Stack<GameObject> EnemyStack = new Stack<GameObject>();
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -24,6 +27,7 @@ public class GameManager : Singleton<GameManager>
         effectManager.AddEffectToPool("blast", defaultBlastEffect, 10);
         SkillManager.Instance.OnSet();
         EffectManager.Instance.OnSet();
+        SpawnEnemy(200);
         setStartPoint();
         setCharactersAndEnemy();
 
@@ -99,6 +103,19 @@ public class GameManager : Singleton<GameManager>
     public void MoveCameraToRoomPosition(DungeonRoom room)
     {
         Camera.main.transform.position = new Vector3(room.transform.position.x, room.transform.position.y, -10);
+    }
+
+    private void SpawnEnemy(int count)
+    {
+        for(int i = 0; i < count; i++)
+        {
+            int num = Random.Range(0, Enemies.Length);
+            GameObject enemy = Instantiate(Enemies[num]);
+            enemy.transform.position = this.transform.position;
+            enemy.transform.parent = this.transform;
+            EnemyStack.Push(enemy);
+            enemy.SetActive(false);
+        }
     }
 
 

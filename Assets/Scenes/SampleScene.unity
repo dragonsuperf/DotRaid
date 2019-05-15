@@ -1003,8 +1003,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ca3982a3dccda4ba417091ead4da70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomPrefab: {fileID: 3826210395049913980, guid: 8d61741a708873744b2e8decb9985268,
+  roomPrefab: {fileID: 4927612900588108652, guid: 336f7c09adbcb431985aa3195c7cebbb,
     type: 3}
+  InnerPattern:
+  - {fileID: 339299053836818022, guid: 762d1708e7db243dd9b758febffb91a1, type: 3}
+  - {fileID: 3892725567588191960, guid: e88157a89a19d49d38ab3800bfff009f, type: 3}
+  - {fileID: 2285698596422462963, guid: da67cdfc0f2174d8bb79ff18e7ed35e8, type: 3}
+  - {fileID: 8849636897603070043, guid: 495176a5758ee4451b30c341a8b939b5, type: 3}
+  - {fileID: 8377981444920721964, guid: 708b5ff4ac0e54fcab3a6f8dc7246d57, type: 3}
 --- !u!1 &322852959
 GameObject:
   m_ObjectHideFlags: 0
@@ -7521,6 +7527,7 @@ MonoBehaviour:
   bossRoomPosition: {x: 0, y: 0, z: 0}
   dungeonCreator: {fileID: 251879155}
   currentCameraPosition: {x: 0, y: 0, z: 0}
+  Enemies: []
 --- !u!114 &1707572309
 MonoBehaviour:
   m_ObjectHideFlags: 0

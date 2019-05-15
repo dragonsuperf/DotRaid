@@ -14,6 +14,7 @@ public class DungeonCreator : Singleton<DungeonCreator>
 
     public GameObject[] InnerPattern = new GameObject[5];
 
+
     private Dictionary<Point, DungeonRoom> roomDict = new Dictionary<Point, DungeonRoom>();
     public Dictionary<Point, DungeonRoom> Rooms
     {
@@ -33,6 +34,31 @@ public class DungeonCreator : Singleton<DungeonCreator>
         
 
         CreateRooms(10, origin, null, -1, -1, true);
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        PlaceEnemies(8);
+    }
+
+    private void PlaceEnemies(int enemyCount)
+    {
+        foreach(KeyValuePair<Point, DungeonRoom> room in roomDict)
+        {
+            if(room.Value.gameObject.name == "Origin Room")
+            {
+                continue;
+            }
+            SpawnPoint spPoint = room.Value.GetComponentInChildren<SpawnPoint>();
+            GameObject[] enemies = new GameObject[enemyCount];
+            for(int i = 0; i < enemyCount; i++)
+            {
+                enemies[i] = GameManager.Instance.EnemyStack.Pop();
+                enemies[i].SetActive(true);
+                enemies[i].transform.position = spPoint.spawnPoint[Random.Range(0, spPoint.spawnPoint.Length)].position;
+            }
+        }
     }
 
     //private void CreateToWayDirection(int globalDirection, int depth, DungeonRoom from)
