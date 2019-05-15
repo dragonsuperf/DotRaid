@@ -26,6 +26,8 @@ public class GameManager : Singleton<GameManager>
         EffectManager.Instance.OnSet();
         setStartPoint();
         setCharactersAndEnemy();
+
+        //bossRoomPosition = 
     }
 
     // Update is called once per frame
@@ -44,8 +46,8 @@ public class GameManager : Singleton<GameManager>
         {
             Debug.LogError("Boss is null.");
         }
-        boss.transform.position = bossRoomPosition;
-        boss.SetActive(false);
+        boss.transform.position = startPosition;
+        //boss.SetActive(false);
 
         foreach(Character ch in chracters)
         {
@@ -72,6 +74,9 @@ public class GameManager : Singleton<GameManager>
                 continue;
             }
         }
+
+        // test code.
+        //bossRoomPosition = startPosition;
     }
 
     public void FindNextRoom()

@@ -22,6 +22,7 @@ public class DoorControl : MonoBehaviour
                 ch.gameObject.GetComponent<Character>().charState = CharacterState.idle;
             }
             GameManager.Instance.MoveCameraToRoomPosition(next);
+            DungeonManager.Instance.SetOffClearToggle();
         }
     }
 }

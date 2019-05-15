@@ -1003,7 +1003,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ca3982a3dccda4ba417091ead4da70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomPrefab: {fileID: 0}
+  roomPrefab: {fileID: 3826210395049913980, guid: 8d61741a708873744b2e8decb9985268,
+    type: 3}
 --- !u!1 &322852959
 GameObject:
   m_ObjectHideFlags: 0
@@ -33637,16 +33638,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 679195455887714535, guid: 638ba891d5c8d2f409ff73c8d77a5532,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 679195455887714535, guid: 638ba891d5c8d2f409ff73c8d77a5532,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 679195455206118036, guid: 638ba891d5c8d2f409ff73c8d77a5532,
         type: 3}
       propertyPath: m_Name
@@ -33692,6 +33683,28 @@ PrefabInstance:
       propertyPath: m_BodyType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 679195455206118046, guid: 638ba891d5c8d2f409ff73c8d77a5532,
+        type: 3}
+      propertyPath: mobPrefab.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 679195455206118046, guid: 638ba891d5c8d2f409ff73c8d77a5532,
+        type: 3}
+      propertyPath: characters.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 679195455206118046, guid: 638ba891d5c8d2f409ff73c8d77a5532,
+        type: 3}
+      propertyPath: mobPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 679195455206118036, guid: 638ba891d5c8d2f409ff73c8d77a5532,
+        type: 3}
+    - target: {fileID: 679195455206118046, guid: 638ba891d5c8d2f409ff73c8d77a5532,
+        type: 3}
+      propertyPath: mobPrefab.Array.data[1]
+      value: 
+      objectReference: {fileID: 679195455206118036, guid: 638ba891d5c8d2f409ff73c8d77a5532,
+        type: 3}
     - target: {fileID: 679195455206118047, guid: 638ba891d5c8d2f409ff73c8d77a5532,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -33757,28 +33770,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 679195455206118046, guid: 638ba891d5c8d2f409ff73c8d77a5532,
-        type: 3}
-      propertyPath: mobPrefab.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 679195455206118046, guid: 638ba891d5c8d2f409ff73c8d77a5532,
-        type: 3}
-      propertyPath: characters.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 679195455206118046, guid: 638ba891d5c8d2f409ff73c8d77a5532,
-        type: 3}
-      propertyPath: mobPrefab.Array.data[0]
-      value: 
-      objectReference: {fileID: 679195455206118036, guid: 638ba891d5c8d2f409ff73c8d77a5532,
-        type: 3}
-    - target: {fileID: 679195455206118046, guid: 638ba891d5c8d2f409ff73c8d77a5532,
-        type: 3}
-      propertyPath: mobPrefab.Array.data[1]
-      value: 
-      objectReference: {fileID: 679195455206118036, guid: 638ba891d5c8d2f409ff73c8d77a5532,
-        type: 3}
     - target: {fileID: 679195455206118045, guid: 638ba891d5c8d2f409ff73c8d77a5532,
         type: 3}
       propertyPath: m_Radius
@@ -33788,6 +33779,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 679195455887714535, guid: 638ba891d5c8d2f409ff73c8d77a5532,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 679195455887714535, guid: 638ba891d5c8d2f409ff73c8d77a5532,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 679195455206118042, guid: 638ba891d5c8d2f409ff73c8d77a5532,
         type: 3}

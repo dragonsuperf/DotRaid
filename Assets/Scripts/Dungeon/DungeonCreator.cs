@@ -114,7 +114,7 @@ public class DungeonCreator : Singleton<DungeonCreator>
             {
                 map.transform.parent = this.transform;
                 mapWidth = map.GetComponent<Tilemap>().localBounds.size.x * 1.2f * 2.2f;
-                mapHeight = map.GetComponent<Tilemap>().localBounds.size.y * 1.2f * 2.2f;
+                mapHeight = map.GetComponent<Tilemap>().localBounds.size.y * 1.2f * 2.2f;   
                 map.transform.parent = null;
             }
             map.SetActive(false);
@@ -193,8 +193,9 @@ public class DungeonCreator : Singleton<DungeonCreator>
         {
             room.setDoorProperties(OppositeDoorNumber(enterDir), true, DoorDir.StartWay);
 
-            room.Doors[OppositeDoorNumber(enterDir)].SetPrevRoom(roomDict[fromPt]);
+            room.Doors[OppositeDoorNumber(enterDir)].SetNextRoom(roomDict[fromPt]);
             roomDict[fromPt].Doors[enterDir].SetNextRoom(room);
+
         }
 
         fromPt = new Point(createPt);
