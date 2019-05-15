@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ca3982a3dccda4ba417091ead4da70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomPrefab: {fileID: 3826210395049913980, guid: 8d61741a708873744b2e8decb9985268,
+  roomPrefab: {fileID: 4927612900588108652, guid: 336f7c09adbcb431985aa3195c7cebbb,
     type: 3}
 --- !u!156049354 &441560533
 Grid:
