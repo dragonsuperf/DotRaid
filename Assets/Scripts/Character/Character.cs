@@ -204,9 +204,10 @@ public class Character : MonoBehaviour
         {
             currentTarget = hit.collider.transform;
         }
-        else
+        else if(hit.transform.tag == "Untagged") // No Collider && No Enemy
         {
-            
+            charState = CharacterState.move;
+            curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
         }
 
 
