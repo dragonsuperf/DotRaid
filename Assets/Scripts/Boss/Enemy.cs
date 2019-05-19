@@ -63,6 +63,7 @@ public class Enemy : Actor
 
     void JudgeAndDoAction()
     {
+        if (currentTarget == null) return;
         if (isLookLeft && transform.position.x < (forceTarget != null ? forceTarget.transform.position.x : currentTarget.transform.position.x))
         {
             isLookLeft = false;
@@ -91,7 +92,7 @@ public class Enemy : Actor
     void FindTarget()
     {
         if (forceTarget != null) return; // 우선 타겟이 있을 경우 적을 탐색하지 않음
-
+        if (currentTarget == null) return;
         Transform closest = GetClosest();
 
         if (attackRangeCollider.OverlapPoint(currentTarget.position)) // 현재 타겟이 사거리 내에 있다면 타겟 변경 없음
@@ -143,6 +144,7 @@ public class Enemy : Actor
 
     void AttackEnd()
     {
+        if(currentTarget != null)
         em.PlayEffectOnPosition("blast", currentTarget.transform.position, 1.0f);
     }
 }

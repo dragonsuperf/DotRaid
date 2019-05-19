@@ -43,6 +43,7 @@ public class Boss : Enemy
 
     void ThrowFiveProjectile()
     {
+        if(currentTarget != null)
         for(int i = 0; i < 5; i++)
         {
             Projectile p = Instantiate(proj);

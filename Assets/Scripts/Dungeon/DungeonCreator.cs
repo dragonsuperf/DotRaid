@@ -54,6 +54,7 @@ public class DungeonCreator : Singleton<DungeonCreator>
             GameObject[] enemies = new GameObject[enemyCount];
             for(int i = 0; i < enemyCount; i++)
             {
+                if (GameManager.Instance.EnemyStack.Count == 0) break;
                 enemies[i] = GameManager.Instance.EnemyStack.Pop();
                 enemies[i].SetActive(true);
                 enemies[i].transform.position = spPoint.spawnPoint[Random.Range(0, spPoint.spawnPoint.Length)].position;

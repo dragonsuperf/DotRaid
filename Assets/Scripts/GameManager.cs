@@ -107,6 +107,7 @@ public class GameManager : Singleton<GameManager>
 
     private void SpawnEnemy(int count)
     {
+        if (Enemies.Length == 0) return;
         for(int i = 0; i < count; i++)
         {
             int num = Random.Range(0, Enemies.Length);
