@@ -176,6 +176,7 @@ public class InputListener : MonoBehaviour
             {
                 _state = InputState.SkillWait;
                 _skill = _charactors[_selectCharactorIdx].skill_second;
+                Debug.Log("선택스킬 : " + _skill);
             }
         }
         //스킬 누르고 타겟 누를 때
@@ -184,21 +185,13 @@ public class InputListener : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 _skillState = CheckSkillState(_skill);
-                if (_skillState == eSkillState.NonTarget_Cast)
-                {
-                    //논타겟 스킬
-                    _charactors[_selectCharactorIdx].skillStateData.hasCast = true;
-                    _charactors[_selectCharactorIdx].skillStateData.skillMakeCallback = MakeSkill;
-                }
-                //@임시 애니메이션도 없이 즉발로 나갈 경우
-                else if(_skillState == eSkillState.NonTarget)
-                {
-                    MakeSkill();
-                }
+                _charactors[_selectCharactorIdx].skillStateData.skillState = _skillState;
+                _charactors[_selectCharactorIdx].skillStateData.skillMakeCallback = MakeSkill;
                 _state = InputState.None;
             }
             else if (Input.GetMouseButtonDown(1))
             {
+                _charactors[_selectCharactorIdx].skillStateData.Clear();
                 _state = InputState.None;
             }
         }
@@ -208,7 +201,7 @@ public class InputListener : MonoBehaviour
     {
         eTargetState targetState = eTargetState.Enemy;
         // 형식에따라 마우스로 타겟을 어디를 지정할건지 정하는거임
-        if(_skillState == (eSkillState.NonTarget | eSkillState.NonTarget_Cast) )
+        if(_skillState == (eSkillState.NonTarget_Cast) )
         {
             targetState = eTargetState.Ground;
         }
@@ -233,14 +226,14 @@ public class InputListener : MonoBehaviour
     /// <returns></returns>
     private eSkillState CheckSkillState(eSkill skill)
     {
-        eSkillState state = eSkillState.NonTarget;
+        eSkillState state = eSkillState.Nomal;
         switch(skill)
         {
             case eSkill.Sniping:
                 state = eSkillState.NonTarget_Cast;
                 break;
             default:
-                state = eSkillState.NonTarget;
+                state = eSkillState.Nomal;
                 break;
         }
         return state;
