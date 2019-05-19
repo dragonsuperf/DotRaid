@@ -12,6 +12,9 @@ public class DungeonCreator : Singleton<DungeonCreator>
     private int beforeCoorX, beforeCoorY;
     private int coorX, coorY;
 
+    public GameObject[] InnerPattern = new GameObject[5];
+
+
     private Dictionary<Point, DungeonRoom> roomDict = new Dictionary<Point, DungeonRoom>();
     public Dictionary<Point, DungeonRoom> Rooms
     {
@@ -31,6 +34,32 @@ public class DungeonCreator : Singleton<DungeonCreator>
         
 
         CreateRooms(10, origin, null, -1, -1, true);
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        PlaceEnemies(8);
+    }
+
+    private void PlaceEnemies(int enemyCount)
+    {
+        foreach(KeyValuePair<Point, DungeonRoom> room in roomDict)
+        {
+            if(room.Value.gameObject.name == "Origin Room")
+            {
+                continue;
+            }
+            SpawnPoint spPoint = room.Value.GetComponentInChildren<SpawnPoint>();
+            GameObject[] enemies = new GameObject[enemyCount];
+            for(int i = 0; i < enemyCount; i++)
+            {
+                if (GameManager.Instance.EnemyStack.Count == 0) break;
+                enemies[i] = GameManager.Instance.EnemyStack.Pop();
+                enemies[i].SetActive(true);
+                enemies[i].transform.position = spPoint.spawnPoint[Random.Range(0, spPoint.spawnPoint.Length)].position;
+            }
+        }
     }
 
     //private void CreateToWayDirection(int globalDirection, int depth, DungeonRoom from)
@@ -114,7 +143,7 @@ public class DungeonCreator : Singleton<DungeonCreator>
             {
                 map.transform.parent = this.transform;
                 mapWidth = map.GetComponent<Tilemap>().localBounds.size.x * 1.2f * 2.2f;
-                mapHeight = map.GetComponent<Tilemap>().localBounds.size.y * 1.2f * 2.2f;
+                mapHeight = map.GetComponent<Tilemap>().localBounds.size.y * 1.2f * 2.2f;   
                 map.transform.parent = null;
             }
             map.SetActive(false);
@@ -125,53 +154,53 @@ public class DungeonCreator : Singleton<DungeonCreator>
         coorY = 9;
     }
 
-    private void CreateDungeonRooms(ref int level, ref int depth, Point createPt, Point fromPt, bool first)
-    {
-        if (level > depth) return;
+    //private void CreateDungeonRooms(ref int level, ref int depth, Point createPt, Point fromPt, bool first)
+    //{
+    //    if (level > depth) return;
 
-        // create room.
-        DungeonRoom room = CreateARoom(createPt, "room" + level, roomStack, mapArray);
-        int doorway = Point.PointToPointWay(fromPt, createPt);
-        room.DoorOpen(OppositeDoorNumber(doorway));
-        room.SetDoorDir(OppositeDoorNumber(doorway), DoorDir.StartWay);
-        roomDict.Add(createPt, room);
+    //    // create room.
+    //    DungeonRoom room = CreateARoom(createPt, "room" + level, roomStack, mapArray);
+    //    int doorway = Point.PointToPointWay(fromPt, createPt);
+    //    room.DoorOpen(OppositeDoorNumber(doorway));
+    //    room.SetDoorDir(OppositeDoorNumber(doorway), DoorDir.StartWay);
+    //    roomDict.Add(createPt, room);
 
-        // create point
-        fromPt = new Point(createPt);
-        while (true)
-        {
-            int way = Random.Range(0, 4);
-            createPt = Point.GetRandomWay(fromPt);
-            if(!mapArray[createPt.X, createPt.Y])
-            {
-                break;
-            }
-        }
-        Debug.Log(createPt);
+    //    // create point
+    //    fromPt = new Point(createPt);
+    //    while (true)
+    //    {
+    //        int way = Random.Range(0, 4);
+    //        createPt = Point.GetRandomWay(fromPt);
+    //        if(!mapArray[createPt.X, createPt.Y])
+    //        {
+    //            break;
+    //        }
+    //    }
+    //    Debug.Log(createPt);
 
-        if (first)
-        {
-            first = false;
-            room.gameObject.name = "Origin Room";
-            room.DoorClose(OppositeDoorNumber(doorway));
-            room.SetDoorDir(OppositeDoorNumber(doorway), DoorDir.None);
-        }
+    //    if (first)
+    //    {
+    //        first = false;
+    //        room.gameObject.name = "Origin Room";
+    //        room.DoorClose(OppositeDoorNumber(doorway));
+    //        room.SetDoorDir(OppositeDoorNumber(doorway), DoorDir.None);
+    //    }
 
-        level++;
-        if (level < depth)
-        {
-            int opendoor = Point.PointToPointWay(fromPt, createPt);
-            room.DoorOpen(opendoor);
-            room.SetDoorDir(opendoor, DoorDir.BossWay);
-        }
-        else if(level == depth)
-        {
-            room.gameObject.name = "Boss Room";
-        }
+    //    level++;
+    //    if (level < depth)
+    //    {
+    //        int opendoor = Point.PointToPointWay(fromPt, createPt);
+    //        room.DoorOpen(opendoor);
+    //        room.SetDoorDir(opendoor, DoorDir.BossWay);
+    //    }
+    //    else if(level == depth)
+    //    {
+    //        room.gameObject.name = "Boss Room";
+    //    }
 
 
-        CreateDungeonRooms(ref level, ref depth, createPt, fromPt, first);
-    }
+    //    CreateDungeonRooms(ref level, ref depth, createPt, fromPt, first);
+    //}
 
     public void CreateRooms(int depth, Point createPt, Point fromPt, int enterDir, int outDir, bool isMain)
     {
@@ -193,8 +222,13 @@ public class DungeonCreator : Singleton<DungeonCreator>
         {
             room.setDoorProperties(OppositeDoorNumber(enterDir), true, DoorDir.StartWay);
 
-            room.Doors[OppositeDoorNumber(enterDir)].SetPrevRoom(roomDict[fromPt]);
+            room.Doors[OppositeDoorNumber(enterDir)].SetNextRoom(roomDict[fromPt]);
             roomDict[fromPt].Doors[enterDir].SetNextRoom(room);
+
+            int num = Random.Range(0, 5);
+            GameObject inner = Instantiate(InnerPattern[num]);
+            inner.transform.position = room.transform.position;
+            inner.transform.parent = room.transform;
         }
 
         fromPt = new Point(createPt);

@@ -39,7 +39,6 @@ public class NonTargetSkillBase : Skill
     {
         _dir = targetPos - startPos;
         _dir.Normalize();
-        Debug.Log(targetPos + " " + startPos + " " +_dir);
     }
 
     protected virtual void MoveToPosition(Vector2 dir , float speed)

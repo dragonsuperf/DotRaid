@@ -11,6 +11,7 @@ public class DoorControl : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player" && DungeonManager.Instance.roomCleared)
         {
+            DungeonManager.Instance.roomCleared = false;
             DungeonRoom next = Door.NextRoom;
             Debug.Log(next);
             var characters = GameManager.Instance.heroes;
@@ -18,7 +19,10 @@ public class DoorControl : MonoBehaviour
             {
                 Vector3 position = next.GetDoorObj(DungeonCreator.Instance.OppositeDoorNumber(doorWay)).transform.position;
                 ch.gameObject.transform.position = position;
+                ch.gameObject.GetComponent<Character>().charState = CharacterState.idle;
             }
+            GameManager.Instance.MoveCameraToRoomPosition(next);
+            DungeonManager.Instance.SetOffClearToggle();
         }
     }
 }

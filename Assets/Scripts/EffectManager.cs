@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EffectManager : MonoBehaviour
+public class EffectManager : Singleton<EffectManager>
 {
     public GameObject[] effects;
     public GameObject blastObj;
@@ -12,17 +12,17 @@ public class EffectManager : MonoBehaviour
     Dictionary<string, List<Effect>> effectPool = new Dictionary<string, List<Effect>>();
     
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         blastPool.Add(blastObj.GetComponent<Effect>());
         for (int i = 0; i < 10; i++)
-            blastPool.Add(Instantiate(blastObj).GetComponent<Effect>());
+            blastPool.Add(Instantiate(blastObj, transform).GetComponent<Effect>());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     Effect FindUseableObj(List<Effect> list)
@@ -77,7 +77,7 @@ public class EffectManager : MonoBehaviour
     {
         if (!effectPool.ContainsKey(key))
             effectPool.Add(key, new List<Effect>());
-        effectPool[key].Add(Instantiate(e));
+        effectPool[key].Add(Instantiate(e, transform));
     }
 
     public void AddEffectToPool(string key, Effect e, int howMany) // 이펙트 등록 여러개
@@ -85,6 +85,6 @@ public class EffectManager : MonoBehaviour
         if (!effectPool.ContainsKey(key))
             effectPool.Add(key, new List<Effect>());
 
-        for(int i = 0; i < howMany; i++) effectPool[key].Add(Instantiate(e));
+        for(int i = 0; i < howMany; i++) effectPool[key].Add(Instantiate(e, transform));
     }
 }

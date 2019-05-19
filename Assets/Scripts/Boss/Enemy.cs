@@ -22,16 +22,15 @@ public enum EnemyState
     idle, attack, move, cast, chase, count
 }
 
-public class Enemy : MonoBehaviour
+public class Enemy : Actor
 {
-
-    public EnemyStats stat;
+//    public EnemyStats stat;
     public PatternManager pm;
 
     GameManager gameManager;
     CircleCollider2D attackRangeCollider;
-    protected Transform currentTarget = null;
-    protected EnemyState state = EnemyState.idle;
+//    protected Transform currentTarget = null;
+//    protected EnemyState state = EnemyState.idle;
     protected GameObject forceTarget; // currentTaget보다 우선시되는 타겟
     protected EffectManager em;
     Animator ani;
@@ -46,7 +45,7 @@ public class Enemy : MonoBehaviour
         attackRangeCollider = GetComponent<CircleCollider2D>();
         ani = GetComponent<Animator>();
         pm.SetAnimator(ani);
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager = GameManager.Instance;
         em = gameManager.effectManager;
         characters = gameManager.GetChars();
         currentTarget = GetClosest(); // 첫번째 공격타겟 
@@ -64,6 +63,7 @@ public class Enemy : MonoBehaviour
 
     void JudgeAndDoAction()
     {
+        if (currentTarget == null) return;
         if (isLookLeft && transform.position.x < (forceTarget != null ? forceTarget.transform.position.x : currentTarget.transform.position.x))
         {
             isLookLeft = false;
@@ -78,12 +78,12 @@ public class Enemy : MonoBehaviour
         if (pm.IsRunning()) return; // 패턴이 실행 중이면 기본 동작 스킵
 
 
-        if (state == EnemyState.chase)
+        if (state == ActorState.chase)
         {
             if (!pm.IsRunning())
                 MoveToPosition(currentTarget.position);
         }
-        else if (state == EnemyState.idle)
+        else if (state == ActorState.idle)
         {
 
         }
@@ -92,18 +92,18 @@ public class Enemy : MonoBehaviour
     void FindTarget()
     {
         if (forceTarget != null) return; // 우선 타겟이 있을 경우 적을 탐색하지 않음
-
+        if (currentTarget == null) return;
         Transform closest = GetClosest();
 
         if (attackRangeCollider.OverlapPoint(currentTarget.position)) // 현재 타겟이 사거리 내에 있다면 타겟 변경 없음
         {
-            state = EnemyState.idle;
+            state = ActorState.idle;
             return;
         }
 
         if (!attackRangeCollider.OverlapPoint(closest.position)) // 가장 가까운 타겟이 사거리 내에 없다면 추적 상태로 변경
         {
-            state = EnemyState.chase;
+            state = ActorState.chase;
         }
 
         currentTarget = closest;
@@ -121,7 +121,7 @@ public class Enemy : MonoBehaviour
 
     void CheckAttackable() // 평타 로직
     {
-        if (state != EnemyState.idle)
+        if (state != ActorState.idle)
             pm.SkipCurrentPattern();
     }
     
@@ -144,6 +144,7 @@ public class Enemy : MonoBehaviour
 
     void AttackEnd()
     {
+        if(currentTarget != null)
         em.PlayEffectOnPosition("blast", currentTarget.transform.position, 1.0f);
     }
 }

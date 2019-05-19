@@ -17,14 +17,21 @@ public class GameManager : Singleton<GameManager>
     private Point currentRoomKey;
     private DungeonRoom currentRoom;
 
+    public GameObject[] Enemies;
+    public Stack<GameObject> EnemyStack = new Stack<GameObject>();
+
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         effectManager.AddEffectToPool("blast", defaultBlastEffect, 10);
         SkillManager.Instance.OnSet();
+        EffectManager.Instance.OnSet();
+        SpawnEnemy(200);
         setStartPoint();
         setCharactersAndEnemy();
+
+        //bossRoomPosition = 
     }
 
     // Update is called once per frame
@@ -43,8 +50,8 @@ public class GameManager : Singleton<GameManager>
         {
             Debug.LogError("Boss is null.");
         }
-        boss.transform.position = bossRoomPosition;
-        boss.SetActive(false);
+        boss.transform.position = startPosition;
+        //boss.SetActive(false);
 
         foreach(Character ch in chracters)
         {
@@ -71,6 +78,9 @@ public class GameManager : Singleton<GameManager>
                 continue;
             }
         }
+
+        // test code.
+        //bossRoomPosition = startPosition;
     }
 
     public void FindNextRoom()
@@ -90,17 +100,24 @@ public class GameManager : Singleton<GameManager>
         currentRoomKey = currentRoom.RoomCoord;
     }
     
-    //public void MoveCharacters()
-    //{
-    //    Vector3 move = new Vector3(20f, 20f, 0f);
-    //    foreach (GameObject ch in chracters)
-    //    {
-    //        Debug.Log(ch.name);
-    //        Debug.Log(ch.gameObject.transform.position);
-    //        ch.gameObject.transform.position += move;
-    //        Debug.Log(ch.gameObject.transform.position);
-    //    }
-    //}
+    public void MoveCameraToRoomPosition(DungeonRoom room)
+    {
+        Camera.main.transform.position = new Vector3(room.transform.position.x, room.transform.position.y, -10);
+    }
+
+    private void SpawnEnemy(int count)
+    {
+        if (Enemies.Length == 0) return;
+        for(int i = 0; i < count; i++)
+        {
+            int num = Random.Range(0, Enemies.Length);
+            GameObject enemy = Instantiate(Enemies[num]);
+            enemy.transform.position = this.transform.position;
+            enemy.transform.parent = this.transform;
+            EnemyStack.Push(enemy);
+            enemy.SetActive(false);
+        }
+    }
 
 
 }

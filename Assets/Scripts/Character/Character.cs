@@ -31,13 +31,13 @@ public struct CharacterStats
 public class SkillStateData
 {
     public bool hasAnimation = false; // 애니메이션 특성 동작에 스킬을 발사해야 할 수 있어서 임시로 만들어둠
-    public bool hasCast = false;
+    public eSkillState skillState = eSkillState.None;
     public Action skillMakeCallback = null;
 
     public void Clear()
     {
         hasAnimation = false;
-        hasCast = false;
+        skillState = eSkillState.None;
         skillMakeCallback = null;
     }
 }
@@ -139,9 +139,9 @@ public class Character : MonoBehaviour
         }
 
         //----- 스킬 부르는 예시 캐스팅 바 다 차거나 애니메이션 끝날 때 이렇게하면 됨
-        if (skillStateData.hasCast == true)
+        if (skillStateData.skillState == eSkillState.NonTarget_Cast)
         {
-            Debug.Log("캐스트 트루임");
+            Debug.Log("캐스트 끝났을 때 시점");
             skillStateData.skillMakeCallback.SafeInvoke();
             skillStateData.Clear();
         }
@@ -399,7 +399,7 @@ public class Character : MonoBehaviour
         if (currentTarget != null)
         {
             effectmanager.BlastOnPosition(currentTarget.position, 0.7f);
-            currentTarget.gameObject.GetComponent<Enemy>().stat.hp -= this.stat.attack;
+            currentTarget.gameObject.GetComponent<Enemy>().TakeDamage(this.stat.attack);
         }
         else
             Debug.Log("attack fail");
