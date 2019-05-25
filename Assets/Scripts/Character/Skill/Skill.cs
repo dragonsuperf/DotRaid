@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public enum eSkill
 {
     TestSkill = 0,
-    Sniping
+    Sniping,
+    NomalRange
 }
 
 /// <summary>
