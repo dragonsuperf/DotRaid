@@ -56,6 +56,7 @@ public class SkillData
     public List<Effect> effect = null;
     public Action createEffectCallback = null; //생성 시점
     public Action hitEffectCallback = null; //히팅 시점
+    public Action inherentCallback = null; //스킬마다 고유 효과
 }
 
 public class Skill : MonoBehaviour
