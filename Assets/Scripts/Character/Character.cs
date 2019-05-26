@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 [Serializable]
 public struct CharacterStats
@@ -48,7 +49,7 @@ public enum CharacterState
     idle, attack, move, cast, chase, count
 }
 
-public class Character : MonoBehaviour
+public class Character : Actor
 {
     [Header("Use Skill")]
     public eSkill skill_first;
@@ -67,6 +68,7 @@ public class Character : MonoBehaviour
     public Transform currentTarget;
     
     public GameObject point;
+    private GameObject aStarTarget;
 
     private float startPointX;
     private float startPointY;
@@ -99,11 +101,12 @@ public class Character : MonoBehaviour
         ani = this.GetComponent<Animator>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _inputListener = GameManager.Instance.GetComponent<InputListener>();
+        aStarTarget = new GameObject(); // empty GameObject for Astar pathfinding
         charState = CharacterState.idle;
         boss = gameManager.GetBoss();
         characters = gameManager.GetChars();
         effectmanager = gameManager.effectManager;
-        
+             
         line = transform.GetComponent<LineRenderer>();
         arrowSelector = Resources.Load("Prefabs/arrowSelector") as GameObject;
         arrowEnd = Resources.Load("Prefabs/arrowHead") as GameObject;
@@ -131,6 +134,7 @@ public class Character : MonoBehaviour
         Moving();
         Attacking();
         CharFlipping();
+        OrderLayer();
         
 
         if (this.ani.GetCurrentAnimatorStateInfo(0).IsName("attack"))
@@ -175,6 +179,9 @@ public class Character : MonoBehaviour
                 screenPoint = Camera.main.WorldToScreenPoint(transform.position);
                 Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
                 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
+
+                aStarTarget.transform.position = curPosition;
+                SetDestinationAstar(aStarTarget.transform, stat.moveSpeed);
             }
 
             if (Input.GetKeyUp(KeyCode.S))
@@ -375,6 +382,16 @@ public class Character : MonoBehaviour
             {
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
+        }
+    }
+
+    //캐릭터 겹칠때 레이어순서
+    public void OrderLayer()
+    {
+        characters = characters.OrderBy(obj => obj.transform.position.y).ToList();
+        for(int i = 0; i<characters.Count; i++)
+        {
+            characters[i].GetComponent<SpriteRenderer>().sortingOrder = 10 - i;
         }
     }
 
