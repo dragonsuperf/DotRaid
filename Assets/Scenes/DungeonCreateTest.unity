@@ -396,7 +396,92 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomCleared: 0
   clearToggle: {fileID: 1494261587}
-  AdjancentRooms: []
+--- !u!1 &782749628
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 782749630}
+  - component: {fileID: 782749629}
+  m_Layer: 0
+  m_Name: A*
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &782749629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782749628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78396926cbbfc4ac3b48fc5fc34a87d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  data:
+    dataString: UEsDBBQAAAgIAABIIeyeh6tWZgIAAAoFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMty4jAQ/BVK5yVlm/fedg0he8ijQrZy8UXYY6xCllx6BEiKf9+RLLDDckHumR719Iz9RZjQDeRGqrVixaMsgPwcEHcmPwZd8AGOdCfFhn3CJeedFaZySdTnvFLDJOKxo2lZg1Es/yV23CVHCFrBSqnqVbGDVGqjES4p14AhJY1jC4S+BuSIf8OFo5zwlMzc6RNPi2hwxmMOwoDqUqO7SeR+k0AYIhAY8d04iaP5JElWw3js2VbknNYNFK6Vrsh0HtjjmU8T2GTIcA3lknOmg0JiTo13IKWNttgfJhSMYsdelsuvgO0q49T3yc9lqcEEOxQ9LZlC49qq5Lds3ayp3re6Pii37p5kMvWa2qKP/8WHsQ+XStYPl3vjyN1hKpbvX+kpp9r07O7Dy+/CrThQvqdbDu8ViCe5VtKKAoNGWUe1GpJl93htLa0g33d4K/UGtE1vaMHuy2xdD2ff/THlrN76uY5bYMOl99uvBCiczB8U7BdGhxKIOhV/NbzRXX+zQuCeKW0wFLoUTt5WWuVSycp75rqxJpVKgIeD6AYE5eb0gmXM7QhvYr1rbyL31L1D4fIQu7waNxQPd/lRdBN6kYfrsHQlD4+gq2drOBPQiXaBJ/QplUK0G9b35ELbWFXSvEfbWVZ8Xy2yoPP5bFpAnIzmEM0WQ7qA7WibzCa0LKfJbET87jGBfVL+0goN9uDURFdc4J5dPi2DtaKN3/ZC0cOafdayZzkTpdzkCkA8txWuwkHhJfhWFquCoUEbMIYJP2/ylREu8z0U2bVQ5jtdHY2iWVclIw37kMYhGUn9tyQjZ3L+B1BLAwQUAAAICAAASCHsHidQIGwAAAB3AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9Kz0FFQSi9KLMgoBgoYgjilmSkgdrSSZaKFhblZSqqhkbFFqoG5pW6iZWqScZKRuWliWpqZkbmxUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAABIIeyeh6tWZgIAAAoFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAABIIeweJ1AgbAAAAHcAAAAJACQAAAAAAAAAAAAAALMCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAagMAAAAA
+    upgradeData: 
+    file_cachedStartup: {fileID: 0}
+    data_cachedStartup: 
+    cacheStartup: 0
+  showNavGraphs: 1
+  showUnwalkableNodes: 1
+  debugMode: 0
+  debugFloor: 0
+  debugRoof: 1
+  manualDebugFloorRoof: 0
+  showSearchTree: 0
+  unwalkableNodeDebugSize: 0.3
+  logPathResults: 1
+  maxNearestNodeDistance: 100
+  scanOnStartup: 1
+  fullGetNearestSearch: 0
+  prioritizeGraphs: 0
+  prioritizeGraphsLimit: 1
+  colorSettings:
+    _SolidColor: {r: 0.11764706, g: 0.4, b: 0.7882353, a: 0.9}
+    _UnwalkableNode: {r: 1, g: 0, b: 0, a: 0.5}
+    _BoundsHandles: {r: 0.29, g: 0.454, b: 0.741, a: 0.9}
+    _ConnectionLowLerp: {r: 0, g: 1, b: 0, a: 0.5}
+    _ConnectionHighLerp: {r: 1, g: 0, b: 0, a: 0.5}
+    _MeshEdgeColor: {r: 0, g: 0, b: 0, a: 0.5}
+    _AreaColors:
+    - {r: 0, g: 0, b: 0, a: 0}
+  tagNames: []
+  heuristic: 2
+  heuristicScale: 1
+  threadCount: 1
+  maxFrameTime: 1
+  batchGraphUpdates: 0
+  graphUpdateBatchingInterval: 0.2
+  euclideanEmbedding:
+    mode: 0
+    seed: 0
+    pivotPointRoot: {fileID: 0}
+    spreadOutCount: 1
+  showGraphs: 1
+--- !u!4 &782749630
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782749628}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &926210165 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3106726133298768520, guid: 336f7c09adbcb431985aa3195c7cebbb,
@@ -914,6 +999,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6454143215382434802, guid: 336f7c09adbcb431985aa3195c7cebbb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 336f7c09adbcb431985aa3195c7cebbb, type: 3}
