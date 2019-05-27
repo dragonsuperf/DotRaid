@@ -29,8 +29,7 @@ public class Enemy : Actor
 
     GameManager gameManager;
     CircleCollider2D attackRangeCollider;
-//    protected Transform currentTarget = null;
-//    protected EnemyState state = EnemyState.idle;
+
     protected GameObject forceTarget; // currentTaget보다 우선시되는 타겟
     protected EffectManager em;
     Animator ani;

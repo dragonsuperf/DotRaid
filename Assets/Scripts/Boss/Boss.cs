@@ -10,6 +10,7 @@ public class Boss : Enemy
     public GameObject[] mobPrefab;
 
     [SerializeField] private Image _hpBar;
+    Transform roomPosition;
 
     public Effect afterImage;
     public Projectile proj;
@@ -28,6 +29,7 @@ public class Boss : Enemy
         pm.AddPattern("shootcast", 2.0f, 8.0f, 0.5f);
 
         em.AddEffectToPool("bossAfterimage", afterImage);
+        roomPosition = DungeonManager.Instance.GetCurrentDungeonRoom().transform;
     }
 
     // Update is called once per frame
@@ -36,7 +38,7 @@ public class Boss : Enemy
         if (forceTarget != null)
             MoveToPosition(chargePoint);
 
-        //_hpBar.fillAmount = stat.hp / fullHP;
+        _hpBar.fillAmount = stat.hp / fullHP;
 
         base.Update();
     }
@@ -47,13 +49,13 @@ public class Boss : Enemy
         for(int i = 0; i < 5; i++)
         {
             Projectile p = Instantiate(proj);
-            p.Set(10.0f, 300.0f, transform.position, currentTarget.position, (-30.0f + (15.0f * i)));
+            p.Set(10.0f, 300.0f, transform.position, currentTarget.position, (-30.0f + (15.0f * i)), false);
         }
     }
 
     void SummonSomething() // cast 패턴시 시전되는 소환 스킬
     {
-        Instantiate(mobPrefab[UnityEngine.Random.Range(0, 2)], spawnPoint[UnityEngine.Random.Range(0, 2)], Quaternion.identity);
+        Instantiate(mobPrefab[UnityEngine.Random.Range(0, 2)], new Vector2(roomPosition.transform.position.x, roomPosition.transform.position.y) + spawnPoint[UnityEngine.Random.Range(0, 2)], Quaternion.identity);
     }
 
     void TargetCharge() // 돌진 시작

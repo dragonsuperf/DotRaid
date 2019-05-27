@@ -7,6 +7,9 @@ TagManager:
   - Enemy
   - Obstacle
   - Skill
+  - GameManager
+  - Enemy-Proj
+  - Player-Proj
   layers:
   - Default
   - TransparentFX

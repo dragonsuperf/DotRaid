@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7932063644934366317}
   m_Layer: 2
   m_Name: SkeletonMage
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ac04c757ca843458de6bf93654deec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   stat:
     hp: 10
     attackRangeRadius: 1
@@ -160,8 +161,10 @@ MonoBehaviour:
     moveSpeed: 1
     attackSpeed: 1
     CastSpeed: 1
-    phisicDamage: 1
+    physicDamage: 0
     magicDamage: 1
+    physicDef: 0
+    magicDef: 0
   pm: {fileID: 4315879744928836764}
 --- !u!58 &7932063644934366317
 CircleCollider2D:

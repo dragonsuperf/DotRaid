@@ -26,7 +26,7 @@ public class SkeletonMage : Enemy
         for (int i = 0; i < 3; i++)
         {
             Projectile p = Instantiate(proj, transform);
-            p.Set(10.0f, 300.0f, transform.position, currentTarget.position, (-15.0f + (15.0f * i)));
+            p.Set(10.0f, 300.0f, transform.position, currentTarget.position, (-15.0f + (15.0f * i)), false);
         }
     }
 }

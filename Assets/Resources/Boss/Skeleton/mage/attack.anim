@@ -83,3 +83,11 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.25
+    functionName: ThrowThreeProjectile
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: d6ac04c757ca843458de6bf93654deec,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
