@@ -34,6 +34,7 @@ public class Actor : MonoBehaviour
     protected Transform currentTarget;
     [SerializeField]
     protected ActorState state;
+    [SerializeField]
     protected ActorStats stat;
     protected Vector3 curMovePosition;
 

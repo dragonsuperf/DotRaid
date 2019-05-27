@@ -92,8 +92,9 @@ public class Enemy : Actor
     void FindTarget()
     {
         if (forceTarget != null) return; // 우선 타겟이 있을 경우 적을 탐색하지 않음
-        if (currentTarget == null) return;
         Transform closest = GetClosest();
+        currentTarget = closest;
+        if (currentTarget == null) return;
 
         if (attackRangeCollider.OverlapPoint(currentTarget.position)) // 현재 타겟이 사거리 내에 있다면 타겟 변경 없음
         {
@@ -105,8 +106,6 @@ public class Enemy : Actor
         {
             state = ActorState.chase;
         }
-
-        currentTarget = closest;
     }
 
     protected GameObject GetRandomTarget()
