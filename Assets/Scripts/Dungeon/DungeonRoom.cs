@@ -73,6 +73,7 @@ public class DungeonRoom : MonoBehaviour
         Doors[number].DoorObject = GetDoorObj(number);
         Doors[number].DoorObject.GetComponent<DoorControl>().Door = Doors[number];
         Doors[number].DoorObject.GetComponent<DoorControl>().doorWay = number;
+        // Debug.Log(Doors[number].DoorObject.GetComponent<DoorControl>().Door.ToString());
     }
 
     public void SetDoorDir(int dir, DoorDir way)
@@ -118,6 +119,10 @@ public class DungeonRoom : MonoBehaviour
 
         RoomCoord.X = x;
         RoomCoord.Y = y;
+    }
+
+    public override string ToString(){
+        return "Current Room " + RoomCoord.ToString();
     }
 }
 

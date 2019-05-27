@@ -396,6 +396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomCleared: 0
   clearToggle: {fileID: 1494261587}
+  AdjancentRooms: []
 --- !u!4 &926210165 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3106726133298768520, guid: 336f7c09adbcb431985aa3195c7cebbb,
@@ -969,7 +970,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 13
+  orthographic size: 24
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

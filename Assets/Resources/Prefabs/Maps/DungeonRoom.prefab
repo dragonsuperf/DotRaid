@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 864931409634206041}
   m_Layer: 0
   m_Name: wall
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113334,11 +113334,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3106726133298768520}
     m_Modifications:
-    - target: {fileID: 6924283054066765542, guid: f9fde217fc63b4c5a921372da7fa1c46,
-        type: 3}
-      propertyPath: doorWay
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 7920521473117535356, guid: f9fde217fc63b4c5a921372da7fa1c46,
         type: 3}
       propertyPath: m_Name
@@ -113404,6 +113399,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6924283054066765542, guid: f9fde217fc63b4c5a921372da7fa1c46,
+        type: 3}
+      propertyPath: doorWay
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9fde217fc63b4c5a921372da7fa1c46, type: 3}
 --- !u!1 &8586333166984391874 stripped
@@ -113425,11 +113425,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3106726133298768520}
     m_Modifications:
-    - target: {fileID: 6924283054066765542, guid: f9fde217fc63b4c5a921372da7fa1c46,
-        type: 3}
-      propertyPath: doorWay
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7920521473117535356, guid: f9fde217fc63b4c5a921372da7fa1c46,
         type: 3}
       propertyPath: m_Name
@@ -113494,6 +113489,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924283054066765542, guid: f9fde217fc63b4c5a921372da7fa1c46,
+        type: 3}
+      propertyPath: doorWay
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9fde217fc63b4c5a921372da7fa1c46, type: 3}
@@ -113602,11 +113602,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3106726133298768520}
     m_Modifications:
-    - target: {fileID: 6924283054066765542, guid: f9fde217fc63b4c5a921372da7fa1c46,
-        type: 3}
-      propertyPath: doorWay
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7920521473117535356, guid: f9fde217fc63b4c5a921372da7fa1c46,
         type: 3}
       propertyPath: m_Name
@@ -113671,6 +113666,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924283054066765542, guid: f9fde217fc63b4c5a921372da7fa1c46,
+        type: 3}
+      propertyPath: doorWay
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9fde217fc63b4c5a921372da7fa1c46, type: 3}
