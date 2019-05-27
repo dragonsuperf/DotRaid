@@ -36,6 +36,10 @@ public class DungeonManager : Singleton<DungeonManager>
         }
     }
 
+    public DungeonRoom GetCurrentDungeonRoom(){
+        return DungeonCreator.Instance.Rooms[CurrPoint];
+    }
+
     public List<DungeonRoom> GetAdjacentRooms(Point currPoint){
         DungeonRoom currRoom = DungeonCreator.Instance.Rooms[currPoint];
         List<DungeonRoom> list = new List<DungeonRoom>();
