@@ -29,11 +29,21 @@ public class DungeonCreator : Singleton<DungeonCreator>
         //int depth = 10;
         //int level = 0;
         Point origin = new Point(10, 10);
+        DungeonManager.Instance.CurrPoint = origin;
         //CreateDungeonRooms(ref level, ref depth, origin, Point.GetRandomWay(origin), true);
 
         
 
         CreateRooms(10, origin, null, -1, -1, true);
+        HideOtherRooms();
+    }
+
+    private void HideOtherRooms(){
+        foreach(KeyValuePair<Point, DungeonRoom> room in Rooms){
+            if(room.Value.gameObject.name != "Origin Room"){
+                room.Value.gameObject.SetActive(false);
+            }
+        }
     }
 
     protected override void Start()
@@ -136,18 +146,22 @@ public class DungeonCreator : Singleton<DungeonCreator>
 
     private void InitRooms()
     {
+        GameObject roomStackObj = new GameObject("Room Stack");
+        roomStackObj.transform.parent = this.transform;
         for(int i = 0; i < 50; i++)
         {
             GameObject map = Instantiate(roomPrefab.gameObject);
+            
             if(i == 0)
             {
                 map.transform.parent = this.transform;
                 mapWidth = map.GetComponent<Tilemap>().localBounds.size.x * 1.2f * 2.2f;
                 mapHeight = map.GetComponent<Tilemap>().localBounds.size.y * 1.2f * 2.2f;   
-                map.transform.parent = null;
+                
             }
             map.SetActive(false);
             roomStack.Push(map.GetComponent<DungeonRoom>());
+            map.transform.parent = roomStackObj.transform;
         }
         mapArray = new bool[20, 20];
         coorX = 9;

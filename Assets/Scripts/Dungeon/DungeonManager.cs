@@ -8,6 +8,8 @@ public class DungeonManager : Singleton<DungeonManager>
 {
     public bool roomCleared = false;
     public Toggle clearToggle;
+    public Point CurrPoint;
+    public List<DungeonRoom> AdjancentRooms = new List<DungeonRoom>();
 
     protected override void Start()
     {
@@ -33,6 +35,23 @@ public class DungeonManager : Singleton<DungeonManager>
             roomCleared = false;
         }
     }
+
+    public DungeonRoom GetCurrentDungeonRoom(){
+        return DungeonCreator.Instance.Rooms[CurrPoint];
+    }
+
+    public List<DungeonRoom> GetAdjacentRooms(Point currPoint){
+        DungeonRoom currRoom = DungeonCreator.Instance.Rooms[currPoint];
+        List<DungeonRoom> list = new List<DungeonRoom>();
+        foreach(Door door in currRoom.Doors){
+            if(door.IsOpen){
+                list.Add(door.NextRoom);
+            }
+        }
+        return list;
+    }
+
+
 
 
 
