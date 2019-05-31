@@ -76,7 +76,6 @@ public class InputListener : MonoBehaviour
                     for (int i = 0; i < selectedUnits.Count; i++) //선택된것들 선택
                     {
                         selectedUnits[i].CharSelect = true;
-                        selectedUnits.Add(_charactors[i]);
                     }
                     selectTemp.Clear();
                 }
@@ -248,13 +247,26 @@ public class InputListener : MonoBehaviour
         var camera = Camera.main;
         var viewportBounds =
             _uiHelper.GetViewportBounds(camera, mousePosition, Input.mousePosition);
+        Vector2 worldPoint = camera.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
 
-        for (int i = 0; i < _charactors.Count; i++)
+        if(mousePosition == Input.mousePosition) // if Click
         {
-            if (viewportBounds.Contains(camera.WorldToViewportPoint(_charactors[i].transform.position)))
+            if (hit.collider)
             {
-                selectTemp.Add(_charactors[i]);
+                selectTemp.Add(hit.transform.GetComponent<Character>());
             }
         }
+        else // if Drag
+        {
+            for (int i = 0; i < _charactors.Count; i++)
+            {
+                if (viewportBounds.Contains(camera.WorldToViewportPoint(_charactors[i].transform.position)))
+                {
+                    selectTemp.Add(_charactors[i]);
+                }
+            }
+        }
+        
     }
 }
