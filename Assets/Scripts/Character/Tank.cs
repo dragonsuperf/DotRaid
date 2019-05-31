@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tank : Character
 {
     GameObject defencer;
-    CharacterStats defencerStat;
+    //CharacterStats defencerStat;
 
 
     // Start is called before the first frame update

@@ -7,16 +7,18 @@ using UnityEngine;
 [Serializable]
 public struct ActorStats
 {
+    public bool isSelect;
     public float hp;
     public float attackRangeRadius;
     public float awareRangeRadius;
     public float moveSpeed;
     public float attackSpeed;
-    public float CastSpeed;
+    public float castSpeed;
     public float physicDamage;
     public float magicDamage;
     public float physicDef;
     public float magicDef;
+    
 }
 
 public enum DamageType
@@ -38,7 +40,18 @@ public class Actor : MonoBehaviour
     protected ActorStats stat;
     protected Vector3 curMovePosition;
 
-    //public ActorStats Stat { get => stat; set => stat = value; }
+
+    public bool CharSelect { get => stat.isSelect; set => stat.isSelect = value; }
+    public float HP { get => stat.hp; set => stat.hp = value; }
+    public float CharAttackRangeRadius { get => stat.attackRangeRadius; set => stat.attackRangeRadius = value; }
+    public float CharAwareRangeRadius { get => stat.awareRangeRadius; set => stat.awareRangeRadius = value; }
+    public float CharMoveSpeed { get => stat.moveSpeed; set => stat.moveSpeed = value; }
+    public float CharCastSpeed { get => stat.castSpeed; set => stat.castSpeed = value; }
+    public float CharPhysicDamage { get => stat.physicDamage; set => stat.physicDamage = value; }
+    public float CharMagicDamage { get => stat.magicDamage; set => stat.magicDamage = value; }
+    public float CharPhysicDef { get => stat.physicDef; set => stat.physicDef = value; }
+    public float CharMagicDef { get => stat.magicDef; set => stat.magicDef = value; }
+    
 
     public void TakeDamage(float damage)
     {

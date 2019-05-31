@@ -12,7 +12,7 @@ public class AnglePowerUpSkill : BuffSkillBase
     private int _originAttack;
 
     private int _attackCount = 0;
-    CharacterStats _tmpStat ;
+    //CharacterStats _tmpStat ;
     public override void OnSet(object data)
     {
         base.OnSet(data);
@@ -23,8 +23,8 @@ public class AnglePowerUpSkill : BuffSkillBase
         }
         Data.inherentCallback = AnglePowerEffect; //타이밍이 필요한 고유 능력적용
         
-        _originAttack = GameManager.Instance.chracters[_data.player_info.idx].stat.attack;
-        GameManager.Instance.chracters[_data.player_info.idx].stat.attack = (int)((float)_originAttack * _upDamage);
+        //_originAttack = GameManager.Instance.chracters[_data.player_info.idx].stat.attack;
+        //GameManager.Instance.chracters[_data.player_info.idx].stat.attack = (int)((float)_originAttack * _upDamage);
     }
 
     private void AnglePowerEffect()
@@ -34,17 +34,17 @@ public class AnglePowerUpSkill : BuffSkillBase
         if(_attackCount == 0)
         {
             //3번 치면 자힐
-            GameManager.Instance.chracters[_data.player_info.idx].stat.hp += 1; // TODO 캐릭터쪽 에서 heal 함수로 바꿔야함
+            //GameManager.Instance.chracters[_data.player_info.idx].stat.hp += 1; // TODO 캐릭터쪽 에서 heal 함수로 바꿔야함
         }
         else
         {
-            GameManager.Instance.chracters[_data.player_info.idx].stat.hp -= 1; // TODO 캐릭터쪽 에서 "데미지입었다" 함수로 바꿔야함
+            //GameManager.Instance.chracters[_data.player_info.idx].stat.hp -= 1; // TODO 캐릭터쪽 에서 "데미지입었다" 함수로 바꿔야함
         }
     }
 
     public override void OnRemove()
     {
         base.OnRemove();
-        GameManager.Instance.chracters[_data.player_info.idx].stat.attack = _originAttack;
+        //GameManager.Instance.chracters[_data.player_info.idx].stat.attack = _originAttack;
     }
 }

@@ -69,13 +69,14 @@ public class InputListener : MonoBehaviour
                 {
                     for (int i = 0; i < selectedUnits.Count; i++) //모두선택 해제 (발밑 원모양 표시위하여, isSelect false)
                     {
-                        selectedUnits[i].stat.isSelect = false;
+                        selectedUnits[i].CharSelect = false; 
                     }
                     selectedUnits.Clear();
                     selectedUnits = new List<Character>(selectTemp);
                     for (int i = 0; i < selectedUnits.Count; i++) //선택된것들 선택
                     {
-                        selectedUnits[i].stat.isSelect = true;
+                        selectedUnits[i].CharSelect = true;
+                        selectedUnits.Add(_charactors[i]);
                     }
                     selectTemp.Clear();
                 }
@@ -102,59 +103,59 @@ public class InputListener : MonoBehaviour
             {
                 for (int i = 0; i < selectedUnits.Count; i++) //모두선택 해제 (발밑 원모양 표시위하여, isSelect false)
                 {
-                    selectedUnits[i].stat.isSelect = false;
+                    selectedUnits[i].CharSelect = false;
                 }
                 selectedUnits.Clear();
                 _selectCharactorIdx = 0;
                 selectedUnits.Add(_charactors[0]);
-                selectedUnits[0].stat.isSelect = true;
+                selectedUnits[0].CharSelect = true;
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 for (int i = 0; i < selectedUnits.Count; i++) //모두선택 해제 (발밑 원모양 표시위하여, isSelect false)
                 {
-                    selectedUnits[i].stat.isSelect = false;
+                    selectedUnits[i].CharSelect = false;
                 }
                 selectedUnits.Clear();
                 _selectCharactorIdx = 1;
                 selectedUnits.Add(_charactors[1]);
-                selectedUnits[0].stat.isSelect = true;
+                selectedUnits[0].CharSelect = true;
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 for (int i = 0; i < selectedUnits.Count; i++) //모두선택 해제 (발밑 원모양 표시위하여, isSelect false)
                 {
-                    selectedUnits[i].stat.isSelect = false;
+                    selectedUnits[i].CharSelect = false;
                 }
                 selectedUnits.Clear();
                 _selectCharactorIdx = 2;
                 selectedUnits.Add(_charactors[2]);
-                selectedUnits[0].stat.isSelect = true;
+                selectedUnits[0].CharSelect = true;
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha4))
             {
                 for (int i = 0; i < selectedUnits.Count; i++) //모두선택 해제 (발밑 원모양 표시위하여, isSelect false)
                 {
-                    selectedUnits[i].stat.isSelect = false;
+                    selectedUnits[i].CharSelect = false;
                 }
                 selectedUnits.Clear();
                 _selectCharactorIdx = 3;
                 selectedUnits.Add(_charactors[3]);
-                selectedUnits[0].stat.isSelect = true;
+                selectedUnits[0].CharSelect = true;
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha5))
             {
                 for (int i = 0; i < selectedUnits.Count; i++) //모두선택 해제 (발밑 원모양 표시위하여, isSelect false)
                 {
-                    selectedUnits[i].stat.isSelect = false;
+                    selectedUnits[i].CharSelect = false;
                 }
                 selectedUnits.Clear();
                 _selectCharactorIdx = 4;
                 selectedUnits.Add(_charactors[4]);
-                selectedUnits[0].stat.isSelect = true;
+                selectedUnits[0].CharSelect = true;
             }
 
             if (preIdx != _selectCharactorIdx) Debug.Log(_selectCharactorIdx + " 바뀜 ");

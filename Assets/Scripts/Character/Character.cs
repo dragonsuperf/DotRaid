@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
 
+/*
 [Serializable]
 public struct CharacterStats
 {
@@ -25,6 +26,7 @@ public struct CharacterStats
     public int moveSpeed;
     public int CastSpeed;
 }
+*/
 
 /// <summary>
 /// 스킬을 만드는 타이밍
@@ -65,8 +67,6 @@ public class Character : Actor
     public GameObject boss;
     public List<Character> characters;
    
-    public Transform currentTarget;
-    
     public GameObject point;
     private GameObject aStarTarget;
 
@@ -78,12 +78,14 @@ public class Character : Actor
     private GameObject arrowSelector;
     private GameObject arrowStart;
     private GameObject arrowEnd;
+    private GameObject selectiveObject;
     private Vector3 screenPoint;
     private Vector3 offset;
     private Quaternion arrowAngle;
+    
 
     public Vector3 curPosition;
-    public CharacterStats stat;
+    //public CharacterStats stat;
     public CharacterState charState;
     private Vector2 startPosition;
 
@@ -106,7 +108,8 @@ public class Character : Actor
         boss = gameManager.GetBoss();
         characters = gameManager.GetChars();
         effectmanager = gameManager.effectManager;
-             
+
+        selectiveObject = transform.Find("isSelect").gameObject;
         line = transform.GetComponent<LineRenderer>();
         arrowSelector = Resources.Load("Prefabs/arrowSelector") as GameObject;
         arrowEnd = Resources.Load("Prefabs/arrowHead") as GameObject;
@@ -128,8 +131,11 @@ public class Character : Actor
         {
             distance = Vector2.Distance(currentTarget.transform.position, transform.position);
         }
-
-        transform.Find("isSelect").gameObject.SetActive(stat.isSelect); // Select된 캐릭터 밑 원
+        if (selectiveObject)
+        {
+            selectiveObject.SetActive(stat.isSelect); // Select된 캐릭터 밑 원
+        }
+        
         MoveAndAttack();
         Moving();
         Attacking();
@@ -416,7 +422,7 @@ public class Character : Actor
         if (currentTarget != null)
         {
             effectmanager.BlastOnPosition(currentTarget.position, 0.7f);
-            currentTarget.gameObject.GetComponent<Enemy>().TakeDamage(this.stat.attack);
+            currentTarget.gameObject.GetComponent<Enemy>().TakeDamage(this.CharPhysicDamage);
         }
         else
             Debug.Log("attack fail");
@@ -449,10 +455,10 @@ public class Character : Actor
         {
             if (data[i]["name"].Equals(this.name))
             {
-                this.stat.level = (int)data[i]["level"];
+                //this.stat.level = (int)data[i]["level"];
                 this.stat.hp = (int)data[i]["max_hp"];
-                this.stat.armor = (int)data[i]["dp"];
-                this.stat.attack = (int)data[i]["atk"];
+                //this.stat.armor = (int)data[i]["dp"];
+                //this.stat.attack = (int)data[i]["atk"];
                 this.stat.attackSpeed = (float)data[i]["atkSpeed"];
                 this.stat.attackRangeRadius = (int)data[i]["attackRange"];
                 this.stat.awareRangeRadius = (int)data[i]["awareRange"];
