@@ -65,7 +65,7 @@ public class InputListener : MonoBehaviour
                 
                 IsWithinSelectionBounds();
 
-                if(selectTemp.Count != 0) // 무언가 select 했을때
+                if(selectTemp.Count > 1) // 무언가 select 했을때
                 {
                     for (int i = 0; i < selectedUnits.Count; i++) //모두선택 해제 (발밑 원모양 표시위하여, isSelect false)
                     {
@@ -77,8 +77,28 @@ public class InputListener : MonoBehaviour
                     {
                         selectedUnits[i].CharSelect = true;
                     }
+                    selectTemp.Clear();                 
+                }
+
+                else if(selectTemp.Count != 0) // only one selected
+                {
+                    for (int i = 0; i < selectedUnits.Count; i++) //모두선택 해제 (발밑 원모양 표시위하여, isSelect false)
+                    {
+                        selectedUnits[i].CharSelect = false;
+                    }
+                    selectedUnits.Clear();
+                    selectedUnits = new List<Character>(selectTemp);
+                    for (int i = 0; i < _charactors.Count; i++)
+                    {
+                        if (selectedUnits[0] == _charactors[i])
+                        {
+                            _selectCharactorIdx = i;
+                        }
+                    }
+                    selectedUnits[0].CharSelect = true;
                     selectTemp.Clear();
                 }
+                
 
                 else // select 안했을때 selectedUnits 그대로 가져감
                 {
@@ -254,7 +274,17 @@ public class InputListener : MonoBehaviour
         {
             if (hit.collider)
             {
-                selectTemp.Add(hit.transform.GetComponent<Character>());
+                //selectTemp.Add(hit.transform.GetComponent<Character>());
+                
+                for (int i = 0; i < _charactors.Count; i++)
+                {
+                    if (hit.transform.GetComponent<Character>() == _charactors[i])
+                    {
+                        _selectCharactorIdx = i;
+                        selectTemp.Add(_charactors[i]);
+                    }
+                }
+                
             }
         }
         else // if Drag
