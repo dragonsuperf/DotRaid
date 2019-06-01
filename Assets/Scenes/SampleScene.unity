@@ -2244,6 +2244,7 @@ SpriteRenderer:
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &728732412
+<<<<<<< HEAD
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 679195455206118047, guid: 638ba891d5c8d2f409ff73c8d77a5532,
@@ -7163,6 +7164,8 @@ ParticleSystem:
         m_RotationOrder: 4
     vectorLabel1_3: W
 --- !u!4 &1212497086
+=======
+>>>>>>> parent of 337f07d... Update SampleScene.unity
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
