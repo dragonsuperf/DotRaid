@@ -5134,7 +5134,6 @@ GameObject:
   - component: {fileID: 8719451579858976190}
   - component: {fileID: 7214174085200176506}
   - component: {fileID: 4927612900588108652}
-  - component: {fileID: 9098759572754353868}
   m_Layer: 0
   m_Name: DungeonRoom
   m_TagString: Untagged
@@ -34677,61 +34676,6 @@ MonoBehaviour:
   RightDoorObj: {fileID: 8542786508497761997}
   BottomDoorObj: {fileID: 1211556539912668626}
   LeftDoorObj: {fileID: 8586333166984391874}
---- !u!114 &9098759572754353868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7573544564437165731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78396926cbbfc4ac3b48fc5fc34a87d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  data:
-    dataString: UEsDBBQAAAgIAABIIex25i3cTwIAAPEEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMty2jAU/RVG69KxmaRAd61DSBd5TGknG2+EdI01yJJHjwDJ8O+9kmXs0A3I55x7de7D/iBC2RaY02ZtBH/UHMj3CQln8mUykA9wpDutNuIdes2r4K4OIho1v6kTGvE8hFndgDOC/VA7GcQZgl6JSptmxXdQaOsswhWVFpAy2oVohdDHhBzxb7oMISc8zebh9I6nZTY545GBcmAGaZ6E0zzpOplXTNKmBR48D+pviyS/mUeZwmqSIsQzLaWwyQpxpzaWWtDWeiwEBVxQLC3eH/Q1iF3tgs1x8HNVWXCpbkNPd8Jgh7qs5Kfu2tZQu+98vVHp4WK8S/n4HzvNI10Z3Tz0t+ZZuMHVgu1/0xOj1o26OobvPtv26kDlnm4lvNagnvTaaK84ks74EOotzO6Gx0thRQ1sP+Cd1SvQt0O3+yH2Iww1nGPtx0KKZhuorzcdsJE6djtOHgzO5RcajnthUwpEg4u/Fv7Q3XiBEnEvjHVIpSpVsLfV3gQpWcWehWq8K7RREOFkugVFpTu9YBp3PcArbnTtFXNPw6uSLk9c/wZchUR40GfZFfWiD5dh2VofHsHWz95JoWAwHYgn7FOhler2a9yTPmzjTUXZKGznBf+8WoTNc3Y7m1XZYrnEH5guMtjezrYZX9zSfDGfk7h7QmGdVL50RlN7cGpqSK5wz/ovyGRtaBt3nRt6WIv3Ro9aLlSlN8wAqOcuw8U4GLwE30m+4gIbtAHnhIrzJh8lkZrtgZeXRGWsdHV0hpZDlpK04k27gJSkiJ+MkpzJ+R9QSwMEFAAACAgAAEgh7JC/OSNrAAAAdwAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSs9BRUEovSizIKAYKGII4pZkpIHa0UrK5YbKpkVGagYWlJZBI1bUwSE0yNUoySLEwTTS0MDdXigWqL6ksSPVLzE2F6AlILMlIy8xLycxL13MvykxxBxmtFFsLAFBLAQItABQAAAgIAABIIex25i3cTwIAAPEEAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAABIIeyQvzkjawAAAHcAAAAJACQAAAAAAAAAAAAAAJwCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAUgMAAAAA
-    upgradeData: 
-    file_cachedStartup: {fileID: 0}
-    data_cachedStartup: 
-    cacheStartup: 0
-  showNavGraphs: 1
-  showUnwalkableNodes: 1
-  debugMode: 0
-  debugFloor: 0
-  debugRoof: 1
-  manualDebugFloorRoof: 0
-  showSearchTree: 0
-  unwalkableNodeDebugSize: 0.3
-  logPathResults: 1
-  maxNearestNodeDistance: 100
-  scanOnStartup: 1
-  fullGetNearestSearch: 0
-  prioritizeGraphs: 0
-  prioritizeGraphsLimit: 1
-  colorSettings:
-    _SolidColor: {r: 0.11764706, g: 0.4, b: 0.7882353, a: 0.9}
-    _UnwalkableNode: {r: 1, g: 0, b: 0, a: 0.5}
-    _BoundsHandles: {r: 0.29, g: 0.454, b: 0.741, a: 0.9}
-    _ConnectionLowLerp: {r: 0, g: 1, b: 0, a: 0.5}
-    _ConnectionHighLerp: {r: 1, g: 0, b: 0, a: 0.5}
-    _MeshEdgeColor: {r: 0, g: 0, b: 0, a: 0.5}
-    _AreaColors:
-    - {r: 0, g: 0, b: 0, a: 0}
-  tagNames: []
-  heuristic: 2
-  heuristicScale: 1
-  threadCount: 1
-  maxFrameTime: 10
-  batchGraphUpdates: 0
-  graphUpdateBatchingInterval: 0.2
-  euclideanEmbedding:
-    mode: 0
-    seed: 0
-    pivotPointRoot: {fileID: 0}
-    spreadOutCount: 1
-  showGraphs: 1
 --- !u!1001 &1928544311226683582
 PrefabInstance:
   m_ObjectHideFlags: 0

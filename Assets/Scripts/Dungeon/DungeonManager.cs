@@ -10,6 +10,7 @@ public class DungeonManager : Singleton<DungeonManager>
     public Toggle clearToggle;
     public Point CurrPoint;
     public List<DungeonRoom> AdjancentRooms = new List<DungeonRoom>();
+    public AStarManager AStarManager;
 
     protected override void Start()
     {
