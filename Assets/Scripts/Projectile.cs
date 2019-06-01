@@ -5,14 +5,25 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     protected float speed = 1.0f;
-    protected float liftTime = 0.0f;
+    protected float lifeTime = 0.0f;
     protected Vector2 targetVec;
     protected CircleCollider2D collider;
+
+    [SerializeField]
+    private ProjectileStat stat;
+
+    struct ProjectileStat
+    {
+        public float speed;
+        public float lifeTime;
+        public float damage;
+        public Vector2 targetVec;
+        public CircleCollider2D collider;
+    }
     // Start is called before the first frame update
     void Start()
     {
         collider = GetComponent<CircleCollider2D>();
-
     }
 
     // Update is called once per frame
@@ -65,11 +76,16 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        string compareString = gameObject.tag.Split('-')[0];
+        string compareString = gameObject.tag == "Enemy-Proj" ? "Player" : "Enemy";
 
-        if (!collision.tag.Contains(compareString))
+        if (collision.tag == compareString)
         {
             Actor t = collision.gameObject.GetComponent<Actor>();
+            if (t == null)
+            {
+                Debug.Log("collision null");
+                return;
+            }
             t.TakeDamage(10);
             GameManager.Instance.effectManager.PlayEffectOnPosition("blast", transform.position, 0.5f);
             Destroy(gameObject);

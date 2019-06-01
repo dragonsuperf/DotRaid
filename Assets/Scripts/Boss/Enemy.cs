@@ -24,7 +24,7 @@ public enum EnemyState
 
 public class Enemy : Actor
 {
-//    public EnemyStats stat;
+    //    public EnemyStats stat;
     public PatternManager pm;
 
     GameManager gameManager;
@@ -35,6 +35,7 @@ public class Enemy : Actor
     Animator ani;
     List<Character> characters;
     bool isLookLeft = true;
+    bool isUnable;
 
     protected float fullHP;
     float attackDelay = 0.0f;
@@ -54,6 +55,13 @@ public class Enemy : Actor
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (stat.hp <= 0)
+        {
+            pm.Pause();
+            Dead();
+            return;
+        }
+
         FindTarget(); // 타겟 찾기
         JudgeAndDoAction(); // 행동 결정 및 실행
 
@@ -73,7 +81,7 @@ public class Enemy : Actor
             isLookLeft = true;
             transform.Rotate(0, 180, 0);
         }
-        
+
         if (pm.IsRunning()) return; // 패턴이 실행 중이면 기본 동작 스킵
 
 
@@ -122,7 +130,7 @@ public class Enemy : Actor
         if (state != ActorState.idle)
             pm.SkipCurrentPattern();
     }
-    
+
     Transform GetClosest() // 가장 가까운 캐릭터를 찾음
     {
         Transform tMin = null;
@@ -142,7 +150,13 @@ public class Enemy : Actor
 
     void AttackEnd()
     {
-        if(currentTarget != null)
-        em.PlayEffectOnPosition("blast", currentTarget.transform.position, 1.0f);
+        if (currentTarget != null)
+            em.PlayEffectOnPosition("blast", currentTarget.transform.position, 1.0f);
+    }
+
+    void Dead()
+    {  
+        enabled = false;
+        StartCoroutine(em.DestroyWithFadeOut(gameObject));
     }
 }
