@@ -55,7 +55,7 @@ public class Boss : Enemy
 
     void SummonSomething() // cast 패턴시 시전되는 소환 스킬
     {
-        Instantiate(mobPrefab[UnityEngine.Random.Range(0, 2)], new Vector2(roomPosition.transform.position.x, roomPosition.transform.position.y) + spawnPoint[UnityEngine.Random.Range(0, 2)], Quaternion.identity);
+        Instantiate(mobPrefab[UnityEngine.Random.Range(0, 2)], new Vector2(roomPosition.transform.position.x, roomPosition.transform.position.y) + spawnPoint[UnityEngine.Random.Range(0, 2)], Quaternion.identity, GameManager.Instance.EnemiesRoot.transform);
     }
 
     void TargetCharge() // 돌진 시작
@@ -65,12 +65,17 @@ public class Boss : Enemy
         
         stat.moveSpeed *= 5.0f;
 
+        GameUtil.GetChildWithName(gameObject, "Charge").gameObject.SetActive(true);
+
         StartCoroutine(MakeSomeAfterimage());
     }
 
     void TargetChargeEnd() // 돌진 끝
     {
         forceTarget = null;
+
+        GameUtil.GetChildWithName(gameObject, "Charge").gameObject.SetActive(false);
+
         stat.moveSpeed /= 5.0f;
     }
 
