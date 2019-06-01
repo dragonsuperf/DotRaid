@@ -77,7 +77,7 @@ public class Actor : MonoBehaviour
             }
         }
     }
-
+    /*  AStar 추후 추가
     public void SetDestinationAstar(Transform destination) // Astar pathfinding 목적지 설정 : 게임오브젝트의 Transform 넣으면 됨
     {
         this.GetComponent<AIDestinationSetter>().target = destination;
@@ -88,4 +88,5 @@ public class Actor : MonoBehaviour
         this.GetComponent<AIDestinationSetter>().target = destination;
         this.GetComponent<AIPath>().maxSpeed = speed;
     }
+    */
 }
