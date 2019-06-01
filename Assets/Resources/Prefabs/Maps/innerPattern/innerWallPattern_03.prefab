@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1739437488707549614}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: spawn_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3272102216075560658}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: spawn_00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6868184906467002309}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: spawn_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1711622009945263732}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: spawn_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 921773372465484700}
   - component: {fileID: 3638746301962900215}
   - component: {fileID: 5575888679483281640}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pattern
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -1229,9 +1229,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2080008008503873642}
   - component: {fileID: -1275742585773378766}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: innerWallPattern_03
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
