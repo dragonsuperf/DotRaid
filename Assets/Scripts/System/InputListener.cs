@@ -14,7 +14,7 @@ public class InputListener : MonoBehaviour
 {
     private InputState _state = InputState.None;
     private int _selectCharactorIdx = 0;
-    private List<Character> _charactors;
+    private List<Character> _characters;
 
     private eSkill _skill;
     private eSkillState _skillState;
@@ -30,7 +30,7 @@ public class InputListener : MonoBehaviour
 
     private void Start()
     {
-        _charactors = GameManager.Instance.GetChars();
+        _characters = GameManager.Instance.GetChars();
         _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
@@ -88,9 +88,9 @@ public class InputListener : MonoBehaviour
                     }
                     selectedUnits.Clear();
                     selectedUnits = new List<Character>(selectTemp);
-                    for (int i = 0; i < _charactors.Count; i++)
+                    for (int i = 0; i < _characters.Count; i++)
                     {
-                        if (selectedUnits[0] == _charactors[i])
+                        if (selectedUnits[0] == _characters[i])
                         {
                             _selectCharactorIdx = i;
                         }
@@ -126,7 +126,7 @@ public class InputListener : MonoBehaviour
                 }
                 selectedUnits.Clear();
                 _selectCharactorIdx = 0;
-                selectedUnits.Add(_charactors[0]);
+                selectedUnits.Add(_characters[0]);
                 selectedUnits[0].CharSelect = true;
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -137,7 +137,7 @@ public class InputListener : MonoBehaviour
                 }
                 selectedUnits.Clear();
                 _selectCharactorIdx = 1;
-                selectedUnits.Add(_charactors[1]);
+                selectedUnits.Add(_characters[1]);
                 selectedUnits[0].CharSelect = true;
             }
 
@@ -149,7 +149,7 @@ public class InputListener : MonoBehaviour
                 }
                 selectedUnits.Clear();
                 _selectCharactorIdx = 2;
-                selectedUnits.Add(_charactors[2]);
+                selectedUnits.Add(_characters[2]);
                 selectedUnits[0].CharSelect = true;
             }
 
@@ -161,7 +161,7 @@ public class InputListener : MonoBehaviour
                 }
                 selectedUnits.Clear();
                 _selectCharactorIdx = 3;
-                selectedUnits.Add(_charactors[3]);
+                selectedUnits.Add(_characters[3]);
                 selectedUnits[0].CharSelect = true;
             }
 
@@ -173,7 +173,7 @@ public class InputListener : MonoBehaviour
                 }
                 selectedUnits.Clear();
                 _selectCharactorIdx = 4;
-                selectedUnits.Add(_charactors[4]);
+                selectedUnits.Add(_characters[4]);
                 selectedUnits[0].CharSelect = true;
             }
 
@@ -189,13 +189,13 @@ public class InputListener : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 _state = InputState.SkillWait;
-                _skill = _charactors[_selectCharactorIdx].skill_first;
+                _skill = _characters[_selectCharactorIdx].skill_first;
                 Debug.Log("선택스킬 : " + _skill);
             }
             if (Input.GetKeyDown(KeyCode.W))
             {
                 _state = InputState.SkillWait;
-                _skill = _charactors[_selectCharactorIdx].skill_second;
+                _skill = _characters[_selectCharactorIdx].skill_second;
                 Debug.Log("선택스킬 : " + _skill);
             }
         }
@@ -205,13 +205,13 @@ public class InputListener : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 _skillState = CheckSkillState(_skill);
-                _charactors[_selectCharactorIdx].skillStateData.skillState = _skillState;
-                _charactors[_selectCharactorIdx].skillStateData.skillMakeCallback = MakeSkill;
+                _characters[_selectCharactorIdx].skillStateData.skillState = _skillState;
+                _characters[_selectCharactorIdx].skillStateData.skillMakeCallback = MakeSkill;
                 _state = InputState.None;
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                _charactors[_selectCharactorIdx].skillStateData.Clear();
+                _characters[_selectCharactorIdx].skillStateData.Clear();
                 _state = InputState.None;
             }
         }
@@ -229,7 +229,7 @@ public class InputListener : MonoBehaviour
         SkillData info = new SkillData();
         info.player_info = new CasterInfo(); //시전자 정보임
         info.player_info.idx = _selectCharactorIdx;
-        info.player_info.pos = _charactors[_selectCharactorIdx].transform.position;
+        info.player_info.pos = _characters[_selectCharactorIdx].transform.position;
         
         info.target_info = new TargetInfo(); //타겟 정보임
         info.target_info.pos = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -253,7 +253,7 @@ public class InputListener : MonoBehaviour
                 state = eSkillState.NonTarget_Cast;
                 break;
             default:
-                state = eSkillState.Nomal;
+                state = eSkillState.NonTarget_Cast;// state = eSkillState.Nomal;
                 break;
         }
         return state;
@@ -276,12 +276,12 @@ public class InputListener : MonoBehaviour
             {
                 //selectTemp.Add(hit.transform.GetComponent<Character>());
                 
-                for (int i = 0; i < _charactors.Count; i++)
+                for (int i = 0; i < _characters.Count; i++)
                 {
-                    if (hit.transform.GetComponent<Character>() == _charactors[i])
+                    if (hit.transform.GetComponent<Character>() == _characters[i])
                     {
                         _selectCharactorIdx = i;
-                        selectTemp.Add(_charactors[i]);
+                        selectTemp.Add(_characters[i]);
                     }
                 }
                 
@@ -289,11 +289,11 @@ public class InputListener : MonoBehaviour
         }
         else // if Drag
         {
-            for (int i = 0; i < _charactors.Count; i++)
+            for (int i = 0; i < _characters.Count; i++)
             {
-                if (viewportBounds.Contains(camera.WorldToViewportPoint(_charactors[i].transform.position)))
+                if (viewportBounds.Contains(camera.WorldToViewportPoint(_characters[i].transform.position)))
                 {
-                    selectTemp.Add(_charactors[i]);
+                    selectTemp.Add(_characters[i]);
                 }
             }
         }
