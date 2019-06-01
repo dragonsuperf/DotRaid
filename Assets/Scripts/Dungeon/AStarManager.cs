@@ -27,9 +27,10 @@ public class AStarManager : MonoBehaviour
         // gridGraph.width = 80;
         // gridGraph.depth = 60;
         gridGraph.SetDimensions(80, 60, 1f);
+        gridGraph.center = room.gameObject.transform.position;
         gridGraph.Scan();
         // Debug.Log(gridGraph.center);
-        gridGraph.center = room.gameObject.transform.position;
+        
         // Debug.Log(gridGraph.center);
     }
 

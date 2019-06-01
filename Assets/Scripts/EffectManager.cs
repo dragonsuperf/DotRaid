@@ -80,11 +80,25 @@ public class EffectManager : Singleton<EffectManager>
         effectPool[key].Add(Instantiate(e, transform));
     }
 
-    public void AddEffectToPool(string key, Effect e, int howMany) // 이펙트 등록 여러개
+    public void AddEffectToPool(string key, Effect e, int howMany) // 이펙트 등록 여러개    
     {
         if (!effectPool.ContainsKey(key))
             effectPool.Add(key, new List<Effect>());
 
         for(int i = 0; i < howMany; i++) effectPool[key].Add(Instantiate(e, transform));
+    }
+
+    public IEnumerator DestroyWithFadeOut(GameObject obj)
+    {
+        Color tmp = obj.GetComponent<SpriteRenderer>().color;
+
+        for (; tmp.a > 0; tmp.a -= 0.1f)
+        {
+            obj.GetComponent<SpriteRenderer>().color = tmp;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        Destroy(obj);
+        yield return new WaitForSeconds(0.1f);
     }
 }
