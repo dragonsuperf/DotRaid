@@ -15,6 +15,7 @@ public class EffectManager : Singleton<EffectManager>
     protected override void Start()
     {
         base.Start();
+        blastObj = Resources.Load("Prefabs/Effects/blast") as GameObject;
         blastPool.Add(blastObj.GetComponent<Effect>());
         for (int i = 0; i < 10; i++)
             blastPool.Add(Instantiate(blastObj, transform).GetComponent<Effect>());

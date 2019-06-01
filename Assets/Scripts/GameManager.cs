@@ -6,7 +6,9 @@ public class GameManager : Singleton<GameManager>
 {
     public Character[] chracters;
     public List<Character> heroes = new List<Character>();
-    public GameObject boss;
+    private GameObject boss;
+
+    public UIHelper uiHelper;
     
     public Vector3 startPosition;
     public Vector3 bossRoomPosition;
@@ -23,14 +25,18 @@ public class GameManager : Singleton<GameManager>
     protected override void Start()
     {
         base.Start();
-        
+
+        boss = Instantiate( Resources.Load("Prefabs/Enemy/Boss") as GameObject ) ;
+        Debug.Log(boss); 
+
         SkillManager.Instance.OnSet();
         EffectManager.Instance.OnSet();
+        CharSelectManager.Instance.OnSet();
         
         SpawnEnemy(200);
         setStartPoint();
         setCharactersAndEnemy();
-
+        
         //bossRoomPosition = 
     }
 

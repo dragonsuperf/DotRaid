@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharSelectManager : MonoBehaviour
+public class CharSelectManager : Singleton<CharSelectManager>
 {
-    [SerializeField] private UIHelper _uiHelper;
+    private UIHelper _uiHelper;
 
     public GameObject[] selector;
     
@@ -15,13 +15,12 @@ public class CharSelectManager : MonoBehaviour
     private List<Character> characters;
     private Vector3 mousePosition;
 
-
     // Start is called before the first frame update
     void Start()
     {
         characters = GameManager.Instance.GetChars();
         selector = new GameObject[characters.Count];
-
+        _uiHelper = GameManager.Instance.uiHelper;
         for (int i = 0; i < selector.Length; i++)
         {
             //selector[i] = characters[i].transform.Find("arrowSelector").gameObject;
