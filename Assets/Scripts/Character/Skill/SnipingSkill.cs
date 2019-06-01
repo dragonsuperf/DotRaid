@@ -26,9 +26,9 @@ public class SnipingSkill : NonTargetSkillBase
         Debug.Log(_idx + " 번 스킬 지워짐");
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (col.gameObject.tag == "Enemy")
             SkillManager.Instance.Remove(this._idx);
     }
 }

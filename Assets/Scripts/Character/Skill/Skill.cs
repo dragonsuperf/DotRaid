@@ -6,7 +6,8 @@ public enum eSkill
 {
     TestSkill = 0,
     Sniping,
-    NomalRange
+    NomalRange,
+    AngryPowerUpSkill
 }
 
 /// <summary>
@@ -15,7 +16,7 @@ public enum eSkill
 public enum eTargetState
 {
     Enemy = 0,
-    Charactor,
+    Character,
     Ground
 }
 

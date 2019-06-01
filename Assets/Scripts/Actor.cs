@@ -9,6 +9,7 @@ public struct ActorStats
 {
     public bool isSelect;
     public float hp;
+    public float maxHp;
     public float attackRangeRadius;
     public float awareRangeRadius;
     public float moveSpeed;
@@ -38,9 +39,9 @@ public class Actor : MonoBehaviour
     protected ActorState state;
     [SerializeField]
     protected ActorStats stat;
+    public ActorStats Stat { get { return stat; } private set { } }
     protected Vector3 curMovePosition;
-
-
+    
     public bool CharSelect { get => stat.isSelect; set => stat.isSelect = value; }
     public float HP { get => stat.hp; set => stat.hp = value; }
     public float CharAttackRangeRadius { get => stat.attackRangeRadius; set => stat.attackRangeRadius = value; }
@@ -52,7 +53,6 @@ public class Actor : MonoBehaviour
     public float CharPhysicDef { get => stat.physicDef; set => stat.physicDef = value; }
     public float CharMagicDef { get => stat.magicDef; set => stat.magicDef = value; }
     
-
     public void TakeDamage(float damage)
     {
         stat.hp -= damage;
@@ -61,6 +61,13 @@ public class Actor : MonoBehaviour
     public void TakeDamage(float damage, DamageType type)
     {
         stat.hp -= damage - (type == DamageType.physic ? stat.physicDef : stat.magicDef);
+    }
+
+    public void TakeHeal(float heal)
+    {
+        if (heal <= 0) return;
+        float healHp = stat.hp + heal;
+        stat.hp = (healHp > stat.maxHp) ? stat.maxHp : healHp;
     }
 
     public void CharFlipping()

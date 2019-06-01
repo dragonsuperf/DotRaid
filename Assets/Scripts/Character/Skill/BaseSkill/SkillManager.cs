@@ -47,6 +47,7 @@ public class SkillManager : Singleton<SkillManager>
     {
         if (HasSkill(idx))
         {
+            Debug.Log("스킬번호 지워짐 : " + idx);
             _skillDict[idx].OnRemove();
             _skillDict[idx].Data.hitEffectCallback.SafeInvoke();
             Destroy(_skillDict[idx].gameObject);
