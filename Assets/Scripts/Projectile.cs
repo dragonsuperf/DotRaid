@@ -65,11 +65,13 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        string compareString = gameObject.tag.Split('-')[0];
+        string compareString = gameObject.tag == "Enemy-Proj" ? "Player" : "Enemy";
 
-        if (!collision.tag.Contains(compareString))
+        if (collision.tag == compareString)
         {
             Actor t = collision.gameObject.GetComponent<Actor>();
+            if (t == null)
+                Debug.Log("collision null");
             t.TakeDamage(10);
             GameManager.Instance.effectManager.PlayEffectOnPosition("blast", transform.position, 0.5f);
             Destroy(gameObject);
