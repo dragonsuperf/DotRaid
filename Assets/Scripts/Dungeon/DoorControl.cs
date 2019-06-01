@@ -23,6 +23,7 @@ public class DoorControl : MonoBehaviour
             }
             GameManager.Instance.MoveCameraToRoomPosition(next);
             DungeonManager.Instance.SetOffClearToggle();
+            DungeonManager.Instance.AStarManager.AttachAstar(next);
 
             DungeonManager.Instance.CurrPoint = GetCurrentPoint(Door, DungeonManager.Instance.CurrPoint);
             DungeonManager.Instance.AdjancentRooms = DungeonManager.Instance.GetAdjacentRooms(DungeonManager.Instance.CurrPoint);
