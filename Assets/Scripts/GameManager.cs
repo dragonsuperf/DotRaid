@@ -7,8 +7,7 @@ public class GameManager : Singleton<GameManager>
     public Character[] chracters;
     public List<Character> heroes = new List<Character>();
     public GameObject boss;
-    public EffectManager effectManager;
-    public Effect defaultBlastEffect;
+    
     public Vector3 startPosition;
     public Vector3 bossRoomPosition;
     public DungeonCreator dungeonCreator;
@@ -24,9 +23,10 @@ public class GameManager : Singleton<GameManager>
     protected override void Start()
     {
         base.Start();
-        effectManager.AddEffectToPool("blast", defaultBlastEffect, 10);
+        
         SkillManager.Instance.OnSet();
         EffectManager.Instance.OnSet();
+        
         SpawnEnemy(200);
         setStartPoint();
         setCharactersAndEnemy();

@@ -107,7 +107,7 @@ public class Character : Actor
         charState = CharacterState.idle;
         boss = gameManager.GetBoss();
         characters = gameManager.GetChars();
-        effectmanager = gameManager.effectManager;
+        effectmanager = EffectManager.Instance;
 
         selectiveObject = transform.Find("isSelect").gameObject;
         line = transform.GetComponent<LineRenderer>();

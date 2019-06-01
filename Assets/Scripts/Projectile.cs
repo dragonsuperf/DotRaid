@@ -87,7 +87,7 @@ public class Projectile : MonoBehaviour
                 return;
             }
             t.TakeDamage(10);
-            GameManager.Instance.effectManager.PlayEffectOnPosition("blast", transform.position, 0.5f);
+            EffectManager.Instance.PlayEffectOnPosition("blast", transform.position, 0.5f);
             Destroy(gameObject);
         }
     }

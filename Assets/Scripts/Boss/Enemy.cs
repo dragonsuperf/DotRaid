@@ -46,7 +46,7 @@ public class Enemy : Actor
         ani = GetComponent<Animator>();
         pm.SetAnimator(ani);
         gameManager = GameManager.Instance;
-        em = gameManager.effectManager;
+        em = EffectManager.Instance ;
         characters = gameManager.GetChars();
         currentTarget = GetClosest(); // 첫번째 공격타겟 
         fullHP = stat.hp;
