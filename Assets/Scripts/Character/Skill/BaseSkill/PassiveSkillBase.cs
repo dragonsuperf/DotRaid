@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PassiveSkillBase : MonoBehaviour
+public class PassiveSkillBase : Skill
 {
     // Start is called before the first frame update
     void Start()
