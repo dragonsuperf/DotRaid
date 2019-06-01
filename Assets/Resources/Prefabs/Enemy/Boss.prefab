@@ -140,25 +140,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 6578630686280255966}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 2d418b99e98b92a48a9a23f5cdf5d14b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   stat:
+    isSelect: 0
     hp: 1000
     attackRangeRadius: 1
     awareRangeRadius: 1
     moveSpeed: 10
     attackSpeed: 2
-    CastSpeed: 5
-    phisicDamage: 10
+    castSpeed: 0
+    physicDamage: 0
     magicDamage: 10
+    physicDef: 0
+    magicDef: 0
   pm: {fileID: 6578630686706103215}
   mobPrefab:
   - {fileID: 2853873378045141451, guid: ec1b07a9e3ddf17408c410f5b92c599f, type: 3}
   - {fileID: 1083282528, guid: 656a158bde6761d49badc10de2777212, type: 3}
+  _hpBar: {fileID: 6985836878573397128, guid: aad1816d0de1d4795ad957676cafb16d, type: 3}
   afterImage: {fileID: 7891477879131857156, guid: f71643296a350fe46b2804016f06674f,
     type: 3}
+  proj: {fileID: 0}
 --- !u!58 &6578630686280255959
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -235,7 +240,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6578630686706103213}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 1d580060c56cbee479e82c2bfb4fef8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
