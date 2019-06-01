@@ -148,7 +148,7 @@ public class DungeonCreator : Singleton<DungeonCreator>
     {
         GameObject roomStackObj = new GameObject("Room Stack");
         roomStackObj.transform.parent = this.transform;
-        for(int i = 0; i < 50; i++)
+        for(int i = 0; i < 30; i++)
         {
             GameObject map = Instantiate(roomPrefab.gameObject);
             
