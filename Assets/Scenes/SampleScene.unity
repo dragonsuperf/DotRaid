@@ -958,6 +958,7 @@ GameObject:
   - component: {fileID: 251879153}
   - component: {fileID: 251879155}
   - component: {fileID: 251879156}
+  - component: {fileID: 251879157}
   m_Layer: 0
   m_Name: MapGrid
   m_TagString: Untagged
@@ -1028,7 +1029,20 @@ MonoBehaviour:
   roomCleared: 0
   clearToggle: {fileID: 680841574}
   AdjancentRooms: []
-  AStarManager: {fileID: 0}
+  AStarManager: {fileID: 251879157}
+--- !u!114 &251879157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251879152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3d795ec11ab4f769777401fa47e9d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Astar: {fileID: 1484874011333979702, guid: c70f21630ab694a609d81c7c9d8b41ad, type: 3}
 --- !u!1 &322852959
 GameObject:
   m_ObjectHideFlags: 0
@@ -2230,11 +2244,6 @@ SpriteRenderer:
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &728732412
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 679195455206118047, guid: 638ba891d5c8d2f409ff73c8d77a5532,
@@ -7154,13 +7163,6 @@ ParticleSystem:
         m_RotationOrder: 4
     vectorLabel1_3: W
 --- !u!4 &1212497086
-=======
->>>>>>> parent of 337f07d... Update SampleScene.unity
-=======
->>>>>>> parent of 337f07d... Update SampleScene.unity
-=======
->>>>>>> parent of 337f07d... Update SampleScene.unity
->>>>>>> 31b9bad5b10f80ab398847056345dddc2fa967a8
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
