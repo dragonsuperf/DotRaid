@@ -7,6 +7,7 @@ public class PatternManager : MonoBehaviour
     Queue<Pattern> patternQueue = new Queue<Pattern>();
     Animator ani = null;
     Pattern currentPattern;
+    bool isPause = false;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,8 @@ public class PatternManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isPause) return;
+
         if(currentPattern == null)
             if (!GetNextPattern())
                 return;
@@ -53,7 +56,7 @@ public class PatternManager : MonoBehaviour
         //Debug.Log("Play : " + currentPattern.Name);
     }
 
-    void EndPattern()
+    public void EndPattern()
     {
         currentPattern.IsRunning = false;
         ani.SetBool(currentPattern.Name, false);
@@ -143,5 +146,17 @@ public class PatternManager : MonoBehaviour
         }
 
         //플레이 후
+    }
+
+    public void Pause()
+    {
+        isPause = true;
+        ani.speed = 0;
+    }
+
+    public void Resume()
+    {
+        isPause = false;
+        ani.speed = currentPattern != null ? currentPattern.Speed : 1;
     }
 }
