@@ -15,6 +15,8 @@ public class GameManager : Singleton<GameManager>
     public DungeonCreator dungeonCreator;
     public Vector3 currentCameraPosition;
 
+    [HideInInspector]public GameObject EnemiesRoot;
+
     private Point currentRoomKey;
     private DungeonRoom currentRoom;
 
@@ -27,7 +29,7 @@ public class GameManager : Singleton<GameManager>
         base.Start();
 
         boss = Instantiate( Resources.Load("Prefabs/Enemy/Boss") as GameObject ) ;
-        Debug.Log(boss); 
+        EnemiesRoot = new GameObject("EnemiesRoot");
 
         SkillManager.Instance.OnSet();
         EffectManager.Instance.OnSet();
