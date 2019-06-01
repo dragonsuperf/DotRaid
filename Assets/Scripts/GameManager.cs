@@ -20,22 +20,16 @@ public class GameManager : Singleton<GameManager>
     public GameObject[] Enemies;
     public Stack<GameObject> EnemyStack = new Stack<GameObject>();
 
-    private GameObject enemiesRoot;
-
-    public GameObject EnemiesRoot { get => enemiesRoot; set => enemiesRoot = value; }
-
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        effectManager.AddEffectToPool("blast", defaultBlastEffect, 30);
+        effectManager.AddEffectToPool("blast", defaultBlastEffect, 10);
         SkillManager.Instance.OnSet();
         EffectManager.Instance.OnSet();
         SpawnEnemy(200);
         setStartPoint();
         setCharactersAndEnemy();
-
-        enemiesRoot = new GameObject("EnemiesRoot");
 
         //bossRoomPosition = 
     }
