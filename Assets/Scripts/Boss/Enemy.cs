@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 using System;
 
 [Serializable]
@@ -43,8 +42,7 @@ public class Enemy : Actor
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        attackRangeCollider = GameUtil.GetChildWithName(gameObject, "AttackRange").gameObject.GetComponent<CircleCollider2D>();
-        Debug.Log(attackRangeCollider);
+        attackRangeCollider = GetComponent<CircleCollider2D>();
         ani = GetComponent<Animator>();
         pm.SetAnimator(ani);
         gameManager = GameManager.Instance;
