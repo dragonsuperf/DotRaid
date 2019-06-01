@@ -270,13 +270,12 @@ public class InputListener : MonoBehaviour
         Vector2 worldPoint = camera.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
 
-
-        if (Vector3.Distance(mousePosition, Input.mousePosition) < 1.0f)
+        if(mousePosition == Input.mousePosition) // if Click
         {
-            if (!hit.collider.isTrigger && hit.collider.tag == "Player")
+            if (hit.collider)
             {
                 //selectTemp.Add(hit.transform.GetComponent<Character>());
-
+                
                 for (int i = 0; i < _charactors.Count; i++)
                 {
                     if (hit.transform.GetComponent<Character>() == _charactors[i])
@@ -285,10 +284,9 @@ public class InputListener : MonoBehaviour
                         selectTemp.Add(_charactors[i]);
                     }
                 }
-
+                
             }
         }
-
         else // if Drag
         {
             for (int i = 0; i < _charactors.Count; i++)

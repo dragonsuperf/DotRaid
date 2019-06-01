@@ -185,10 +185,9 @@ public class Character : Actor
                 screenPoint = Camera.main.WorldToScreenPoint(transform.position);
                 Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
                 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
-                curPosition.z = 0;
 
                 aStarTarget.transform.position = curPosition;
-                SetDestinationAstar(aStarTarget.transform, CharMoveSpeed);
+                SetDestinationAstar(aStarTarget.transform, stat.moveSpeed);
             }
 
             if (Input.GetKeyUp(KeyCode.S))
@@ -218,7 +217,7 @@ public class Character : Actor
         {
             currentTarget = hit.collider.transform;
         }
-        else  // No Collider && No Enemy
+        else if(hit.transform.tag == "Untagged") // No Collider && No Enemy
         {
             charState = CharacterState.move;
             curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
@@ -247,7 +246,7 @@ public class Character : Actor
     {
         if (charState == CharacterState.move)
         {
-            //transform.position = Vector2.MoveTowards(transform.position, curPosition, stat.moveSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, curPosition, stat.moveSpeed * Time.deltaTime);
             currentTarget = null;
             ani.SetBool("walk", true);
 
