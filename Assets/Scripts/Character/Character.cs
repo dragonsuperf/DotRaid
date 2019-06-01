@@ -119,6 +119,8 @@ public class Character : Actor
         arrowStart.SetActive(false);
         point.SetActive(false);
 
+        GetComponent<Rigidbody2D>().drag = 5.0f;
+
         StartCoroutine(AttackMotion(1 / this.stat.attackSpeed));
 
         
