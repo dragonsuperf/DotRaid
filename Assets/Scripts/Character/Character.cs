@@ -185,9 +185,10 @@ public class Character : Actor
                 screenPoint = Camera.main.WorldToScreenPoint(transform.position);
                 Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
                 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
-
+                /* Astar 추후 추가
                 aStarTarget.transform.position = curPosition;
                 SetDestinationAstar(aStarTarget.transform, stat.moveSpeed);
+                */               
             }
 
             if (Input.GetKeyUp(KeyCode.S))
