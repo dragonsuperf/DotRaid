@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 디펜서 - 도발
+/// </summary>
+[SkillJobKind(SkillJobKindAttribute.eAttribute.Tanker)]
 public class ProvocationSkill : BuffSkillBase
 {
     public override void OnSet(object data)

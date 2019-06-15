@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// 스킬 프리팹 네임
+/// </summary>
 public enum eSkill
 {
     TestSkill = 0,
@@ -44,6 +47,19 @@ public class TargetInfo
     public int idx;
     public eTargetState state;
     public Vector2 pos; //생성시점 타겟 위치가 됨
+}
+
+/// <summary>
+/// 스킬 직업 탱,딜,힐,전사 속성 상위 폴더name 지정
+/// </summary>
+public class SkillJobKindAttribute : Attribute
+{
+    public enum eAttribute { Healder, Ranger, Tanker, Warrior }
+    public eAttribute folderRoot { get; private set; }
+    public SkillJobKindAttribute(eAttribute inFolderRoot)
+    {
+        folderRoot = inFolderRoot;
+    }
 }
 
 /// <summary>
