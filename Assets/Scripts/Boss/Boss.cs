@@ -30,6 +30,8 @@ public class Boss : Enemy
 
         em.AddEffectToPool("bossAfterimage", afterImage);
         roomPosition = DungeonManager.Instance.GetCurrentDungeonRoom().transform;
+
+        GameUtil.DrawCircle(gameObject, 10.0f, 0.35f);
     }
 
     // Update is called once per frame

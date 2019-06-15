@@ -23,6 +23,7 @@ public class GameManager : Singleton<GameManager>
     public List<GameObject> Enemies = new List<GameObject>();
     public Stack<GameObject> EnemyStack = new Stack<GameObject>();
 
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -101,7 +102,7 @@ public class GameManager : Singleton<GameManager>
 
     private void SpawnEnemy(int count)
     {
-        Debug.Log("EnemieLength: " + Enemies.Count);
+        // Debug.Log("EnemieLength: " + Enemies.Count);
         if (Enemies.Count == 0) return;
         for(int i = 0; i < count; i++)
         {

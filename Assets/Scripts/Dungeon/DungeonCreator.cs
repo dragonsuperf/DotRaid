@@ -50,7 +50,6 @@ public class DungeonCreator : Singleton<DungeonCreator>
 
     public void PlaceEnemies(int enemyCount)
     {
-        Debug.Log("place enemy");
         foreach(KeyValuePair<Point, DungeonRoom> room in roomDict)
         {
             if(room.Value.gameObject.name == "Origin Room")
@@ -61,14 +60,19 @@ public class DungeonCreator : Singleton<DungeonCreator>
             GameObject[] enemies = new GameObject[enemyCount];
             for(int i = 0; i < enemyCount; i++)
             {
-                Debug.Log("break hani?");
                 if (GameManager.Instance.EnemyStack.Count == 0) break;
-                Debug.Log("ok, no~");
                 enemies[i] = GameManager.Instance.EnemyStack.Pop();
-                enemies[i].SetActive(true);
+                // enemies[i].SetActive(true);
                 enemies[i].transform.position = spPoint.spawnPoint[Random.Range(0, spPoint.spawnPoint.Length)].position;
+
+                // DungeonManager의 EnemiesGroup에 넣는다.
+                DungeonManager.Instance.SetEnemiesInRooms(room.Value, enemies[i].GetComponent<Enemy>());
             }
         }
+
+        // foreach(KeyValuePair<DungeonRoom, List<Enemy>> pair in DungeonManager.Instance.EnemiesGroup){
+        //     Debug.Log(pair.Value.Count);
+        // }
     }
 
     //private void CreateToWayDirection(int globalDirection, int depth, DungeonRoom from)
