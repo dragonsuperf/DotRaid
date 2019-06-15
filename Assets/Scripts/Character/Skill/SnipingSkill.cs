@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 스나이퍼 - 액티브 스킬
+/// </summary>
+[SkillJobKind(SkillJobKindAttribute.eAttribute.Ranger)]
 public class SnipingSkill : NonTargetSkillBase
 {
     [SerializeField] private float _speed = 1.0f;

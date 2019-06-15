@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefencerPassiveSkill : MonoBehaviour
+/// <summary>
+/// 디펜서 - 페시브
+/// </summary>
+[SkillJobKind(SkillJobKindAttribute.eAttribute.Tanker)]
+public class DefencerPassiveSkill : PassiveSkillBase
 {
+
 }
