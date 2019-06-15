@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Hunter : Character
 {
-
+    private HunterPassiveSkill _passiveSkill = null;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -14,7 +14,7 @@ public class Hunter : Character
             SkillData sd = new SkillData();
             sd.player_info = new CasterInfo();
             sd.player_info.idx = base._idx; // @NOTE 플레이어 idx만 필요함
-            SkillManager.Instance.CreatePassive<HunterPassiveSkill>(sd);
+            _passiveSkill = SkillManager.Instance.CreatePassive<HunterPassiveSkill>(sd) as HunterPassiveSkill;
         }
     }
 

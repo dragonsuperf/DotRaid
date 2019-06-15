@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class PassiveSkillBase : Skill
 {
+    protected Character hero;
+    protected int heroIdx = 0;
     /// <summary>
     /// data는 캐릭터 id만 필요.. 나머지 쓰지마샘 설계오류
     /// </summary>
@@ -15,5 +17,13 @@ public class PassiveSkillBase : Skill
     {
         base.OnSet(data);
         _data = (SkillData)data;
+        heroIdx = _data.player_info.idx;
+        hero = GameManager.Instance.chracters[heroIdx];
+    }
+
+    public override void OnRemove()
+    {
+        base.OnRemove();
+        SkillManager.Instance.Remove(this._idx);
     }
 }

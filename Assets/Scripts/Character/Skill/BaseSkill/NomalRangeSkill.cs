@@ -29,6 +29,9 @@ public class NomalRangeSkill : TargetSkillBase
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
+        {
+            Data.hitCallback.SafeInvoke();
             SkillManager.Instance.Remove(this._idx);
+        }
     }
 }

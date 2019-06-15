@@ -27,7 +27,7 @@ public class AngryPowerUpSkill : BuffSkillBase
         }
         Data.inherentCallback = AnglePowerEffect; //타이밍이 필요한 고유 능력적용
         
-        _originAttack = GameManager.Instance.chracters[_data.player_info.idx].CharPhysicDamage;
+        _originAttack = GameManager.Instance.chracters[_data.player_info.idx].CharPhysicDamage; // TODO 이 동안 데미지가 증가하면 문제가 있다.
         GameManager.Instance.chracters[_data.player_info.idx].CharPhysicDamage = (int)((float)_originAttack * _upDamage);
     }
 

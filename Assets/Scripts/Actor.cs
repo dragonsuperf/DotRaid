@@ -85,6 +85,21 @@ public class Actor : MonoBehaviour
         }
     }
 
+    public bool GetActorBack()
+    {
+        bool IsTgLeft = false;
+        bool IsLeft = false;
+
+        if (currentTarget.rotation.y > 179 && currentTarget.rotation.y < 181) IsTgLeft = true;
+        else IsTgLeft = false;
+
+        if (transform.rotation.y > 179 && transform.rotation.y < 181) IsLeft = true;
+        else IsLeft = false;
+
+        if (IsTgLeft == IsLeft) return true;
+        else return false;
+    }
+
     public void SetDestinationAstar(Transform destination) // Astar pathfinding 목적지 설정 : 게임오브젝트의 Transform 넣으면 됨
     {
         this.GetComponent<AIDestinationSetter>().target = destination;

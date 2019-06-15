@@ -33,6 +33,9 @@ public class SnipingSkill : NonTargetSkillBase
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Enemy")
+        {
+            Data.hitCallback.SafeInvoke();
             SkillManager.Instance.Remove(this._idx);
+        }
     }
 }

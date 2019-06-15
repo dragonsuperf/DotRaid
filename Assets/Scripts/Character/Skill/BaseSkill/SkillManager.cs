@@ -41,9 +41,9 @@ public class SkillManager : Singleton<SkillManager>
     /// 각 캐릭터에서 패시브 생성
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public void CreatePassive<T>(SkillData skillData)
+    public Skill CreatePassive<T>(SkillData skillData)
     {
-        if (skillData == null) return;
+        if(skillData==null) return null;
         Type type = typeof(T);
         GameObject newObj = Instantiate(new GameObject(type.ToString()),_skillRoot.transform);
         Skill newSkill = newObj.AddComponent(type) as Skill;
@@ -53,6 +53,7 @@ public class SkillManager : Singleton<SkillManager>
         newSkill.OnSet(skillData);
 
         _skillCount++; // TODO 키 유니크하게 관리해야함
+        return newSkill;
     }
 
     /// <summary>
