@@ -40,7 +40,7 @@ public class GameManager : Singleton<GameManager>
         DungeonCreator.Instance.PlaceEnemies(8);
         setStartPoint();
         setCharactersAndEnemy();
-        
+
         //bossRoomPosition = 
     }
 
@@ -63,9 +63,11 @@ public class GameManager : Singleton<GameManager>
         boss.transform.position = startPosition;
         //boss.SetActive(false);
 
+        int idx = 0;
         foreach(Character ch in chracters)
         {
             Character hero = Instantiate(ch.gameObject, startPosition, Quaternion.identity, this.gameObject.transform).GetComponent<Character>();
+            hero.SetIDX(idx++);
             heroes.Add(hero);
         }
         Camera.main.gameObject.transform.position = new Vector3( startPosition.x, startPosition.y, Camera.main.gameObject.transform.position.z) ;
