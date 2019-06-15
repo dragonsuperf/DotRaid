@@ -20,7 +20,7 @@ public class GameManager : Singleton<GameManager>
     private Point currentRoomKey;
     private DungeonRoom currentRoom;
 
-    public GameObject[] Enemies;
+    public List<GameObject> Enemies = new List<GameObject>();
     public Stack<GameObject> EnemyStack = new Stack<GameObject>();
 
     // Start is called before the first frame update
@@ -36,6 +36,7 @@ public class GameManager : Singleton<GameManager>
         CharSelectManager.Instance.OnSet();
         
         SpawnEnemy(200);
+        DungeonCreator.Instance.PlaceEnemies(8);
         setStartPoint();
         setCharactersAndEnemy();
 
@@ -100,10 +101,11 @@ public class GameManager : Singleton<GameManager>
 
     private void SpawnEnemy(int count)
     {
-        if (Enemies.Length == 0) return;
+        Debug.Log("EnemieLength: " + Enemies.Count);
+        if (Enemies.Count == 0) return;
         for(int i = 0; i < count; i++)
         {
-            int num = Random.Range(0, Enemies.Length);
+            int num = Random.Range(0, Enemies.Count);
             GameObject enemy = Instantiate(Enemies[num]);
             enemy.transform.position = this.transform.position;
             enemy.transform.parent = this.transform;

@@ -26,13 +26,9 @@ public class DungeonCreator : Singleton<DungeonCreator>
     protected override void Awake()
     {
         InitRooms();
-        //int depth = 10;
-        //int level = 0;
+
         Point origin = new Point(10, 10);
         DungeonManager.Instance.CurrPoint = origin;
-        //CreateDungeonRooms(ref level, ref depth, origin, Point.GetRandomWay(origin), true);
-
-        
 
         CreateRooms(10, origin, null, -1, -1, true);
         HideOtherRooms();
@@ -46,14 +42,15 @@ public class DungeonCreator : Singleton<DungeonCreator>
         }
     }
 
-    protected override void Start()
-    {
-        base.Start();
-        PlaceEnemies(8);
-    }
+    // protected override void Start()
+    // {
+    //     base.Start();
+    //     PlaceEnemies(8);
+    // }
 
-    private void PlaceEnemies(int enemyCount)
+    public void PlaceEnemies(int enemyCount)
     {
+        Debug.Log("place enemy");
         foreach(KeyValuePair<Point, DungeonRoom> room in roomDict)
         {
             if(room.Value.gameObject.name == "Origin Room")
@@ -64,7 +61,9 @@ public class DungeonCreator : Singleton<DungeonCreator>
             GameObject[] enemies = new GameObject[enemyCount];
             for(int i = 0; i < enemyCount; i++)
             {
+                Debug.Log("break hani?");
                 if (GameManager.Instance.EnemyStack.Count == 0) break;
+                Debug.Log("ok, no~");
                 enemies[i] = GameManager.Instance.EnemyStack.Pop();
                 enemies[i].SetActive(true);
                 enemies[i].transform.position = spPoint.spawnPoint[Random.Range(0, spPoint.spawnPoint.Length)].position;
