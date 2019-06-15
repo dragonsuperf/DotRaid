@@ -90,23 +90,6 @@ public class GameManager : Singleton<GameManager>
         // test code.
         //bossRoomPosition = startPosition;
     }
-
-    public void FindNextRoom()
-    {
-        if (currentRoom.NextRoom == null) return;
-
-        DungeonRoom nextRoom = currentRoom.NextRoom;
-
-        Vector3 move = currentRoom.transform.position - nextRoom.transform.position;
-        foreach(Character ch in heroes)
-        {
-            ch.gameObject.transform.position -= move;
-        }
-        Camera.main.transform.position = nextRoom.transform.position;
-
-        currentRoom = nextRoom;
-        currentRoomKey = currentRoom.RoomCoord;
-    }
     
     public void MoveCameraToRoomPosition(DungeonRoom room)
     {
