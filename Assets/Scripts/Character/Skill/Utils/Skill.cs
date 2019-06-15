@@ -54,7 +54,7 @@ public class TargetInfo
 /// </summary>
 public class SkillJobKindAttribute : Attribute
 {
-    public enum eAttribute { Healder, Ranger, Tanker, Warrior }
+    public enum eAttribute { Healer, Ranger, Tanker, Warrior }
     public eAttribute folderRoot { get; private set; }
     public SkillJobKindAttribute(eAttribute inFolderRoot)
     {
@@ -81,12 +81,12 @@ public class Skill : MonoBehaviour
     //스킬 id임
     protected int _idx = -1;
     protected SkillData _data;
-    public SkillData Data { get { return _data; } private set { } }
+    public SkillData Data { get { if (_data != null) return _data; else return null; } private set { } }
     public int IDX { get { return _idx; } set { _idx = value; } }
     /// <summary>
     /// 초기화임
     /// </summary>
-    public virtual void OnSet(object data)
+    public virtual void OnSet(object data = null)
     {
         _data = (SkillData)data;
     }
