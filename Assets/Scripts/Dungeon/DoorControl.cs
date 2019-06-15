@@ -11,6 +11,7 @@ public class DoorControl : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player" && DungeonManager.Instance.roomCleared)
         {
+            Debug.Log("OnTriggerEnter");
             DungeonManager.Instance.roomCleared = false;
             DungeonRoom next = Door.NextRoom;
             // Debug.Log(next);

@@ -32468,6 +32468,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeftDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 7920521473117535356, guid: f9fde217fc63b4c5a921372da7fa1c46,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7752481155471772383, guid: f9fde217fc63b4c5a921372da7fa1c46,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -32553,6 +32558,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RightDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920521473117535356, guid: f9fde217fc63b4c5a921372da7fa1c46,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7752481155471772383, guid: f9fde217fc63b4c5a921372da7fa1c46,
         type: 3}
@@ -32640,6 +32650,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpperDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 7920521473117535356, guid: f9fde217fc63b4c5a921372da7fa1c46,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7752481155471772383, guid: f9fde217fc63b4c5a921372da7fa1c46,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -32720,6 +32735,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BottomDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920521473117535356, guid: f9fde217fc63b4c5a921372da7fa1c46,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7752481155471772383, guid: f9fde217fc63b4c5a921372da7fa1c46,
         type: 3}
