@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// 스킬 프리팹 네임
+/// </summary>
 public enum eSkill
 {
     TestSkill = 0,
@@ -47,6 +50,19 @@ public class TargetInfo
 }
 
 /// <summary>
+/// 스킬 직업 탱,딜,힐,전사 속성 상위 폴더name 지정
+/// </summary>
+public class SkillJobKindAttribute : Attribute
+{
+    public enum eAttribute { Healer, Ranger, Tanker, Warrior }
+    public eAttribute folderRoot { get; private set; }
+    public SkillJobKindAttribute(eAttribute inFolderRoot)
+    {
+        folderRoot = inFolderRoot;
+    }
+}
+
+/// <summary>
 /// 스킬은 플레이어 정보만 있으면 된다
 /// </summary>
 public class SkillData
@@ -65,12 +81,12 @@ public class Skill : MonoBehaviour
     //스킬 id임
     protected int _idx = -1;
     protected SkillData _data;
-    public SkillData Data { get { return _data; } private set { } }
+    public SkillData Data { get { if (_data != null) return _data; else return null; } private set { } }
     public int IDX { get { return _idx; } set { _idx = value; } }
     /// <summary>
     /// 초기화임
     /// </summary>
-    public virtual void OnSet(object data)
+    public virtual void OnSet(object data = null)
     {
         _data = (SkillData)data;
     }

@@ -13,7 +13,6 @@ public class DoorControl : MonoBehaviour
         {
             DungeonManager.Instance.roomCleared = false;
             DungeonRoom next = Door.NextRoom;
-            // Debug.Log(next);
             var characters = GameManager.Instance.heroes;
             foreach(var ch in characters)
             {
@@ -24,6 +23,11 @@ public class DoorControl : MonoBehaviour
             GameManager.Instance.MoveCameraToRoomPosition(next);
             DungeonManager.Instance.SetOffClearToggle();
             DungeonManager.Instance.AStarManager.AttachAstar(next);
+
+            // wakeup monsters
+            foreach(Enemy enemy in DungeonManager.Instance.EnemiesGroup[next]){
+                enemy.gameObject.SetActive(true);
+            }
 
             DungeonManager.Instance.CurrPoint = GetCurrentPoint(Door, DungeonManager.Instance.CurrPoint);
             DungeonManager.Instance.AdjancentRooms = DungeonManager.Instance.GetAdjacentRooms(DungeonManager.Instance.CurrPoint);

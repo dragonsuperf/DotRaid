@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 분노 - 액티브
+/// </summary>
+[SkillJobKind(SkillJobKindAttribute.eAttribute.Warrior)]
 public class AngryPowerUpSkill : BuffSkillBase
 {
     [Header("Skill Option")]
