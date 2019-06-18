@@ -21,4 +21,29 @@ public static class GameUtil
         Debug.Log("There is no object named : " + name);
         return null;
     }
+
+    public static void DrawCircle(GameObject container, float radius, float lineWidth)
+    {
+        var segments = 360;
+        GameObject circle = new GameObject();
+        circle.transform.SetParent(container.transform);
+        
+        var line = circle.AddComponent<LineRenderer>();
+        line.useWorldSpace = false;
+        line.startWidth = lineWidth;
+        line.endWidth = lineWidth;
+        line.positionCount = segments + 1;
+
+        var pointCount = segments + 1; // add extra point to make startpoint and endpoint the same to close the circle
+        var points = new Vector3[pointCount];
+
+        for (int i = 0; i < pointCount; i++)
+        {
+            var rad = Mathf.Deg2Rad * (i * 360f / segments);
+            points[i] = new Vector3(Mathf.Sin(rad) * radius, 0, Mathf.Cos(rad) * radius);
+        }
+
+        line.SetPositions(points);
+        circle.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+    }
 }

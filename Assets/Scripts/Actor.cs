@@ -1,4 +1,4 @@
-﻿using Pathfinding;
+﻿    using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -83,6 +83,21 @@ public class Actor : MonoBehaviour
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
         }
+    }
+
+    public bool GetActorBack()
+    {
+        bool IsTgLeft = false;
+        bool IsLeft = false;
+
+        if (currentTarget.rotation.y > 179 && currentTarget.rotation.y < 181) IsTgLeft = true;
+        else IsTgLeft = false;
+
+        if (transform.rotation.y > 179 && transform.rotation.y < 181) IsLeft = true;
+        else IsLeft = false;
+
+        if (IsTgLeft == IsLeft) return true;
+        else return false;
     }
 
     public void SetDestinationAstar(Transform destination) // Astar pathfinding 목적지 설정 : 게임오브젝트의 Transform 넣으면 됨

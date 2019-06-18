@@ -21,6 +21,42 @@ public class SkillManager : Singleton<SkillManager>
     }
 
     /// <summary>
+    /// 스킬 루트 속성 리플렉션
+    /// </summary>
+    /// <returns>루트string</returns>
+    private string GetSkillJobKindAttribute<T>()
+    {
+        Type type = typeof(T);
+        string root = string.Empty;
+        SkillJobKindAttribute[] attrs = (SkillJobKindAttribute[])type.GetCustomAttributes(typeof(SkillJobKindAttribute), true);  
+        foreach (SkillJobKindAttribute attr in attrs)
+        {
+            SkillJobKindAttribute a = attr;
+            root = a.folderRoot.ToString();
+        }
+        return root;
+    }
+
+    /// <summary>
+    /// 각 캐릭터에서 패시브 생성
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public Skill CreatePassive<T>(SkillData skillData)
+    {
+        if(skillData==null) return null;
+        Type type = typeof(T);
+        GameObject newObj = Instantiate(new GameObject(type.ToString()),_skillRoot.transform);
+        Skill newSkill = newObj.AddComponent(type) as Skill;
+        newSkill.IDX = _skillCount;
+        _skillDict.Add(_skillCount, newSkill);
+
+        newSkill.OnSet(skillData);
+
+        _skillCount++; // TODO 키 유니크하게 관리해야함
+        return newSkill;
+    }
+
+    /// <summary>
     /// 스킬 생성함 프리팹이름이 스킬클래스 이름이어야함
     /// </summary>
     /// <typeparam name="T">스킬 객체만 ㅇㅋ</typeparam>

@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// 스킬 프리팹 네임
+/// </summary>
 public enum eSkill
 {
     TestSkill = 0,
@@ -47,15 +50,30 @@ public class TargetInfo
 }
 
 /// <summary>
+/// 스킬 직업 탱,딜,힐,전사 속성 상위 폴더name 지정
+/// </summary>
+public class SkillJobKindAttribute : Attribute
+{
+    public enum eAttribute { Healer, Ranger, Tanker, Warrior }
+    public eAttribute folderRoot { get; private set; }
+    public SkillJobKindAttribute(eAttribute inFolderRoot)
+    {
+        folderRoot = inFolderRoot;
+    }
+}
+
+/// <summary>
 /// 스킬은 플레이어 정보만 있으면 된다
 /// </summary>
 public class SkillData
 {
+    public float damage = 0f;
     public CasterInfo player_info = null;
     public TargetInfo target_info = null;
     public eSkillState state = eSkillState.Nomal;
     public List<Effect> effect = null;
     public Action createEffectCallback = null; //생성 시점
+    public Action hitCallback = null; //스킬이 맞았을 때 히어로가 등록하는 콜백 (ex 맞았을 때 마나확률 계산해서 마나를 획득하는 듯)
     public Action hitEffectCallback = null; //히팅 시점
     public Action inherentCallback = null; //스킬마다 고유 효과
 }
@@ -65,12 +83,12 @@ public class Skill : MonoBehaviour
     //스킬 id임
     protected int _idx = -1;
     protected SkillData _data;
-    public SkillData Data { get { return _data; } private set { } }
+    public SkillData Data { get { if (_data != null) return _data; else return null; } private set { } }
     public int IDX { get { return _idx; } set { _idx = value; } }
     /// <summary>
     /// 초기화임
     /// </summary>
-    public virtual void OnSet(object data)
+    public virtual void OnSet(object data = null)
     {
         _data = (SkillData)data;
     }

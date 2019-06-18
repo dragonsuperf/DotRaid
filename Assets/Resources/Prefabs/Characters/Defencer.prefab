@@ -73,27 +73,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
+  stat:
+    isSelect: 0
+    hp: 500
+    maxHp: 0
+    attackRangeRadius: 5
+    awareRangeRadius: 15
+    moveSpeed: 5
+    attackSpeed: 0
+    castSpeed: 0
+    physicDamage: 0
+    magicDamage: 0
+    physicDef: 0
+    magicDef: 0
   skill_first: 0
   skill_second: 0
   boss: {fileID: 0}
   characters: []
-  currentTarget: {fileID: 0}
   point: {fileID: 0}
   curPosition: {x: 0, y: 0, z: 0}
-  stat:
-    job: 
-    synergy: 
-    isSelect: 0
-    agro: 0
-    level: 0
-    hp: 500
-    armor: 0
-    attack: 0
-    attackSpeed: 0
-    attackRangeRadius: 5
-    awareRangeRadius: 15
-    moveSpeed: 5
-    CastSpeed: 0
   charState: 0
   lineProto: {fileID: 0}
 --- !u!212 &8632173303461905189
@@ -291,7 +289,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &4308529733864974261
 MonoBehaviour:
   m_ObjectHideFlags: 0

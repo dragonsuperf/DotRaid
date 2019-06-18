@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1083282528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.09, y: 1.78, z: 42.06998}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children:
   - {fileID: 253885457105876796}
   - {fileID: 1122559048451862727}
@@ -141,6 +141,7 @@ MonoBehaviour:
   stat:
     isSelect: 0
     hp: 10
+    maxHp: 0
     attackRangeRadius: 1
     awareRangeRadius: 1
     moveSpeed: 1
