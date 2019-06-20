@@ -26,13 +26,9 @@ public class DungeonCreator : Singleton<DungeonCreator>
     protected override void Awake()
     {
         InitRooms();
-        //int depth = 10;
-        //int level = 0;
+
         Point origin = new Point(10, 10);
         DungeonManager.Instance.CurrPoint = origin;
-        //CreateDungeonRooms(ref level, ref depth, origin, Point.GetRandomWay(origin), true);
-
-        
 
         CreateRooms(10, origin, null, -1, -1, true);
         HideOtherRooms();
@@ -46,13 +42,13 @@ public class DungeonCreator : Singleton<DungeonCreator>
         }
     }
 
-    protected override void Start()
-    {
-        base.Start();
-        PlaceEnemies(8);
-    }
+    // protected override void Start()
+    // {
+    //     base.Start();
+    //     PlaceEnemies(8);
+    // }
 
-    private void PlaceEnemies(int enemyCount)
+    public void PlaceEnemies(int enemyCount)
     {
         foreach(KeyValuePair<Point, DungeonRoom> room in roomDict)
         {
@@ -66,10 +62,17 @@ public class DungeonCreator : Singleton<DungeonCreator>
             {
                 if (GameManager.Instance.EnemyStack.Count == 0) break;
                 enemies[i] = GameManager.Instance.EnemyStack.Pop();
-                enemies[i].SetActive(true);
+                // enemies[i].SetActive(true);
                 enemies[i].transform.position = spPoint.spawnPoint[Random.Range(0, spPoint.spawnPoint.Length)].position;
+
+                // DungeonManager의 EnemiesGroup에 넣는다.
+                DungeonManager.Instance.SetEnemiesInRooms(room.Value, enemies[i].GetComponent<Enemy>());
             }
         }
+
+        // foreach(KeyValuePair<DungeonRoom, List<Enemy>> pair in DungeonManager.Instance.EnemiesGroup){
+        //     Debug.Log(pair.Value.Count);
+        // }
     }
 
     //private void CreateToWayDirection(int globalDirection, int depth, DungeonRoom from)

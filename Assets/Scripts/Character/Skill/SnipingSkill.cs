@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 스나이퍼 - 액티브 스킬
+/// </summary>
+[SkillJobKind(SkillJobKindAttribute.eAttribute.Ranger)]
 public class SnipingSkill : NonTargetSkillBase
 {
     [SerializeField] private float _speed = 1.0f;
@@ -29,6 +33,9 @@ public class SnipingSkill : NonTargetSkillBase
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Enemy")
+        {
+            Data.hitCallback.SafeInvoke();
             SkillManager.Instance.Remove(this._idx);
+        }
     }
 }

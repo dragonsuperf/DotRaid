@@ -160,5 +160,13 @@ public class Enemy : Actor
     {  
         enabled = false;
         StartCoroutine(em.DestroyWithFadeOut(gameObject));
+
+        // broadcast i'm dead
+        DungeonManager.Instance.RemoveEnemyInRoom(DungeonManager.Instance.GetCurrentDungeonRoom(), this);
+    }
+
+    public IEnumerator DebugDead(){
+        yield return new WaitForSeconds(0.5f);
+        Dead();
     }
 }
