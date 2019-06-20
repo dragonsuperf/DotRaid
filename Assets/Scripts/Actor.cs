@@ -1,5 +1,4 @@
-﻿using Pathfinding;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -85,14 +84,4 @@ public class Actor : MonoBehaviour
         }
     }
 
-    public void SetDestinationAstar(Transform destination) // Astar pathfinding 목적지 설정 : 게임오브젝트의 Transform 넣으면 됨
-    {
-        this.GetComponent<AIDestinationSetter>().target = destination;
-    }
-
-    public void SetDestinationAstar(Transform destination,float speed) // Speed
-    {
-        this.GetComponent<AIDestinationSetter>().target = destination;
-        this.GetComponent<AIPath>().maxSpeed = speed;
-    }
 }

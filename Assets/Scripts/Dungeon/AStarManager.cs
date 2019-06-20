@@ -1,38 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
 
 public class AStarManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject Astar;
-    private AstarPath AstarPath;
+    public AStarGrid AStarGrid;
 
     private void Start(){
         Init();
         AttachAstar(DungeonManager.Instance.GetCurrentDungeonRoom());
+
     }
 
     public void Init(){
         GameObject go = Instantiate(Astar);
         go.transform.parent = this.transform;
-        AstarPath = go.GetComponent<AstarPath>();
+        AStarGrid = go.GetComponent<AStarGrid>();
     }
 
     public void AttachAstar(DungeonRoom room){
-        AstarPath.transform.parent = room.gameObject.transform;
-        AstarData  data = AstarPath.active.data;
-        GridGraph gridGraph = data.gridGraph;
+        AStarGrid.transform.parent = room.gameObject.transform;
+        AStarGrid.transform.position = room.gameObject.transform.position;
+        //AstarData  data = AstarPath.active.data;
+        //GridGraph gridGraph = data.gridGraph;
         // gridGraph.width = 80;
         // gridGraph.depth = 60;
-        gridGraph.SetDimensions(80, 60, 1f);
-        gridGraph.center = room.gameObject.transform.position;
-        gridGraph.Scan();
+        //gridGraph.SetDimensions(80, 60, 1f);
+        //gridGraph.center = room.gameObject.transform.position;
+        //gridGraph.Scan();
         // Debug.Log(gridGraph.center);
         
         // Debug.Log(gridGraph.center);
     }
 
-    
 }

@@ -16,7 +16,7 @@ public class DungeonManager : Singleton<DungeonManager>
     {
         clearToggle.onValueChanged.AddListener((bool val) =>
         {
-            ClearToggleValueChanged(val);
+            ClearToggleValueChanged(val);   
         });
     }
 

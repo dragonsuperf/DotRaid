@@ -187,7 +187,6 @@ public class Character : Actor
                 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
 
                 aStarTarget.transform.position = curPosition;
-                SetDestinationAstar(aStarTarget.transform, stat.moveSpeed);
             }
 
             if (Input.GetKeyUp(KeyCode.S))
