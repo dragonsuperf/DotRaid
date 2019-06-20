@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class AStarManager : MonoBehaviour
+public class AStarManager : Singleton<AStarManager>
 {
     [SerializeField]
     private GameObject Astar;
@@ -12,12 +12,11 @@ public class AStarManager : MonoBehaviour
     private void Start(){
         Init();
         AttachAstar(DungeonManager.Instance.GetCurrentDungeonRoom());
-
     }
 
-    private void Update()
+    public void Update()
     {
-        AStarGrid.collidableMap = DungeonManager.Instance.GetCurrentDungeonRoom().GetComponent<Tilemap>();
+        
     }
 
     public void Init(){
@@ -28,7 +27,9 @@ public class AStarManager : MonoBehaviour
 
     public void AttachAstar(DungeonRoom room){
         AStarGrid.transform.parent = room.gameObject.transform;
-        AStarGrid.transform.position = room.gameObject.transform.position;     
+        AStarGrid.transform.position = room.gameObject.transform.position;
+        AStarGrid.collidableMap = room.GetComponent<Tilemap>();
+
         //AstarData  data = AstarPath.active.data;
         //GridGraph gridGraph = data.gridGraph;
         // gridGraph.width = 80;

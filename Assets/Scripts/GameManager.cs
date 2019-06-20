@@ -35,6 +35,7 @@ public class GameManager : Singleton<GameManager>
         SkillManager.Instance.OnSet();
         EffectManager.Instance.OnSet();
         CharSelectManager.Instance.OnSet();
+        AStarManager.Instance.OnSet();
         
         SpawnEnemy(200);
         DungeonCreator.Instance.PlaceEnemies(8);

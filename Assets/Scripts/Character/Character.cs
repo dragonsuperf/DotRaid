@@ -61,6 +61,7 @@ public class Character : Actor
     protected Animator ani;
     EffectManager effectmanager;
     InputListener _inputListener;
+    AStarManager aStarManager;
     float distance;
 
     GameManager gameManager;
@@ -84,6 +85,7 @@ public class Character : Actor
     private Vector3 screenPoint;
     private Vector3 offset;
     private Quaternion arrowAngle;
+    private AStarPathfinding aStarPathfinding;
     
 
     public Vector3 curPosition;
@@ -105,12 +107,15 @@ public class Character : Actor
         ani = this.GetComponent<Animator>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _inputListener = GameManager.Instance.GetComponent<InputListener>();
+        aStarManager = GameManager.Instance.GetComponent<AStarManager>();
         aStarTarget = new GameObject(); // empty GameObject for Astar pathfinding
         charState = CharacterState.idle;
         boss = gameManager.GetBoss();
         characters = gameManager.GetChars();
         effectmanager = EffectManager.Instance;
-
+        aStarPathfinding = GetComponent<AStarPathfinding>();
+        aStarPathfinding.grid = aStarManager.AStarGrid;
+        
         selectiveObject = transform.Find("isSelect").gameObject;
         line = transform.GetComponent<LineRenderer>();
         arrowSelector = Resources.Load("Prefabs/arrowSelector") as GameObject;
@@ -248,6 +253,7 @@ public class Character : Actor
         if (charState == CharacterState.move)
         {
             transform.position = Vector2.MoveTowards(transform.position, curPosition, stat.moveSpeed * Time.deltaTime);
+            aStarPathfinding.FindPath(transform.position, curPosition);
             currentTarget = null;
             ani.SetBool("walk", true);
 
