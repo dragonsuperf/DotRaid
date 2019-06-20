@@ -29,7 +29,7 @@ public class AStarGrid : MonoBehaviour
 
     void Start()
     {
-        collidableMap = DungeonManager.Instance.GetCurrentDungeonRoom().GetComponent<Tilemap>();
+        //collidableMap = DungeonManager.Instance.GetCurrentDungeonRoom().GetComponent<Tilemap>();
         worldsize3 = collidableMap.size;
         gridWorldSize = worldsize3;
         //set gridX, gridY, offset
