@@ -114,7 +114,7 @@ public class Character : Actor
         characters = gameManager.GetChars();
         effectmanager = EffectManager.Instance;
         aStarPathfinding = GetComponent<AStarPathfinding>();
-        aStarPathfinding.grid = aStarManager.AStarGrid;
+        //aStarPathfinding.grid = aStarManager.AStarGrid;
         
         selectiveObject = transform.Find("isSelect").gameObject;
         line = transform.GetComponent<LineRenderer>();

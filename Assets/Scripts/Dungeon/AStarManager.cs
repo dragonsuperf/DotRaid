@@ -5,11 +5,12 @@ using UnityEngine.Tilemaps;
 
 public class AStarManager : Singleton<AStarManager>
 {
-    [SerializeField]
     private GameObject Astar;
     public AStarGrid AStarGrid;
 
-    private void Start(){
+    protected override void Start(){
+        base.Start();
+        Astar = Instantiate(Resources.Load("Prefabs/Maps/aStar") as GameObject);
         Init();
         AttachAstar(DungeonManager.Instance.GetCurrentDungeonRoom());
     }
