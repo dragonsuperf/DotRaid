@@ -45,7 +45,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collidableMap: {fileID: 8719451579858976190, guid: 336f7c09adbcb431985aa3195c7cebbb,
     type: 3}
+  worldsize3: {x: 0, y: 0, z: 0}
   gridWorldSize: {x: 0, y: 0}
-  resolution: 0.5
+  resolution: 1.5
   allowDiagonals: 1
-  showGrid: 1
+  isCollidable: 0
+  showGrid: 0

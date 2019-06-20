@@ -30,7 +30,9 @@ public class AStarGrid : MonoBehaviour
 
     void Start()
     {
-        //collidableMap = DungeonManager.Instance.GetCurrentDungeonRoom().GetComponent<Tilemap>();
+      
+        //collidableMap = DungeonManager.Instance.GetCurrentDungeonRoom()
+        //    .transform.Find("Pattern").GetComponent<Tilemap>();
         //isCollidable = collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<TilemapCollider2D>();
         worldsize3 = collidableMap.size;
         gridWorldSize = worldsize3;
@@ -44,7 +46,7 @@ public class AStarGrid : MonoBehaviour
         BuildGrid();
     }
 
-    void BuildGrid()
+    public void BuildGrid()
     {
         //create the map array
         nodes = new Node[gridX, gridY];
@@ -59,22 +61,31 @@ public class AStarGrid : MonoBehaviour
                 Vector3 checkPos = startPos + new Vector3(x * resolution + offset, y * resolution + offset, 0);
                 bool isSolid = false;
 
-                if (collidableMap.GetColliderType(collidableMap.WorldToCell(checkPos)) == Tile.ColliderType.Grid)
-                {
-                    isSolid = true;
-                }
                 /*
                 //if there is a collidable tile there, then mark the node as solid
                 if (collidableMap.HasTile(collidableMap.WorldToCell(checkPos)))
                 {
                     isSolid = true;
                 }
-
-                if (isCollidable)
+                */
+                Vector2 worldPoint = Camera.main.ScreenToWorldPoint(checkPos);
+                RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
+                if(hit.collider != null)
                 {
                     isSolid = true;
                 }
-                */
+
+                
+                if(collidableMap.transform.childCount > 6)
+                {
+                    if (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().HasTile
+                        (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().WorldToCell(checkPos)))
+                    {
+                        isSolid = true;
+                    }
+                }
+                
+                
                 //update the node map
                 nodes[x, y] = new Node(isSolid, x, y);
             }

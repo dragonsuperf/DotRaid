@@ -35,7 +35,7 @@ public class GameManager : Singleton<GameManager>
         EnemiesRoot = new GameObject("EnemiesRoot");
         dungeonCreator = DungeonCreator.Instance;
 
-        AStarManager.Instance.OnSet();
+        //AStarManager.Instance.OnSet();
         SkillManager.Instance.OnSet();
         EffectManager.Instance.OnSet();
         CharSelectManager.Instance.OnSet();
