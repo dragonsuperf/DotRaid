@@ -25,7 +25,7 @@ public class Boss : Enemy
 
         pm.AddPattern("attack", 0.3f, 3.0f, 1.0f);
         pm.AddPattern("cast", 2.0f, 10.0f, 0.5f);
-        pm.AddPattern("charge", 1.2f, 8.0f, 0.5f);
+        pm.AddPattern("charge", 2.4f, 8.0f, 0.5f);
         pm.AddPattern("shootcast", 2.0f, 8.0f, 0.5f);
 
         em.AddEffectToPool("bossAfterimage", afterImage);
