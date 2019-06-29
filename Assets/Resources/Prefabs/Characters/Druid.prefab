@@ -134,13 +134,12 @@ MonoBehaviour:
     magicDamage: 0
     physicDef: 0
     magicDef: 0
-  skill_first: 0
+  skill_first: 4
   skill_second: 0
   boss: {fileID: 0}
   characters: []
   point: {fileID: 0}
   curPosition: {x: 0, y: 0, z: 0}
-  charState: 0
   lineProto: {fileID: 0}
 --- !u!58 &7552278642472358214
 CircleCollider2D:

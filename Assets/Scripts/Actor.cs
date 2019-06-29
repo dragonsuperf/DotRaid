@@ -51,7 +51,8 @@ public class Actor : MonoBehaviour
     public float CharMagicDamage { get => stat.magicDamage; set => stat.magicDamage = value; }
     public float CharPhysicDef { get => stat.physicDef; set => stat.physicDef = value; }
     public float CharMagicDef { get => stat.magicDef; set => stat.magicDef = value; }
-    
+    public ActorState CharState { get => state; set => state = value; }
+
     public void TakeDamage(float damage)
     {
         stat.hp -= damage;
@@ -61,6 +62,26 @@ public class Actor : MonoBehaviour
     public void TakeDamage(float damage, DamageType type)
     {
         stat.hp -= damage - (type == DamageType.physic ? stat.physicDef : stat.magicDef);
+    }
+
+    public void StopDotCorotine()
+    {
+        StopCoroutine("StartTakeDotDamage");
+    } 
+    public IEnumerator StartTakeDotDamage(float tickDamage, float tickTime, float duringTime, DamageType type)
+    {
+        float StartTime = Time.time;
+        while (true)
+        {
+            if (StartTime + duringTime < Time.time)
+                yield break;
+            if (StartTime + tickTime < Time.time)
+            {
+                TakeDamage(tickDamage, type);
+                StartTime = Time.time;
+            }
+            yield return null;
+        }
     }
 
     public void TakeHeal(float heal)
