@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 2853873378045141454}
   - component: {fileID: 2853873378045141453}
   - component: {fileID: 5041527016368762972}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: SkeletonWarrior
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -228,7 +228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2853873378974065364}
   - component: {fileID: 2853873378974065363}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: PatternManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}

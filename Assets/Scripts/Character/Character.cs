@@ -61,6 +61,7 @@ public class Character : Actor
 
     protected Animator ani;
     EffectManager effectmanager;
+    DungeonManager dungeonManager;
     InputListener _inputListener;
     AStarManager aStarManager;
     float distance;
@@ -105,25 +106,20 @@ public class Character : Actor
         ani = this.GetComponent<Animator>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _inputListener = GameManager.Instance.GetComponent<InputListener>();
-        //aStarManager = GameManager.Instance.GetComponent<AStarManager>();
         aStarManager = GameObject.Find("MapGrid").GetComponent<AStarManager>();
         aStarTarget = new GameObject(); // empty GameObject for Astar pathfinding
         state = ActorState.idle;
+
         boss = gameManager.GetBoss();
         characters = gameManager.GetChars();
+
         effectmanager = EffectManager.Instance;
+        dungeonManager = DungeonManager.Instance;
+
         aStarPathfinding = GetComponent<AStarPathfinding>(); 
         aStarPathfinding.grid = aStarManager.AStarGrid;
         
         selectiveObject = transform.Find("isSelect").gameObject;
-        line = transform.GetComponent<LineRenderer>();
-        arrowSelector = Resources.Load("Prefabs/arrowSelector") as GameObject;
-        arrowEnd = Resources.Load("Prefabs/arrowHead") as GameObject;
-
-        arrowStart = Instantiate(arrowSelector, new Vector2(0, 0), Quaternion.identity);
-        point = Instantiate(arrowEnd, new Vector2(0, 0), Quaternion.identity);
-        arrowStart.SetActive(false);
-        point.SetActive(false);
 
         StartCoroutine(AttackMotion(1 / this.stat.attackSpeed));
 
@@ -206,6 +202,23 @@ public class Character : Actor
 
     }
 
+    Transform GetClosestEnemy(List<Enemy> enemies) // 가장 가까운 캐릭터를 찾음
+    {
+        Transform tMin = null;
+        float minDist = Mathf.Infinity;
+        Vector3 currentPos = transform.position;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            float dist = Vector3.Distance(enemies[i].transform.position, currentPos);
+            if (dist < minDist)
+            {
+                tMin = enemies[i].transform;
+                minDist = dist;
+            }
+        }
+        return tMin;
+    }
+
 
     void MoveAndAttack()
     {
@@ -248,40 +261,20 @@ public class Character : Actor
         Ray2D ray = new Ray2D(wp, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-        if(hit.collider == null)
+        if (hit.collider == null) // 어택땅
         {
-            /*
-            curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
-            state = ActorState.move;
-            */           
+            List<Enemy> enemies = new List<Enemy>();
+            enemies = dungeonManager.EnemiesGroup[dungeonManager.GetCurrentDungeonRoom()];
+            currentTarget = GetClosestEnemy(enemies);
+
+            if (enemies.Count == 0)
+            {
+                curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
+                state = ActorState.move;
+            }
 
         }
-        else if(hit.collider.tag == "Enemy")
-        {
-            currentTarget = hit.collider.transform;
-        }
-        /*
-        if (hit.collider.tag == "Enemy")
-        {
-
-        }
-        else // No Collider && No Enemy
-        {
-
-        }
-        */
-
-
-        //FocusAttack();
-    }
-
-    void FocusAttack()
-    {
-        Vector2 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Ray2D ray = new Ray2D(wp, Vector2.zero);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-        if (hit.collider.tag == "Enemy")
+        else if (hit.collider.tag == "Enemy") // 강제어택
         {
             currentTarget = hit.collider.transform;
         }
@@ -293,8 +286,6 @@ public class Character : Actor
     {
         if (state == ActorState.move)
         {
-            //pathNode = aStarPathfinding.FindPath(transform.position, curPosition); //찾은 길 노드배열
-            //transform.position = Vector2.MoveTowards(transform.position, curPosition, stat.moveSpeed * Time.deltaTime);
             transform.position = Vector2.MoveTowards(transform.position, aStarPathfinding.WorldPointFromNode(pathNode[0]), stat.moveSpeed * Time.deltaTime);
             if(pathNode != null)
             {
@@ -302,15 +293,9 @@ public class Character : Actor
                 {
                     pathNode.RemoveAt(0);
                 }
-                /*
-                if(Vector2.Distance(transform.position, aStarPathfinding.WorldPointFromNode(pathNode[0])) < 0.5) // 0번쨰 노드에 도착하면 
-                {
-                    pathNode.RemoveAt(0); // 찾은 길 노드 0번째 인덱스 삭제
-                }
-                */
             }
 
-            currentTarget = null;
+            currentTarget = null; /////////////////수정해야함 ... 이거때문에 이동할때 공격하지않음
             ani.SetBool("walk", true);
 
             if (pathNode.Count == 0)
@@ -327,22 +312,13 @@ public class Character : Actor
                 curPosition = transform.position;
             }
 
-            if (isCollidingWithEnemy)
+            if (isCollidingWithEnemy || isCollidingWithPlayer) // 콜리더 충돌중이면 새로운 길 찾음
             {
                 //pathNode[0].isSolid = true;
                 pathNode = aStarPathfinding.FindPath(transform.position, curPosition);
             }
 
         }
-        /*
-
-        if (transform.position == curPosition) //강제 이동 끝나면 idle상태
-        {
-            state = ActorState.idle;
-            ani.SetBool("walk", false);
-        }
-
-            */
 
         if (state == ActorState.chase)
         {
@@ -355,7 +331,7 @@ public class Character : Actor
     {
         if (currentTarget != null)
         {
-            if (state != ActorState.move && stat.attackRangeRadius > distance) //in attack range
+            if (stat.attackRangeRadius > distance) //in attack range
             {
                 state = ActorState.attack;
             }
