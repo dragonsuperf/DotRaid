@@ -68,9 +68,6 @@ public class Character : Actor
     GameManager gameManager;
     public GameObject boss;
     public List<Character> characters;
-    protected int _idx = 0; //캐릭터 고유 index (게임매니저의 인덱스랑 싱크가 맞아야 함)
-    public int IDX { get { return _idx; } private set { } }
-    public void SetIDX(int val) { _idx = val; }
 
     public GameObject point;
     private GameObject aStarTarget;
@@ -97,7 +94,7 @@ public class Character : Actor
 
     //이걸로 스킬 만드는 타이밍 조절
     public SkillStateData skillStateData = new SkillStateData();
-    private SkillData _lastSkill; //마지막 사용 스킬
+    private SkillData _lastSkill = new SkillData(); //마지막 사용 스킬
 
     // Start is called before the first frame update
     protected virtual void Start()

@@ -21,8 +21,12 @@ public class SinglePoisonSkill : BuffSkillBase
     /// </summary>
     private void HitPoison()
     {
-        GameManager.Instance.Enemies[Data.target_info.idx].StopDotCorotine();
-        StartCoroutine( GameManager.Instance.Enemies[ Data.target_info.idx ].StartTakeDotDamage(1,1,10,DamageType.physic) );
+        if (this == null) return;
+        if (!SkillManager.Instance.HasSkill(IDX)) return;
+        //새로운 타겟으로 갱신필요
+        var targetIDX = GameManager.Instance.chracters[_data.player_info.idx].CurrentTarget.gameObject.GetComponent<Enemy>().IDX;
+        GameManager.Instance.Enemies[targetIDX].StopDotCorotine();
+        GameManager.Instance.Enemies[targetIDX].StartDotCorotine(1,0.5f,15f,DamageType.physic);
         SkillManager.Instance.Remove(IDX);
     }
 

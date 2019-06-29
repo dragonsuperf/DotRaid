@@ -113,6 +113,7 @@ public class GameManager : Singleton<GameManager>
         {
             int num = Random.Range(0, Enemies.Count);
             Enemy enemy = Instantiate(Enemies[num], EnemiesRoot.transform) as Enemy;
+            enemy.SetIDX(i);
             enemy.transform.position = this.transform.position;
             enemy.transform.parent = this.transform;
             EnemyStack.Push(enemy);
