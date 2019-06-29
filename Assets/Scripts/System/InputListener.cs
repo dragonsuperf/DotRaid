@@ -270,7 +270,8 @@ public class InputListener : MonoBehaviour
         Vector2 worldPoint = camera.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
 
-        if(mousePosition == Input.mousePosition) // if Click
+        //if(mousePosition == Input.mousePosition) // if Click
+        if(Vector2.Distance(mousePosition, Input.mousePosition)<1)   
         {
             if (hit.collider)
             {
