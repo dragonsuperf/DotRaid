@@ -59,6 +59,14 @@ public class AStarGrid : MonoBehaviour
             {
                 //check the middle of each node
                 Vector3 checkPos = startPos + new Vector3(x * resolution + offset, y * resolution + offset, 0);
+                Vector3 checkPosLeft = startPos + new Vector3(x - 1 * resolution + offset, y * resolution + offset, 0);
+                Vector3 checkPosRight = startPos + new Vector3(x + 1 * resolution + offset, y * resolution + offset, 0);
+                Vector3 checkPosUp = startPos + new Vector3(x * resolution + offset, y + 1 * resolution + offset, 0);
+                Vector3 checkPosDown = startPos + new Vector3(x * resolution + offset, y - 1 * resolution + offset, 0);
+                Vector3 checkPosUpRight = startPos + new Vector3(x + 1 * resolution + offset, y + 1 * resolution + offset, 0);
+                Vector3 checkPosUpLeft = startPos + new Vector3(x - 1 * resolution + offset, y + 1 * resolution + offset, 0);
+                Vector3 checkPosDownRight = startPos + new Vector3(x + 1 * resolution + offset, y - 1 * resolution + offset, 0);
+                Vector3 checkPosDownLeft = startPos + new Vector3(x - 1 * resolution + offset, y - 1 * resolution + offset, 0);
                 bool isSolid = false;
 
                 /*
@@ -68,26 +76,72 @@ public class AStarGrid : MonoBehaviour
                     isSolid = true;
                 }
                 */
-                Vector2 worldPoint = Camera.main.ScreenToWorldPoint(checkPos);
-                RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
-                if(hit.collider != null)
-                {
-                    isSolid = true;
-                }
+ 
 
-                
+                /*
+                맵에서 벽에 끼는것을 방지하기 위하여 벽에 붙어서 이동하지 않기위해 closed 노드 근처도 close로 바꿔줌
+                */
                 if(collidableMap.transform.childCount > 6)
                 {
                     if (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().HasTile
                         (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().WorldToCell(checkPos)))
                     {
-                        isSolid = true;
+                        isSolid = true; // 그 자신이 닫힌 노드일 경우
+                    }
+
+                    else if (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().HasTile
+                        (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().WorldToCell(checkPosRight)))
+                    {
+                        isSolid = true; // 오른쪽이 닫힌 노드일 경우
+                    }
+
+                    else if (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().HasTile
+                        (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().WorldToCell(checkPosLeft)))
+                    {
+                        isSolid = true; // 왼쪽이 닫힌 노드일 경우
+                    }
+
+                    else if (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().HasTile
+                        (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().WorldToCell(checkPosUp)))
+                    {
+                        isSolid = true; // 위가 닫힌 노드일 경우
+                    }
+
+                    else if (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().HasTile
+                        (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().WorldToCell(checkPosDown)))
+                    {
+                        isSolid = true; // 아래가 닫힌 노드일 경우
+                    }
+
+                    else if (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().HasTile
+                        (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().WorldToCell(checkPosUpRight)))
+                    {
+                        isSolid = true; // 오른쪽 위가 닫힌 노드일 경우
+                    }
+
+                    else if (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().HasTile
+                        (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().WorldToCell(checkPosUpLeft)))
+                    {
+                        isSolid = true; // 왼쪽 위가 닫힌 노드일 경우
+                    }
+
+                    else if (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().HasTile
+                        (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().WorldToCell(checkPosDownRight)))
+                    {
+                        isSolid = true; //오른쪽 아래가 닫힌 노드일 경우
+                    }
+
+                    else if (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().HasTile
+                        (collidableMap.transform.GetChild(5).Find("Pattern").GetComponent<Tilemap>().WorldToCell(checkPosDownLeft)))
+                    {
+                        isSolid = true; //왼쪽 아래가 닫힌 노드일 경우
                     }
                 }
                 
                 
                 //update the node map
                 nodes[x, y] = new Node(isSolid, x, y);
+
             }
         }
     }
