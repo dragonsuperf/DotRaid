@@ -21,8 +21,9 @@ public class ChargeObject : MonoBehaviour
         if (other.tag == "Player")
         {
             //other.gameObject.GetComponent<Rigidbody2D>().drag = 5.0f;
-            other.gameObject.GetComponent<Actor>().TakeDamage(1.0f);
+            other.gameObject.GetComponent<Actor>().TakeDamage(10.0f);
             EffectManager.Instance.PlayEffectOnPosition("blast", other.transform.position, 1.0f);
+
         }
     }
 
