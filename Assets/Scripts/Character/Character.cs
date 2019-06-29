@@ -418,7 +418,7 @@ public class Character : Actor
 
         for(int i = 0; i < data.Count; i++)
         {
-            if (data[i]["name"].Equals(this.name))
+            if (this.name.Contains(data[i]["name"].ToString()))
             {
                 //this.stat.level = (int)data[i]["level"];
                 this.stat.hp = (int)data[i]["max_hp"];
