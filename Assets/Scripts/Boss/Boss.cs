@@ -31,7 +31,7 @@ public class Boss : Enemy
         em.AddEffectToPool("bossAfterimage", afterImage);
         roomPosition = DungeonManager.Instance.GetCurrentDungeonRoom().transform;
 
-        GameUtil.DrawCircle(gameObject, 10.0f, 0.35f);
+        Util.DrawCircle(gameObject, 10.0f, 0.35f);
     }
 
     // Update is called once per frame
@@ -67,7 +67,7 @@ public class Boss : Enemy
         
         stat.moveSpeed *= 5.0f;
 
-        GameUtil.GetChildWithName(gameObject, "Charge").gameObject.SetActive(true);
+        Util.GetChildWithName(gameObject, "Charge").gameObject.SetActive(true);
 
         StartCoroutine(MakeSomeAfterimage());
     }
@@ -76,7 +76,7 @@ public class Boss : Enemy
     {
         forceTarget = null;
 
-        GameUtil.GetChildWithName(gameObject, "Charge").gameObject.SetActive(false);
+        Util.GetChildWithName(gameObject, "Charge").gameObject.SetActive(false);
 
         stat.moveSpeed /= 5.0f;
     }
