@@ -261,6 +261,7 @@ public class Character : Actor
         Ray2D ray = new Ray2D(wp, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
+<<<<<<< HEAD
         if (hit.collider == null) // 어택땅
         {
             List<Enemy> enemies = new List<Enemy>();

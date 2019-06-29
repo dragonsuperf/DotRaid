@@ -93,7 +93,7 @@ public class SkillManager : Singleton<SkillManager>
         return false;
     }
 
-    private bool HasSkill(int idx)
+    public bool HasSkill(int idx)
     {
         if (!_skillDict.ContainsKey(idx))
             return false;

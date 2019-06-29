@@ -2768,8 +2768,8 @@ MonoBehaviour:
   currentCameraPosition: {x: 0, y: 0, z: 0}
   EnemiesRoot: {fileID: 0}
   Enemies:
-  - {fileID: 2853873378045141451, guid: ec1b07a9e3ddf17408c410f5b92c599f, type: 3}
-  - {fileID: 1083282528, guid: 656a158bde6761d49badc10de2777212, type: 3}
+  - {fileID: 2853873378045141453, guid: ec1b07a9e3ddf17408c410f5b92c599f, type: 3}
+  - {fileID: 1083282529, guid: 656a158bde6761d49badc10de2777212, type: 3}
 --- !u!114 &1707572309
 MonoBehaviour:
   m_ObjectHideFlags: 0

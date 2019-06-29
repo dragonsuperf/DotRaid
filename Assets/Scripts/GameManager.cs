@@ -22,8 +22,8 @@ public class GameManager : Singleton<GameManager>
     private Point currentRoomKey;
     private DungeonRoom currentRoom;
 
-    public List<GameObject> Enemies = new List<GameObject>();
-    public Stack<GameObject> EnemyStack = new Stack<GameObject>();
+    public List<Enemy> Enemies = new List<Enemy>();
+    public Stack<Enemy> EnemyStack = new Stack<Enemy>();
 
 
     // Start is called before the first frame update
@@ -113,11 +113,12 @@ public class GameManager : Singleton<GameManager>
         for(int i = 0; i < count; i++)
         {
             int num = Random.Range(0, Enemies.Count);
-            GameObject enemy = Instantiate(Enemies[num]);
+            Enemy enemy = Instantiate(Enemies[num], EnemiesRoot.transform) as Enemy;
+            enemy.SetIDX(i);
             enemy.transform.position = this.transform.position;
             enemy.transform.parent = this.transform;
             EnemyStack.Push(enemy);
-            enemy.SetActive(false);
+            enemy.gameObject.SetActive(false);
         }
     }
 

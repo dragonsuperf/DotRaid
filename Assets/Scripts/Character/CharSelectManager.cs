@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharSelectManager : Singleton<CharSelectManager>
 {
@@ -18,12 +19,16 @@ public class CharSelectManager : Singleton<CharSelectManager>
     // Start is called before the first frame update
     void Start()
     {
-        characters = GameManager.Instance.GetChars();
-        selector = new GameObject[characters.Count];
-        _uiHelper = GameManager.Instance.uiHelper;
-        for (int i = 0; i < selector.Length; i++)
-        {
-            //selector[i] = characters[i].transform.Find("arrowSelector").gameObject;
+        if(SceneManager.GetActiveScene().name != "Lobby"){
+            characters = GameManager.Instance.GetChars();
+            selector = new GameObject[characters.Count];
+            _uiHelper = GameManager.Instance.uiHelper;
+            for (int i = 0; i < selector.Length; i++)
+            {
+                //selector[i] = characters[i].transform.Find("arrowSelector").gameObject;
+            }
+        }else{
+            _uiHelper = GameObject.FindGameObjectWithTag("LobbyUI").GetComponent<UIHelper>();
         }
     }
 
