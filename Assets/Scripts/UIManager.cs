@@ -5,12 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    private void Start(){
+        PlayerPrefs.SetInt("AlreadySeenIntro", 1);
+    }
+
     public void OnStartButtonClicked()
     {
         if (PlayerPrefs.GetInt("AlreadySeenIntro") == 1) // 빌드할때 PlayerPrefs.GetInt("AlreadySeenIntro") < 1로 바꿔야함
         {
             PlayerPrefs.SetInt("AlreadySeenIntro", 1);
-            SceneManager.LoadScene("Intro");
+            SceneManager.LoadScene("Lobby");
         }
         else
             SceneManager.LoadScene("SampleScene");
@@ -19,5 +23,9 @@ public class UIManager : MonoBehaviour
     public void OnExitButtonClicked()
     {
         Application.Quit();
+    }
+
+    public void OnEnterPortal(string portal){
+        
     }
 }

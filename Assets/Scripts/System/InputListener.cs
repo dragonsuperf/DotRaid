@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Reflection;
+using UnityEngine.SceneManagement;
 
 public enum InputState
 {
@@ -30,8 +31,11 @@ public class InputListener : MonoBehaviour
 
     private void Start()
     {
-        _characters = GameManager.Instance.GetChars();
-        _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        if(SceneManager.GetActiveScene().name != "Lobby"){
+            _characters = GameManager.Instance.GetChars();
+            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        }
+        
     }
 
     void Update()
