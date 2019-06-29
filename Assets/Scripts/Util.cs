@@ -59,18 +59,4 @@ public static class Util
         }
         return i;
     }
-
-    public static IEnumerator DestroyWithFadeOut(GameObject obj)
-    {
-        Color tmp = obj.GetComponent<SpriteRenderer>().color;
-
-        for (; tmp.a > 0; tmp.a -= 0.1f)
-        {
-            obj.GetComponent<SpriteRenderer>().color = tmp;
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        Object.Destroy(obj);
-        yield return new WaitForSeconds(0.1f);
-    }
 }
