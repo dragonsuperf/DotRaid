@@ -6,7 +6,7 @@ public class GameManager : Singleton<GameManager>
 {
     public Character[] chracters;
     public List<Character> heroes = new List<Character>();
-    private GameObject boss;
+    private Boss boss = new Boss();
     [SerializeField]
     private GameObject mapGrid;
 
@@ -25,13 +25,12 @@ public class GameManager : Singleton<GameManager>
     public List<Enemy> Enemies = new List<Enemy>();
     public Stack<Enemy> EnemyStack = new Stack<Enemy>();
 
-
+    public List<Enemy> EnemyList = new List<Enemy>();
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-
-        boss = Instantiate( Resources.Load("Prefabs/Enemy/Boss") as GameObject );
+        
         EnemiesRoot = new GameObject("EnemiesRoot");
         dungeonCreator = DungeonCreator.Instance;
 
@@ -55,7 +54,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     public List<Character> GetChars() => heroes;
-    public GameObject GetBoss() => boss;
+    public Enemy GetBoss() => boss;
     public GameObject GetMapGrid() => mapGrid;
 
 
@@ -107,9 +106,16 @@ public class GameManager : Singleton<GameManager>
 
     private void SpawnEnemy(int count)
     {
+        int bossIndex = 0; //임시처리
+        var bosPrefab = Resources.Load("Prefabs/Enemy/Boss") as GameObject;
+        boss = Instantiate(bosPrefab, EnemiesRoot.transform).GetComponent<Boss>();
+        boss.SetIDX(bossIndex++);
+        EnemyStack.Push(boss);
+        EnemyList.Add(boss);
+
         // Debug.Log("EnemieLength: " + Enemies.Count);
         if (Enemies.Count == 0) return;
-        for(int i = 0; i < count; i++)
+        for(int i = bossIndex; i < count; i++)
         {
             int num = Random.Range(0, Enemies.Count);
             Enemy enemy = Instantiate(Enemies[num], EnemiesRoot.transform) as Enemy;
@@ -117,6 +123,7 @@ public class GameManager : Singleton<GameManager>
             enemy.transform.position = this.transform.position;
             enemy.transform.parent = this.transform;
             EnemyStack.Push(enemy);
+            EnemyList.Add(enemy);
             enemy.gameObject.SetActive(false);
         }
     }

@@ -66,7 +66,7 @@ public class Character : Actor
     float distance;
 
     GameManager gameManager;
-    public GameObject boss;
+    public Enemy boss;
     public List<Character> characters;
 
     public GameObject point;
@@ -410,8 +410,8 @@ public class Character : Actor
         {
             effectmanager.BlastOnPosition(currentTarget.position, 0.7f);
             currentTarget.gameObject.GetComponent<Enemy>().TakeDamage(this.CharPhysicDamage);
-
-            _lastSkill.inherentCallback.SafeInvoke(); //근딜의 어택 시점
+            var targetEnemy = currentTarget.gameObject.GetComponent<Enemy>();
+            _lastSkill.inherentCallback.SafeInvoke(targetEnemy); //근딜의 어택 시점
         }
         else
             Debug.Log("attack fail");

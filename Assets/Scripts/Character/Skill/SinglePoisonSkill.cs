@@ -19,14 +19,12 @@ public class SinglePoisonSkill : BuffSkillBase
     /// <summary>
     /// 도트 중첩시 도트시간만 초기화
     /// </summary>
-    private void HitPoison()
+    private void HitPoison(Enemy enemy)
     {
         if (this == null) return;
         if (!SkillManager.Instance.HasSkill(IDX)) return;
         //새로운 타겟으로 갱신필요
-        var targetIDX = GameManager.Instance.chracters[_data.player_info.idx].CurrentTarget.gameObject.GetComponent<Enemy>().IDX;
-        GameManager.Instance.Enemies[targetIDX].StopDotCorotine();
-        GameManager.Instance.Enemies[targetIDX].StartDotCorotine(1,0.5f,15f,DamageType.physic);
+        GameManager.Instance.EnemyList[targetIDX].StartDotCorotine(1,0.5f,15f,DamageType.physic);
         SkillManager.Instance.Remove(IDX);
     }
 

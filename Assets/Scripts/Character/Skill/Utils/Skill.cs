@@ -77,7 +77,7 @@ public class SkillData
     public Action createEffectCallback = null; //생성 시점
     public Action hitCallback = null; //스킬이 맞았을 때 히어로가 등록하는 콜백 (ex 맞았을 때 마나확률 계산해서 마나를 획득하는 듯)
     public Action hitEffectCallback = null; //히팅 시점
-    public Action inherentCallback = null; //스킬마다 고유 효과
+    public Action<Enemy> inherentCallback = null; //스킬마다 고유 효과
 }
 
 public class Skill : MonoBehaviour
