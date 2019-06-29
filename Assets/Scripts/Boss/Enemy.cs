@@ -119,7 +119,16 @@ public class Enemy : Actor
 
     protected GameObject GetRandomTarget()
     {
-        return characters[UnityEngine.Random.Range(0, characters.Count)].gameObject;
+        GameObject obj = null;
+        for(int i = 0; i < 50; i++) // limit 50
+        {
+            obj = characters[UnityEngine.Random.Range(0, characters.Count)].gameObject;
+            if (obj.GetComponent<Actor>().CharState != ActorState.dead)
+                break;
+            else
+                obj = null;
+        }
+        return obj;
     }
 
     protected void MoveToPosition(Vector2 position)
@@ -140,6 +149,8 @@ public class Enemy : Actor
         Vector3 currentPos = transform.position;
         for (int i = 0; i < characters.Count; i++)
         {
+            if (characters[i].CharState == ActorState.dead) continue;
+
             float dist = Vector3.Distance(characters[i].transform.position, currentPos);
             if (dist < minDist)
             {

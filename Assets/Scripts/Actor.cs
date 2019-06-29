@@ -51,7 +51,8 @@ public class Actor : MonoBehaviour
     public float CharMagicDamage { get => stat.magicDamage; set => stat.magicDamage = value; }
     public float CharPhysicDef { get => stat.physicDef; set => stat.physicDef = value; }
     public float CharMagicDef { get => stat.magicDef; set => stat.magicDef = value; }
-    
+    public ActorState CharState { get => state; set => state = value; }
+
     public void TakeDamage(float damage)
     {
         stat.hp -= damage;
