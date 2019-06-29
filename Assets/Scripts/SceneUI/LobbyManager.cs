@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class LobbyManager : MonoBehaviour
 {
-    private Actor[] players = new Actor[5];
+    [SerializeField]
+    private GameObject[] players = new GameObject[5];
+    [SerializeField]
+    private GameObject[] portals = new GameObject[2];
+    private float speed = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -16,5 +20,12 @@ public class LobbyManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void MoveCharacters(Vector3 to){
+        foreach(GameObject ch in players){
+            float step = speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(ch.transform.position, to, step);
+        }
     }
 }
