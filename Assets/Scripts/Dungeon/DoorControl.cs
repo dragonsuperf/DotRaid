@@ -18,7 +18,7 @@ public class DoorControl : MonoBehaviour
             {
                 Vector3 position = next.GetDoorObj(DungeonCreator.Instance.OppositeDoorNumber(doorWay)).transform.position;
                 ch.gameObject.transform.position = position;
-                ch.gameObject.GetComponent<Character>().charState = CharacterState.idle;
+                //ch.gameObject.GetComponent<Character>().charState = ActorState.idle;
             }
             GameManager.Instance.MoveCameraToRoomPosition(next);
             DungeonManager.Instance.SetOffClearToggle();

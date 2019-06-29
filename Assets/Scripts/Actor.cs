@@ -28,7 +28,7 @@ public enum DamageType
 
 public enum ActorState
 {
-    idle, attack, move, cast, chase, count
+    idle, attack, move, cast, chase, count, dead
 }
 
 public class Actor : MonoBehaviour

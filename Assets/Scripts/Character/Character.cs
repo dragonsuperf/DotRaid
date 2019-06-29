@@ -45,11 +45,12 @@ public class SkillStateData
     }
 }
 
-
+/*
 public enum CharacterState
 {
-    idle, attack, move, cast, chase, count
+    idle, attack, move, cast, chase, count, dead
 }
+*/
 
 public class Character : Actor
 {
@@ -87,7 +88,7 @@ public class Character : Actor
 
     public Vector3 curPosition;
     //public CharacterStats stat;
-    public CharacterState charState;
+    //public ActorState charState;
     private Vector2 startPosition;
 
     private LineRenderer line;
@@ -106,7 +107,7 @@ public class Character : Actor
         //aStarManager = GameManager.Instance.GetComponent<AStarManager>();
         aStarManager = GameObject.Find("MapGrid").GetComponent<AStarManager>();
         aStarTarget = new GameObject(); // empty GameObject for Astar pathfinding
-        charState = CharacterState.idle;
+        state = ActorState.idle;
         boss = gameManager.GetBoss();
         characters = gameManager.GetChars();
         effectmanager = EffectManager.Instance;
@@ -145,6 +146,7 @@ public class Character : Actor
         Attacking();
         CharFlipping();
         OrderLayer();
+        Death();
         
 
         if (this.ani.GetCurrentAnimatorStateInfo(0).IsName("attack"))
@@ -178,29 +180,48 @@ public class Character : Actor
         }
     }
 
+    void Death()
+    {
+        if(stat.hp < 0)
+        {
+            state = ActorState.dead; //인풋제외 위하여 따로 처리
+        }
+        if(state == ActorState.dead)
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("tomb");
+            gameObject.GetComponent<CircleCollider2D>().enabled = false;
+            gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+            gameObject.GetComponent<Animator>().enabled = false;
+        }
+
+    }
+
 
     void MoveAndAttack()
     {
         if (_inputListener.selectedUnits.Contains(this))
         {
-            if (Input.GetMouseButtonUp(1))
+            if(state != ActorState.dead) // 안죽은 캐릭터만
             {
-                charState = CharacterState.move;
-                screenPoint = Camera.main.WorldToScreenPoint(transform.position);
-                Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
-                curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
+                if (Input.GetMouseButtonUp(1))
+                {
+                    state = ActorState.move;
+                    screenPoint = Camera.main.WorldToScreenPoint(transform.position);
+                    Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+                    curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
 
-                aStarTarget.transform.position = curPosition;
-            }
+                    aStarTarget.transform.position = curPosition;
+                }
 
-            if (Input.GetKeyUp(KeyCode.S))
-            {
-                charState = CharacterState.idle;
-            }
+                if (Input.GetKeyUp(KeyCode.S))
+                {
+                    state = ActorState.idle;
+                }
 
-            if (Input.GetKeyUp(KeyCode.A))
-            {
-                StartCoroutine(Attack());
+                if (Input.GetKeyUp(KeyCode.A))
+                {
+                    StartCoroutine(Attack());
+                }
             }
         }
     }
@@ -220,9 +241,9 @@ public class Character : Actor
         {
             currentTarget = hit.collider.transform;
         }
-        else if(hit.transform.tag == "Untagged") // No Collider && No Enemy
+        else if(hit.collider.tag != "Enemy") // No Collider && No Enemy
         {
-            charState = CharacterState.move;
+            state = ActorState.move;
             curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
         }
 
@@ -247,16 +268,22 @@ public class Character : Actor
     //---------------------캐릭터이동--------------------------//
     void Moving()
     {
-        if (charState == CharacterState.move)
+        if (state == ActorState.move)
         {
-            pathNode = aStarPathfinding.FindPath(transform.position, curPosition);
+            pathNode = aStarPathfinding.FindPath(transform.position, curPosition); //찾은 길 노드배열
             //transform.position = Vector2.MoveTowards(transform.position, curPosition, stat.moveSpeed * Time.deltaTime);
             transform.position = Vector2.MoveTowards(transform.position, aStarPathfinding.WorldPointFromNode(pathNode[0]), stat.moveSpeed * Time.deltaTime);
             if(pathNode != null)
             {
+                /*
                 if (transform.position == aStarPathfinding.WorldPointFromNode(pathNode[0]))
                 {
                     pathNode.RemoveAt(0);
+                }
+                */
+                if(Vector2.Distance(transform.position, aStarPathfinding.WorldPointFromNode(pathNode[0])) < 0.5) // 0번쨰 노드에 도착하면 
+                {
+                    pathNode.RemoveAt(0); // 찾은 길 노드 0번째 인덱스 삭제
                 }
             }
            
@@ -266,18 +293,24 @@ public class Character : Actor
 
             if (transform.position == curPosition) //강제 이동 끝나면 idle상태
             {           
-                charState = CharacterState.idle;
+                state = ActorState.idle;
+                ani.SetBool("walk", false);
+            }
+
+            if(pathNode == null)
+            {
+                state = ActorState.idle;
                 ani.SetBool("walk", false);
             }
 
             if (Vector2.Distance(transform.position, curPosition) < 2 && isColliding) // 목적지 근처에서 Player끼리 Colliding 중이면 멈춤
             {
-                charState = CharacterState.idle;
+                state = ActorState.idle;
                 ani.SetBool("walk", false);
             }
         }
 
-        if (charState == CharacterState.chase)
+        if (state == ActorState.chase)
         {
             transform.position = Vector2.MoveTowards(transform.position, currentTarget.position, stat.moveSpeed * Time.deltaTime);
             ani.SetBool("walk", true);
@@ -288,9 +321,9 @@ public class Character : Actor
     {
         if (currentTarget != null)
         {
-            if (charState != CharacterState.move && stat.attackRangeRadius > distance) //in attack range
+            if (state != ActorState.move && stat.attackRangeRadius > distance) //in attack range
             {
-                charState = CharacterState.attack;
+                state = ActorState.attack;
             }
             /*
             else if (charState != CharacterState.hold && charState != CharacterState.move && stat.awareRangeRadius > distance) //in aware range
@@ -300,7 +333,7 @@ public class Character : Actor
             */
             else
             {
-                charState = CharacterState.chase;
+                state = ActorState.chase;
             }
         }
     }
@@ -327,7 +360,7 @@ public class Character : Actor
             }
         }
 
-        if (charState == CharacterState.move)
+        if (state == ActorState.move)
         {
             if(curPosition.x < this.transform.position.x)
             {
@@ -364,7 +397,7 @@ public class Character : Actor
     public IEnumerator AttackMotion(float attackCycle)
     {
 
-        if (charState == CharacterState.attack)
+        if (state == ActorState.attack)
         {
             ani.SetBool("attack", true);
             
