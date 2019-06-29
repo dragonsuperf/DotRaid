@@ -57,7 +57,9 @@ public class Boss : Enemy
 
     void SummonSomething() // cast 패턴시 시전되는 소환 스킬
     {
-        Instantiate(mobPrefab[UnityEngine.Random.Range(0, 2)], new Vector2(roomPosition.transform.position.x, roomPosition.transform.position.y) + spawnPoint[UnityEngine.Random.Range(0, 2)], Quaternion.identity, GameManager.Instance.EnemiesRoot.transform);
+        GameObject spawn = Instantiate(mobPrefab[UnityEngine.Random.Range(0, 2)], new Vector2(roomPosition.transform.position.x, roomPosition.transform.position.y) + spawnPoint[UnityEngine.Random.Range(0, 2)], Quaternion.identity, GameManager.Instance.EnemiesRoot.transform);
+
+        GameManager.Instance.Enemies.Add(spawn);
     }
 
     void TargetCharge() // 돌진 시작

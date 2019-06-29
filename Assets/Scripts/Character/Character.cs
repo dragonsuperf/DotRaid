@@ -248,7 +248,7 @@ public class Character : Actor
         Ray2D ray = new Ray2D(wp, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-        if(hit.collider.tag == "Enemy")
+        if (hit.collider.tag == "Enemy")
         {
             currentTarget = hit.collider.transform;
         }
@@ -257,9 +257,6 @@ public class Character : Actor
             state = ActorState.move;
             curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
         }
-
-
-
         //FocusAttack();
     }
 
