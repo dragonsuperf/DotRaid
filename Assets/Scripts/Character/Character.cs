@@ -248,16 +248,28 @@ public class Character : Actor
         Ray2D ray = new Ray2D(wp, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-        if(hit.collider.tag == "Enemy")
+        if(hit.collider == null)
+        {
+            /*
+            curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
+            state = ActorState.move;
+            */           
+
+        }
+        else if(hit.collider.tag == "Enemy")
         {
             currentTarget = hit.collider.transform;
         }
-        else if(hit.collider.tag != "Enemy") // No Collider && No Enemy
+        /*
+        if (hit.collider.tag == "Enemy")
         {
-            state = ActorState.move;
-            curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
-        }
 
+        }
+        else // No Collider && No Enemy
+        {
+
+        }
+        */
 
 
         //FocusAttack();
@@ -297,22 +309,15 @@ public class Character : Actor
                 }
                 */
             }
-           
 
             currentTarget = null;
             ani.SetBool("walk", true);
 
-            if(pathNode == null)
+            if (pathNode.Count == 0)
             {
                 state = ActorState.idle;
                 ani.SetBool("walk", false);
                 curPosition = transform.position;
-            }
-
-            if (transform.position == curPosition) //강제 이동 끝나면 idle상태
-            {           
-                state = ActorState.idle;
-                ani.SetBool("walk", false);
             }
 
             if (Vector2.Distance(transform.position, curPosition) < 2 && isCollidingWithPlayer) // 목적지 근처에서 Player끼리 Colliding 중이면 멈춤
@@ -321,7 +326,23 @@ public class Character : Actor
                 ani.SetBool("walk", false);
                 curPosition = transform.position;
             }
+
+            if (isCollidingWithEnemy)
+            {
+                //pathNode[0].isSolid = true;
+                pathNode = aStarPathfinding.FindPath(transform.position, curPosition);
+            }
+
         }
+        /*
+
+        if (transform.position == curPosition) //강제 이동 끝나면 idle상태
+        {
+            state = ActorState.idle;
+            ani.SetBool("walk", false);
+        }
+
+            */
 
         if (state == ActorState.chase)
         {
