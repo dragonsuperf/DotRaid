@@ -17,6 +17,7 @@ public class DungeonManager : Singleton<DungeonManager>
 
     protected override void Start()
     {
+        AStarManager = AStarManager.Instance.GetComponent<AStarManager>();
         clearToggle.onValueChanged.AddListener((bool val) =>
         {
             ClearToggleValueChanged(val);   

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5039303618422879459}
   - component: {fileID: 5039303618422879458}
   - component: {fileID: 5039303618422879457}
+  - component: {fileID: -5938982832948709497}
   m_Layer: 0
   m_Name: Mage
   m_TagString: Player
@@ -119,27 +120,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192cf59a223ff8648a6c7b1d5ff62766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
+  stat:
+    isSelect: 0
+    hp: 0
+    maxHp: 0
+    attackRangeRadius: 10
+    awareRangeRadius: 12
+    moveSpeed: 5
+    attackSpeed: 0
+    castSpeed: 0
+    physicDamage: 0
+    magicDamage: 0
+    physicDef: 0
+    magicDef: 0
   skill_first: 0
   skill_second: 0
   boss: {fileID: 0}
   characters: []
-  currentTarget: {fileID: 0}
   point: {fileID: 0}
   curPosition: {x: 0, y: 0, z: 0}
-  stat:
-    job: 
-    synergy: 
-    isSelect: 0
-    agro: 0
-    level: 0
-    hp: 0
-    armor: 0
-    attack: 0
-    attackSpeed: 0
-    attackRangeRadius: 10
-    awareRangeRadius: 12
-    moveSpeed: 5
-    CastSpeed: 0
   charState: 0
   lineProto: {fileID: 8503615714852345723, guid: ee97f36d4361dcc45b6af8dbe32ff3c7,
     type: 3}
@@ -289,6 +289,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-5938982832948709497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5039303618422879481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de116862daa274cfa9b9d06d267e4bc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 0}
+  drawPath: 1
 --- !u!1001 &1902108725281375652
 PrefabInstance:
   m_ObjectHideFlags: 0

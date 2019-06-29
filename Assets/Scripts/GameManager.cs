@@ -7,6 +7,8 @@ public class GameManager : Singleton<GameManager>
     public Character[] chracters;
     public List<Character> heroes = new List<Character>();
     private GameObject boss;
+    [SerializeField]
+    private GameObject mapGrid;
 
     public UIHelper uiHelper;
     
@@ -29,9 +31,11 @@ public class GameManager : Singleton<GameManager>
     {
         base.Start();
 
-        boss = Instantiate( Resources.Load("Prefabs/Enemy/Boss") as GameObject ) ;
+        boss = Instantiate( Resources.Load("Prefabs/Enemy/Boss") as GameObject );
         EnemiesRoot = new GameObject("EnemiesRoot");
+        dungeonCreator = DungeonCreator.Instance;
 
+        //AStarManager.Instance.OnSet();
         SkillManager.Instance.OnSet();
         EffectManager.Instance.OnSet();
         CharSelectManager.Instance.OnSet();
@@ -52,6 +56,7 @@ public class GameManager : Singleton<GameManager>
 
     public List<Character> GetChars() => heroes;
     public GameObject GetBoss() => boss;
+    public GameObject GetMapGrid() => mapGrid;
 
 
     private void setCharactersAndEnemy()

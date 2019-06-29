@@ -904,7 +904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d3d795ec11ab4f769777401fa47e9d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Astar: {fileID: 1484874011333979702, guid: c70f21630ab694a609d81c7c9d8b41ad, type: 3}
+  AStarGrid: {fileID: 0}
 --- !u!1 &322852959
 GameObject:
   m_ObjectHideFlags: 0
@@ -2760,6 +2760,7 @@ MonoBehaviour:
   - {fileID: 5039303618422879487, guid: bfe598e3672d14a66bc25a7fcd7b74a7, type: 3}
   - {fileID: 7552278642472358215, guid: c4df442955bf142c88e300095a731165, type: 3}
   heroes: []
+  mapGrid: {fileID: 0}
   uiHelper: {fileID: 1352382958}
   startPosition: {x: 0, y: 0, z: 0}
   bossRoomPosition: {x: 0, y: 0, z: 0}

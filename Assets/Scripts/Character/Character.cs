@@ -61,6 +61,7 @@ public class Character : Actor
     protected Animator ani;
     EffectManager effectmanager;
     InputListener _inputListener;
+    AStarManager aStarManager;
     float distance;
 
     GameManager gameManager;
@@ -71,11 +72,8 @@ public class Character : Actor
 
     public GameObject point;
     private GameObject aStarTarget;
+    List<Node> pathNode = new List<Node>();
 
-    private float startPointX;
-    private float startPointY;
-    private float charPointX;
-    private float charPointY;
     private bool isColliding;
     private GameObject arrowSelector;
     private GameObject arrowStart;
@@ -84,7 +82,7 @@ public class Character : Actor
     private Vector3 screenPoint;
     private Vector3 offset;
     private Quaternion arrowAngle;
-    
+    private AStarPathfinding aStarPathfinding;  
 
     public Vector3 curPosition;
     //public CharacterStats stat;
@@ -92,7 +90,6 @@ public class Character : Actor
     private Vector2 startPosition;
 
     private LineRenderer line;
-    private int curStart = 0, curEnd = 1;
     public GameObject lineProto;
 
     //이걸로 스킬 만드는 타이밍 조절
@@ -105,12 +102,16 @@ public class Character : Actor
         ani = this.GetComponent<Animator>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _inputListener = GameManager.Instance.GetComponent<InputListener>();
+        //aStarManager = GameManager.Instance.GetComponent<AStarManager>();
+        aStarManager = GameObject.Find("MapGrid").GetComponent<AStarManager>();
         aStarTarget = new GameObject(); // empty GameObject for Astar pathfinding
         charState = CharacterState.idle;
         boss = gameManager.GetBoss();
         characters = gameManager.GetChars();
         effectmanager = EffectManager.Instance;
-
+        aStarPathfinding = GetComponent<AStarPathfinding>(); 
+        aStarPathfinding.grid = aStarManager.AStarGrid;
+        
         selectiveObject = transform.Find("isSelect").gameObject;
         line = transform.GetComponent<LineRenderer>();
         arrowSelector = Resources.Load("Prefabs/arrowSelector") as GameObject;
@@ -247,12 +248,23 @@ public class Character : Actor
     {
         if (charState == CharacterState.move)
         {
-            transform.position = Vector2.MoveTowards(transform.position, curPosition, stat.moveSpeed * Time.deltaTime);
+            pathNode = aStarPathfinding.FindPath(transform.position, curPosition);
+            //transform.position = Vector2.MoveTowards(transform.position, curPosition, stat.moveSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, aStarPathfinding.WorldPointFromNode(pathNode[0]), stat.moveSpeed * Time.deltaTime);
+            if(pathNode != null)
+            {
+                if (transform.position == aStarPathfinding.WorldPointFromNode(pathNode[0]))
+                {
+                    pathNode.RemoveAt(0);
+                }
+            }
+           
+
             currentTarget = null;
             ani.SetBool("walk", true);
 
             if (transform.position == curPosition) //강제 이동 끝나면 idle상태
-            {
+            {           
                 charState = CharacterState.idle;
                 ani.SetBool("walk", false);
             }
@@ -291,72 +303,7 @@ public class Character : Actor
             }
         }
     }
-    /*
-    void OnMouseDown()
-    {
-        if (this.GetComponent<CircleCollider2D>()){
-            //움직이는 중이면 멈춤
-            if (charState != CharacterState.idle) charState = CharacterState.idle;
-
-            //마우스 다운 캐릭터 발 밑 좌표 x, y
-            startPointX = this.transform.gameObject.GetComponent<CapsuleCollider2D>().transform.position.x;
-            startPointY = this.transform.gameObject.GetComponent<CapsuleCollider2D>().transform.position.y - (float)0.9;
-
-            screenPoint = Camera.main.WorldToScreenPoint(transform.position);
-
-            //화살표 시작
-            arrowStart.SetActive(true);
-            arrowStart.transform.position = new Vector2(startPointX, startPointY);
-            startPosition = Vector2.zero;
-            StartLine();
-        }
-        
-
-    }
-
-    private void OnMouseDrag()
-    {
-        //움직이는 중이면 멈춤
-        if (charState != CharacterState.idle) charState = CharacterState.idle;
-
-        //마우스 다운 캐릭터 중앙 좌표 x, y
-        charPointX = this.transform.gameObject.GetComponent<CircleCollider2D>().transform.position.x;
-        charPointY = this.transform.gameObject.GetComponent<CircleCollider2D>().transform.position.y;
-
-        Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
-
-        //마우스 회전각
-        arrowAngle = Quaternion.Euler(0, 0, GetAngle(new Vector3(charPointX, charPointY, screenPoint.z),
-            Camera.main.ScreenToWorldPoint(curScreenPoint)) + 180);
-
-        //화살표 끝
-        point.SetActive(true);
-        point.transform.rotation = arrowAngle;
-        point.transform.position = Camera.main.ScreenToWorldPoint(curScreenPoint);
-        
-
-        //화살표 몸통(라인렌더러)
-        Vector3 pointPos = new Vector2(point.transform.position.x , point.transform.position.y);
-        line.SetPosition(curEnd, pointPos);
-        line.sortingOrder = 1;
-        line.sortingLayerName = "UI";
-    }
-
-    private void OnMouseUp()
-    {
-        Debug.Log("Clicked");
-        charState = CharacterState.move;
-
-        Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
-        
-        curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
-
-        //화살표 삭제
-        arrowStart.SetActive(false);
-        point.SetActive(false);
-        EndLine();
-    }
-    */
+   
     public static float GetAngle(Vector3 vStart, Vector3 vEnd)
     {
         Vector3 v = vEnd - vStart;
@@ -402,22 +349,6 @@ public class Character : Actor
         }
     }
 
-
-    /*
-    private void StartLine()
-    {
-        line.enabled = true;
-        line.SetWidth(0.5f, 0.5f);
-        Vector3 pointPos = new Vector3(transform.position.x, transform.position.y, -0.1f);
-        line.SetPosition(0, pointPos);
-    }
-
-    private void EndLine()
-    {
-        line.enabled = false;
-        
-    }
-    */
     private void NormalAttack()
     {
         if (currentTarget != null)

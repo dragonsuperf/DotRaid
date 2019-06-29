@@ -3,21 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class AStarManager : MonoBehaviour
+public class AStarManager : Singleton<AStarManager>
 {
-    [SerializeField]
     private GameObject Astar;
+    private DungeonRoom privious;
     public AStarGrid AStarGrid;
 
-    private void Start(){
+    protected override void Start(){
+        base.Start();
+        Astar = Instantiate(Resources.Load("Prefabs/Maps/aStar") as GameObject);
         Init();
         AttachAstar(DungeonManager.Instance.GetCurrentDungeonRoom());
-
+        privious = DungeonManager.Instance.GetCurrentDungeonRoom();
     }
 
-    private void Update()
+    public void Update()
     {
-        AStarGrid.collidableMap = DungeonManager.Instance.GetCurrentDungeonRoom().GetComponent<Tilemap>();
+        if(privious != DungeonManager.Instance.GetCurrentDungeonRoom())
+        {
+            Debug.Log("Room Change");
+            privious = DungeonManager.Instance.GetCurrentDungeonRoom();
+            AStarGrid.BuildGrid();
+        }    
     }
 
     public void Init(){
@@ -28,7 +35,14 @@ public class AStarManager : MonoBehaviour
 
     public void AttachAstar(DungeonRoom room){
         AStarGrid.transform.parent = room.gameObject.transform;
-        AStarGrid.transform.position = room.gameObject.transform.position;     
+        AStarGrid.transform.position = room.gameObject.transform.position;      
+        AStarGrid.collidableMap = room.GetComponent<Tilemap>();
+        
+        //AStarGrid.collidableMap = room.gameObject.transform.Find("Pattern").GetComponent<Tilemap>();
+
+        //collidableMap = DungeonManager.Instance.GetCurrentDungeonRoom()
+        //    .transform.Find("Pattern").GetComponent<Tilemap>();
+
         //AstarData  data = AstarPath.active.data;
         //GridGraph gridGraph = data.gridGraph;
         // gridGraph.width = 80;

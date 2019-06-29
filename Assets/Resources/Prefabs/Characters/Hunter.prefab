@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 610872245602763559}
   - component: {fileID: 610872245602763544}
   - component: {fileID: 610872245602763545}
+  - component: {fileID: -736015153865676282}
   m_Layer: 0
   m_Name: Hunter
   m_TagString: Player
@@ -138,27 +139,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5237680db0a1a14a90bfdcf7117cf1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
+  stat:
+    isSelect: 0
+    hp: 0
+    maxHp: 0
+    attackRangeRadius: 10
+    awareRangeRadius: 14
+    moveSpeed: 6
+    attackSpeed: 0
+    castSpeed: 0
+    physicDamage: 0
+    magicDamage: 0
+    physicDef: 0
+    magicDef: 0
   skill_first: 1
   skill_second: 0
   boss: {fileID: 0}
   characters: []
-  currentTarget: {fileID: 0}
   point: {fileID: 0}
   curPosition: {x: 0, y: 0, z: 0}
-  stat:
-    job: 
-    synergy: 
-    isSelect: 0
-    agro: 0
-    level: 0
-    hp: 0
-    armor: 0
-    attack: 0
-    attackSpeed: 0
-    attackRangeRadius: 10
-    awareRangeRadius: 14
-    moveSpeed: 6
-    CastSpeed: 0
   charState: 0
   lineProto: {fileID: 0}
 --- !u!58 &610872245602763559
@@ -288,6 +288,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0069560455, y: -0.30601805}
   m_Size: {x: 0.5855722, y: 0.32128298}
   m_Direction: 1
+--- !u!114 &-736015153865676282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610872245602763553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de116862daa274cfa9b9d06d267e4bc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 0}
+  drawPath: 1
 --- !u!1001 &8799294012503829278
 PrefabInstance:
   m_ObjectHideFlags: 0

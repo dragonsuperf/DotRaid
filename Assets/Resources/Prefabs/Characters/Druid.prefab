@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7552278642472358211}
   - component: {fileID: 7552278642472358210}
   - component: {fileID: 7552278642472358209}
+  - component: {fileID: 8575907026145014286}
   m_Layer: 0
   m_Name: Druid
   m_TagString: Player
@@ -119,27 +120,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be8fa2dc34c56b94aa1d6dd8ff88e0de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
+  stat:
+    isSelect: 0
+    hp: 0
+    maxHp: 0
+    attackRangeRadius: 5
+    awareRangeRadius: 10
+    moveSpeed: 7
+    attackSpeed: 1
+    castSpeed: 0
+    physicDamage: 0
+    magicDamage: 0
+    physicDef: 0
+    magicDef: 0
   skill_first: 0
   skill_second: 0
   boss: {fileID: 0}
   characters: []
-  currentTarget: {fileID: 0}
   point: {fileID: 0}
   curPosition: {x: 0, y: 0, z: 0}
-  stat:
-    job: 
-    synergy: 
-    isSelect: 0
-    agro: 0
-    level: 0
-    hp: 0
-    armor: 0
-    attack: 0
-    attackSpeed: 1
-    attackRangeRadius: 5
-    awareRangeRadius: 10
-    moveSpeed: 7
-    CastSpeed: 0
   charState: 0
   lineProto: {fileID: 0}
 --- !u!58 &7552278642472358214
@@ -288,6 +288,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0069560455, y: -0.30601805}
   m_Size: {x: 0.5855722, y: 0.32128298}
   m_Direction: 1
+--- !u!114 &8575907026145014286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7552278642472358201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de116862daa274cfa9b9d06d267e4bc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 0}
+  drawPath: 1
 --- !u!1001 &8262401639060225794
 PrefabInstance:
   m_ObjectHideFlags: 0
