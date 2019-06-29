@@ -92,6 +92,7 @@ MonoBehaviour:
   curPosition: {x: 0, y: 0, z: 0}
   charState: 0
   lineProto: {fileID: 0}
+  passiveDist: 10
 --- !u!212 &8632173303461905189
 SpriteRenderer:
   m_ObjectHideFlags: 0

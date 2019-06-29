@@ -90,7 +90,10 @@ public class Skill : MonoBehaviour
     /// </summary>
     public virtual void OnSet(object data = null)
     {
-        _data = (SkillData)data;
+        if (data is SkillData)
+            _data = (SkillData)data;
+        else
+            Debug.Log("스킬 데이터 잘못 들어감 ");
     }
     /// <summary>
     /// 매니저에서 업데이트로 불림

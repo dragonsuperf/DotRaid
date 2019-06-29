@@ -69,6 +69,7 @@ public class Character : Actor
     public GameObject boss;
     public List<Character> characters;
     protected int _idx = 0; //캐릭터 고유 index (게임매니저의 인덱스랑 싱크가 맞아야 함)
+    public int IDX { get { return _idx; } private set { } }
     public void SetIDX(int val) { _idx = val; }
 
     public GameObject point;

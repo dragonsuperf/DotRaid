@@ -15,4 +15,10 @@ public class HunterPassiveSkill : PassiveSkillBase
         base.OnSet(data);
         isRangeDamageUp = true;
     }
+
+    public override void OnRemove()
+    {
+        isRangeDamageUp = false;
+        base.OnRemove();
+    }
 }

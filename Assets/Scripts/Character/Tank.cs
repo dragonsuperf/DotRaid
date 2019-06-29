@@ -4,29 +4,27 @@ using UnityEngine;
 
 public class Tank : Character
 {
-    GameObject defencer;
-    //CharacterStats defencerStat;
-
+    [Header("Passive Effect Distance")] public float passiveDist = 1.0f; 
+    private DefencerPassiveSkill _passiveSkill = null;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        
-        
-        //charSkill = GameObject.Find("CharSkill").GetComponent<CharSkill>();
-        //defencerStat = stat;
+
+        //make passive ex
+        {
+            SkillData sd = new SkillData();
+            sd.player_info = new CasterInfo();
+            sd.player_info.idx = base._idx; // @NOTE 플레이어 idx만 필요함
+            _passiveSkill = SkillManager.Instance.CreatePassive<DefencerPassiveSkill>(sd) as DefencerPassiveSkill;
+            _passiveSkill.Init(passiveDist);
+        }
     }
-    
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        //Debug.Log("Defencer : " + stat.armor);
     }
-
-
-    
-    
 }

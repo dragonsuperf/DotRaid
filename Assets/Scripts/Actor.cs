@@ -39,7 +39,7 @@ public class Actor : MonoBehaviour
     [SerializeField]
     protected ActorStats stat;
     public ActorStats Stat { get { return stat; } private set { } }
-    protected Vector3 curMovePosition;
+    protected Vector3 curMovePosition; //마우스로 찍은 부분
     
     public bool CharSelect { get => stat.isSelect; set => stat.isSelect = value; }
     public float HP { get => stat.hp; set => stat.hp = value; }
@@ -85,6 +85,9 @@ public class Actor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 타겟이 뒤에[있냐 압에 있냐??
+    /// </summary>
     public bool GetActorBack()
     {
         bool IsTgLeft = false;
