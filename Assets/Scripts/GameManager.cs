@@ -35,6 +35,7 @@ public class GameManager : Singleton<GameManager>
         dungeonCreator = DungeonCreator.Instance;
 
         //AStarManager.Instance.OnSet();
+        DungeonManager.Instance.OnSet();
         SkillManager.Instance.OnSet();
         EffectManager.Instance.OnSet();
         CharSelectManager.Instance.OnSet();

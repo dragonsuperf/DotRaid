@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4394328258903655957}
   - component: {fileID: 1083282529}
   - component: {fileID: 7932063644934366317}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: SkeletonMage
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 253885457105876796}
   - component: {fileID: 4315879744928836764}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: PatternManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
