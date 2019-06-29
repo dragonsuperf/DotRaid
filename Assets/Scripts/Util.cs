@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.IO;
 
-public static class GameUtil
+public static class Util
 {
     static public Vector2 GetDirection(Vector2 startPos, Vector2 targetPos)
     {
@@ -45,5 +46,31 @@ public static class GameUtil
 
         line.SetPositions(points);
         circle.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+    }
+
+    public static int DirFileCount(DirectoryInfo d)
+    {
+        int i = 0;
+        FileInfo[] fis = d.GetFiles();
+        foreach (FileInfo fi in fis)
+        {
+            if (!fi.Extension.Contains(".meta")) // metafile 제외
+                i++;
+        }
+        return i;
+    }
+
+    public static IEnumerator DestroyWithFadeOut(GameObject obj)
+    {
+        Color tmp = obj.GetComponent<SpriteRenderer>().color;
+
+        for (; tmp.a > 0; tmp.a -= 0.1f)
+        {
+            obj.GetComponent<SpriteRenderer>().color = tmp;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        Object.Destroy(obj);
+        yield return new WaitForSeconds(0.1f);
     }
 }
