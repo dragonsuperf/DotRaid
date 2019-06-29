@@ -45,6 +45,8 @@ public class DefencerPassiveSkill : PassiveSkillBase
         if (startTime + tick > Time.time)
             return;
 
+        // TODO 죽었으면 영향 삭제 if(_chracters[_defencerIDX].)
+
         foreach (var character in _chracters)
         {
             if (character.IDX == _defencerIDX)
@@ -57,7 +59,7 @@ public class DefencerPassiveSkill : PassiveSkillBase
                 _effectIDXs.Add(character.IDX, true);
                 character.CharPhysicDef += 5;
 
-                Debug.Log("영향받은 캐릭터 " + character.IDX);
+                //Debug.Log("방어력 상승 영향받은 캐릭터 " + character.IDX);
             }
             else
             {
@@ -67,7 +69,7 @@ public class DefencerPassiveSkill : PassiveSkillBase
                 _effectIDXs.Remove(character.IDX);
                 character.CharPhysicDef -= 5;
 
-                Debug.Log("영향 사라진 캐릭터 " + character.IDX);
+                //Debug.Log("방어력 상승 영향 사라짐 캐릭터 " + character.IDX);
             }
         }
         startTime = Time.time;

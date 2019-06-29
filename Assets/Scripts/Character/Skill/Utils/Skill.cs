@@ -10,7 +10,8 @@ public enum eSkill
     TestSkill = 0,
     Sniping,
     NomalRange,
-    AngryPowerUpSkill
+    AngryPowerUpSkill,
+    SinglePoisonSkill
 }
 
 /// <summary>
@@ -33,7 +34,8 @@ public enum eSkillState
     NonTarget_Cast, //캐스팅 후 특정 방향으로 발사
     One_Effect, //생성되어 한 번 효과를 발휘하고 사라지는 형식
     Keep_Effect_Cast, //생성되어 버프, 공격 하는 형식 ( 캐스팅 필요 )
-    Channeling //캐스팅중 지속해서 특정 스킬을 사용 하는 형식
+    Channeling, //캐스팅중 지속해서 특정 스킬을 사용 하는 형식
+    JustMake, //항상 스킬 생성
 }
 
 public class CasterInfo

@@ -10,6 +10,12 @@ public class Melee : Character
         base.Start();
     }
 
+    protected override IEnumerator Attack()
+    {
+        return base.Attack();
+
+    }
+
     // Update is called once per frame
     protected override void Update()
     {

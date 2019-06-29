@@ -49,5 +49,5 @@ MonoBehaviour:
   gridWorldSize: {x: 0, y: 0}
   resolution: 1
   allowDiagonals: 1
-  isCollidable: 1
+  isCollidable: 0
   showGrid: 0
