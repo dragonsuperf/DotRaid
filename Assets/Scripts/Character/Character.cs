@@ -35,7 +35,7 @@ public class SkillStateData
 {
     public bool hasAnimation = false; // 애니메이션 특성 동작에 스킬을 발사해야 할 수 있어서 임시로 만들어둠
     public eSkillState skillState = eSkillState.None;
-    public Func<SkillData> skillMakeCallback = null;
+    public Action skillMakeCallback = null;
 
     public void Clear()
     {
@@ -68,6 +68,9 @@ public class Character : Actor
     GameManager gameManager;
     public Enemy boss;
     public List<Character> characters;
+    protected int _idx = 0; //캐릭터 고유 index (게임매니저의 인덱스랑 싱크가 맞아야 함)
+    public int IDX { get { return _idx; } private set { } }
+    public void SetIDX(int val) { _idx = val; }
 
     public GameObject point;
     private GameObject aStarTarget;
@@ -94,7 +97,7 @@ public class Character : Actor
 
     //이걸로 스킬 만드는 타이밍 조절
     public SkillStateData skillStateData = new SkillStateData();
-    private SkillData _lastSkill = new SkillData(); //마지막 사용 스킬
+    private SkillData _lastSkill = new SkillData();
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -157,13 +160,7 @@ public class Character : Actor
         if (skillStateData.skillState == eSkillState.NonTarget_Cast)
         {
             Debug.Log("캐스트 끝났을 때 시점");
-            _lastSkill = skillStateData.skillMakeCallback();
-            skillStateData.Clear(); //생성 후 바로 클리어 시점
-        }
-        if(skillStateData.skillState == eSkillState.JustMake)
-        {
-            Debug.Log("스킬 생성");
-            _lastSkill = skillStateData.skillMakeCallback();
+            skillStateData.skillMakeCallback.SafeInvoke();
             skillStateData.Clear();
         }
     }
@@ -242,7 +239,7 @@ public class Character : Actor
     }
 
 
-    protected virtual IEnumerator Attack()
+    IEnumerator Attack()
     {
         yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // wait for mouse button
 
@@ -252,12 +249,14 @@ public class Character : Actor
         Ray2D ray = new Ray2D(wp, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-        if(hit.collider == null)
-        {
-        }
-        else if(hit.collider.tag == "Enemy")
+        if (hit.collider.tag == "Enemy")
         {
             currentTarget = hit.collider.transform;
+        }
+        else if(hit.collider.tag != "Enemy") // No Collider && No Enemy
+        {
+            state = ActorState.move;
+            curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
         }
         //FocusAttack();
     }
@@ -296,15 +295,22 @@ public class Character : Actor
                 }
                 */
             }
+           
 
             currentTarget = null;
             ani.SetBool("walk", true);
 
-            if (pathNode.Count == 0)
+            if(pathNode == null)
             {
                 state = ActorState.idle;
                 ani.SetBool("walk", false);
                 curPosition = transform.position;
+            }
+
+            if (transform.position == curPosition) //강제 이동 끝나면 idle상태
+            {           
+                state = ActorState.idle;
+                ani.SetBool("walk", false);
             }
 
             if (Vector2.Distance(transform.position, curPosition) < 2 && isCollidingWithPlayer) // 목적지 근처에서 Player끼리 Colliding 중이면 멈춤
@@ -313,23 +319,7 @@ public class Character : Actor
                 ani.SetBool("walk", false);
                 curPosition = transform.position;
             }
-
-            if (isCollidingWithEnemy)
-            {
-                //pathNode[0].isSolid = true;
-                pathNode = aStarPathfinding.FindPath(transform.position, curPosition);
-            }
-
         }
-        /*
-
-        if (transform.position == curPosition) //강제 이동 끝나면 idle상태
-        {
-            state = ActorState.idle;
-            ani.SetBool("walk", false);
-        }
-
-            */
 
         if (state == ActorState.chase)
         {
@@ -410,6 +400,7 @@ public class Character : Actor
         {
             effectmanager.BlastOnPosition(currentTarget.position, 0.7f);
             currentTarget.gameObject.GetComponent<Enemy>().TakeDamage(this.CharPhysicDamage);
+
             var targetEnemy = currentTarget.gameObject.GetComponent<Enemy>();
             _lastSkill.inherentCallback.SafeInvoke(targetEnemy); //근딜의 어택 시점
         }
