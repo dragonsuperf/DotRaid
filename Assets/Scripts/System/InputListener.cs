@@ -217,7 +217,7 @@ public class InputListener : MonoBehaviour
         }
     }
     
-    private void MakeSkill()
+    private SkillData MakeSkill()
     {
         eTargetState targetState = eTargetState.Enemy;
         // 형식에따라 마우스로 타겟을 어디를 지정할건지 정하는거임
@@ -238,6 +238,7 @@ public class InputListener : MonoBehaviour
         //플레이어 한테 스킬 정보를 받아서 그 스킬을 생성해야 함
         SkillManager.Instance.Create(_skill, info);
         _state = InputState.None;
+        return info; 
     }
 
     /// <summary>
@@ -249,6 +250,9 @@ public class InputListener : MonoBehaviour
         eSkillState state = eSkillState.Nomal;
         switch(skill)
         {
+            case eSkill.SinglePoisonSkill:
+                state = eSkillState.JustMake;
+                break;
             case eSkill.Sniping:
                 state = eSkillState.NonTarget_Cast;
                 break;

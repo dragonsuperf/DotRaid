@@ -62,6 +62,26 @@ public class Actor : MonoBehaviour
         stat.hp -= damage - (type == DamageType.physic ? stat.physicDef : stat.magicDef);
     }
 
+    public void StopDotCorotine()
+    {
+        StopCoroutine("StartTakeDotDamage");
+    } 
+    public IEnumerator StartTakeDotDamage(float tickDamage, float tickTime, float duringTime, DamageType type)
+    {
+        float StartTime = Time.time;
+        while (true)
+        {
+            if (StartTime + duringTime < Time.time)
+                yield break;
+            if (StartTime + tickTime < Time.time)
+            {
+                TakeDamage(tickDamage, type);
+                StartTime = Time.time;
+            }
+            yield return null;
+        }
+    }
+
     public void TakeHeal(float heal)
     {
         if (heal <= 0) return;
