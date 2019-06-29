@@ -47,7 +47,7 @@ MonoBehaviour:
     type: 3}
   worldsize3: {x: 0, y: 0, z: 0}
   gridWorldSize: {x: 0, y: 0}
-  resolution: 1.5
+  resolution: 1
   allowDiagonals: 1
-  isCollidable: 0
+  isCollidable: 1
   showGrid: 0

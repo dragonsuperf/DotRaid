@@ -75,7 +75,8 @@ public class Character : Actor
     private GameObject aStarTarget;
     List<Node> pathNode = new List<Node>();
 
-    private bool isColliding;
+    private bool isCollidingWithPlayer;
+    private bool isCollidingWithEnemy;
     private GameObject arrowSelector;
     private GameObject arrowStart;
     private GameObject arrowEnd;
@@ -167,7 +168,12 @@ public class Character : Actor
     {
         if(collision.collider.tag == "Player")
         {
-            isColliding = true;
+            isCollidingWithPlayer = true;
+        }
+
+        if(collision.collider.tag == "Enemy")
+        {
+            isCollidingWithEnemy = true;
         }
     }
 
@@ -175,7 +181,11 @@ public class Character : Actor
     {
         if (collision.collider.tag == "Player")
         {
-            isColliding = false;
+            isCollidingWithPlayer = false;
+        }
+        if(collision.collider.tag == "Enemy")
+        {
+            isCollidingWithEnemy = false;
         }
     }
 
@@ -210,6 +220,7 @@ public class Character : Actor
                     curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
 
                     aStarTarget.transform.position = curPosition;
+                    pathNode = aStarPathfinding.FindPath(transform.position, curPosition); //찾은 길 노드배열
                 }
 
                 if (Input.GetKeyUp(KeyCode.S))
@@ -269,26 +280,33 @@ public class Character : Actor
     {
         if (state == ActorState.move)
         {
-            pathNode = aStarPathfinding.FindPath(transform.position, curPosition); //찾은 길 노드배열
+            //pathNode = aStarPathfinding.FindPath(transform.position, curPosition); //찾은 길 노드배열
             //transform.position = Vector2.MoveTowards(transform.position, curPosition, stat.moveSpeed * Time.deltaTime);
             transform.position = Vector2.MoveTowards(transform.position, aStarPathfinding.WorldPointFromNode(pathNode[0]), stat.moveSpeed * Time.deltaTime);
             if(pathNode != null)
             {
-                /*
                 if (transform.position == aStarPathfinding.WorldPointFromNode(pathNode[0]))
                 {
                     pathNode.RemoveAt(0);
                 }
-                */
+                /*
                 if(Vector2.Distance(transform.position, aStarPathfinding.WorldPointFromNode(pathNode[0])) < 0.5) // 0번쨰 노드에 도착하면 
                 {
                     pathNode.RemoveAt(0); // 찾은 길 노드 0번째 인덱스 삭제
                 }
+                */
             }
            
 
             currentTarget = null;
             ani.SetBool("walk", true);
+
+            if(pathNode == null)
+            {
+                state = ActorState.idle;
+                ani.SetBool("walk", false);
+                curPosition = transform.position;
+            }
 
             if (transform.position == curPosition) //강제 이동 끝나면 idle상태
             {           
@@ -296,16 +314,11 @@ public class Character : Actor
                 ani.SetBool("walk", false);
             }
 
-            if(pathNode == null)
+            if (Vector2.Distance(transform.position, curPosition) < 2 && isCollidingWithPlayer) // 목적지 근처에서 Player끼리 Colliding 중이면 멈춤
             {
                 state = ActorState.idle;
                 ani.SetBool("walk", false);
-            }
-
-            if (Vector2.Distance(transform.position, curPosition) < 2 && isColliding) // 목적지 근처에서 Player끼리 Colliding 중이면 멈춤
-            {
-                state = ActorState.idle;
-                ani.SetBool("walk", false);
+                curPosition = transform.position;
             }
         }
 
