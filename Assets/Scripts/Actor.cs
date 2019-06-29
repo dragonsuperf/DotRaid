@@ -55,6 +55,7 @@ public class Actor : MonoBehaviour
     public void TakeDamage(float damage)
     {
         stat.hp -= damage;
+        Debug.Log(this.name + " take damange : " + damage + " left health is : " + stat.hp);
     }
 
     public void TakeDamage(float damage, DamageType type)

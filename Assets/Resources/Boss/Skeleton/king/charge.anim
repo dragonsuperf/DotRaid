@@ -87,7 +87,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.23076923
+  - time: 0.30769232
     functionName: TargetCharge
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 2d418b99e98b92a48a9a23f5cdf5d14b,
