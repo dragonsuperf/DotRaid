@@ -43,7 +43,7 @@ public class Enemy : Actor
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        attackRangeCollider = GameUtil.GetChildWithName(gameObject, "AttackRange").gameObject.GetComponent<CircleCollider2D>();
+        attackRangeCollider = Util.GetChildWithName(gameObject, "AttackRange").gameObject.GetComponent<CircleCollider2D>();
         Debug.Log(attackRangeCollider);
         ani = GetComponent<Animator>();
         pm.SetAnimator(ani);
