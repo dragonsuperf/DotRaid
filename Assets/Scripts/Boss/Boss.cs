@@ -25,13 +25,13 @@ public class Boss : Enemy
 
         pm.AddPattern("attack", 0.3f, 3.0f, 1.0f);
         pm.AddPattern("cast", 2.0f, 10.0f, 0.5f);
-        pm.AddPattern("charge", 1.2f, 8.0f, 0.5f);
+        pm.AddPattern("charge", 4.8f, 8.0f, 0.125f);
         pm.AddPattern("shootcast", 2.0f, 8.0f, 0.5f);
 
         em.AddEffectToPool("bossAfterimage", afterImage);
         roomPosition = DungeonManager.Instance.GetCurrentDungeonRoom().transform;
 
-        GameUtil.DrawCircle(gameObject, 10.0f, 0.35f);
+        //Util.DrawCircle(gameObject, 10.0f, 0.35f);
     }
 
     // Update is called once per frame
@@ -57,7 +57,10 @@ public class Boss : Enemy
 
     void SummonSomething() // cast 패턴시 시전되는 소환 스킬
     {
-        Instantiate(mobPrefab[UnityEngine.Random.Range(0, 2)], new Vector2(roomPosition.transform.position.x, roomPosition.transform.position.y) + spawnPoint[UnityEngine.Random.Range(0, 2)], Quaternion.identity, GameManager.Instance.EnemiesRoot.transform);
+        Enemy spawn = Instantiate(mobPrefab[UnityEngine.Random.Range(0, 2)], new Vector2(roomPosition.transform.position.x, roomPosition.transform.position.y) + spawnPoint[UnityEngine.Random.Range(0, 2)], Quaternion.identity, GameManager.Instance.EnemiesRoot.transform).GetComponent<Enemy>();
+
+        GameManager.Instance.Enemies.Add(spawn);
+        spawn.SetIDX(GameManager.Instance.Enemies.Count - 1);
     }
 
     void TargetCharge() // 돌진 시작
@@ -67,7 +70,7 @@ public class Boss : Enemy
         
         stat.moveSpeed *= 5.0f;
 
-        GameUtil.GetChildWithName(gameObject, "Charge").gameObject.SetActive(true);
+        Util.GetChildWithName(gameObject, "Charge").gameObject.SetActive(true);
 
         StartCoroutine(MakeSomeAfterimage());
     }
@@ -76,7 +79,7 @@ public class Boss : Enemy
     {
         forceTarget = null;
 
-        GameUtil.GetChildWithName(gameObject, "Charge").gameObject.SetActive(false);
+        Util.GetChildWithName(gameObject, "Charge").gameObject.SetActive(false);
 
         stat.moveSpeed /= 5.0f;
     }

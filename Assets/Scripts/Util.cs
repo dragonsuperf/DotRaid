@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.IO;
 
-public static class GameUtil
+public static class Util
 {
     static public Vector2 GetDirection(Vector2 startPos, Vector2 targetPos)
     {
@@ -45,5 +46,17 @@ public static class GameUtil
 
         line.SetPositions(points);
         circle.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+    }
+
+    public static int DirFileCount(DirectoryInfo d)
+    {
+        int i = 0;
+        FileInfo[] fis = d.GetFiles();
+        foreach (FileInfo fi in fis)
+        {
+            if (!fi.Extension.Contains(".meta")) // metafile 제외
+                i++;
+        }
+        return i;
     }
 }

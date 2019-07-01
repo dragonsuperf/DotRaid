@@ -10,7 +10,8 @@ public enum eSkill
     TestSkill = 0,
     Sniping,
     NomalRange,
-    AngryPowerUpSkill
+    AngryPowerUpSkill,
+    SinglePoisonSkill
 }
 
 /// <summary>
@@ -33,7 +34,8 @@ public enum eSkillState
     NonTarget_Cast, //캐스팅 후 특정 방향으로 발사
     One_Effect, //생성되어 한 번 효과를 발휘하고 사라지는 형식
     Keep_Effect_Cast, //생성되어 버프, 공격 하는 형식 ( 캐스팅 필요 )
-    Channeling //캐스팅중 지속해서 특정 스킬을 사용 하는 형식
+    Channeling, //캐스팅중 지속해서 특정 스킬을 사용 하는 형식
+    JustMake, //항상 스킬 생성
 }
 
 public class CasterInfo
@@ -75,7 +77,7 @@ public class SkillData
     public Action createEffectCallback = null; //생성 시점
     public Action hitCallback = null; //스킬이 맞았을 때 히어로가 등록하는 콜백 (ex 맞았을 때 마나확률 계산해서 마나를 획득하는 듯)
     public Action hitEffectCallback = null; //히팅 시점
-    public Action inherentCallback = null; //스킬마다 고유 효과
+    public Action<Enemy> inherentCallback = null; //스킬마다 고유 효과
 }
 
 public class Skill : MonoBehaviour
@@ -90,7 +92,10 @@ public class Skill : MonoBehaviour
     /// </summary>
     public virtual void OnSet(object data = null)
     {
-        _data = (SkillData)data;
+        if (data is SkillData)
+            _data = (SkillData)data;
+        else
+            Debug.Log("스킬 데이터 잘못 들어감 ");
     }
     /// <summary>
     /// 매니저에서 업데이트로 불림

@@ -28,7 +28,7 @@ public enum DamageType
 
 public enum ActorState
 {
-    idle, attack, move, cast, chase, count
+    idle, attack, move, cast, chase, count, dead
 }
 
 public class Actor : MonoBehaviour
@@ -39,8 +39,13 @@ public class Actor : MonoBehaviour
     [SerializeField]
     protected ActorStats stat;
     public ActorStats Stat { get { return stat; } private set { } }
-    protected Vector3 curMovePosition;
-    
+    protected Vector3 curMovePosition; //마우스로 찍은 부분
+
+    protected int _idx = 0; //캐릭터 고유 index (게임매니저의 인덱스랑 싱크가 맞아야 함)
+    public int IDX { get { return _idx; } private set { } }
+    public void SetIDX(int val) { _idx = val; }
+
+    public Transform CurrentTarget { get { return currentTarget; } private set { } }
     public bool CharSelect { get => stat.isSelect; set => stat.isSelect = value; }
     public float HP { get => stat.hp; set => stat.hp = value; }
     public float CharAttackRangeRadius { get => stat.attackRangeRadius; set => stat.attackRangeRadius = value; }
@@ -51,15 +56,39 @@ public class Actor : MonoBehaviour
     public float CharMagicDamage { get => stat.magicDamage; set => stat.magicDamage = value; }
     public float CharPhysicDef { get => stat.physicDef; set => stat.physicDef = value; }
     public float CharMagicDef { get => stat.magicDef; set => stat.magicDef = value; }
-    
+    public ActorState CharState { get => state; set => state = value; }
+
     public void TakeDamage(float damage)
     {
         stat.hp -= damage;
+        //Debug.Log(this.name + " take damange : " + damage + " left health is : " + stat.hp);
     }
 
     public void TakeDamage(float damage, DamageType type)
     {
         stat.hp -= damage - (type == DamageType.physic ? stat.physicDef : stat.magicDef);
+    }
+ 
+    public void StartDotCorotine(float tickDamage, float tickTime, float duringTime, DamageType type)
+    {
+        StartCoroutine(StartTakeDotDamage(1, 0.5f, 15f, DamageType.physic));
+    }
+    public IEnumerator StartTakeDotDamage(float tickDamage, float tickTime, float duringTime, DamageType type)
+    {
+        StopCoroutine("StartTakeDotDamage");
+        float StartTime = Time.time;
+        while (true)
+        {
+            if (StartTime + duringTime < Time.time)
+                yield break;
+            if (StartTime + tickTime < Time.time)
+            {
+                Debug.Log("보스에게 도트딜 " + tickDamage);
+                TakeDamage(tickDamage, type);
+                StartTime = Time.time;
+            }
+            yield return null;
+        }
     }
 
     public void TakeHeal(float heal)
@@ -84,6 +113,9 @@ public class Actor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 타겟이 뒤에[있냐 압에 있냐??
+    /// </summary>
     public bool GetActorBack()
     {
         bool IsTgLeft = false;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Reflection;
+using UnityEngine.SceneManagement;
 
 public enum InputState
 {
@@ -30,8 +31,11 @@ public class InputListener : MonoBehaviour
 
     private void Start()
     {
-        _characters = GameManager.Instance.GetChars();
-        _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        if(SceneManager.GetActiveScene().name != "Lobby"){
+            _characters = GameManager.Instance.GetChars();
+            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        }
+        
     }
 
     void Update()
@@ -217,7 +221,7 @@ public class InputListener : MonoBehaviour
         }
     }
     
-    private void MakeSkill()
+    private SkillData MakeSkill()
     {
         eTargetState targetState = eTargetState.Enemy;
         // 형식에따라 마우스로 타겟을 어디를 지정할건지 정하는거임
@@ -238,6 +242,7 @@ public class InputListener : MonoBehaviour
         //플레이어 한테 스킬 정보를 받아서 그 스킬을 생성해야 함
         SkillManager.Instance.Create(_skill, info);
         _state = InputState.None;
+        return info; 
     }
 
     /// <summary>
@@ -249,6 +254,9 @@ public class InputListener : MonoBehaviour
         eSkillState state = eSkillState.Nomal;
         switch(skill)
         {
+            case eSkill.SinglePoisonSkill:
+                state = eSkillState.JustMake;
+                break;
             case eSkill.Sniping:
                 state = eSkillState.NonTarget_Cast;
                 break;
@@ -270,7 +278,8 @@ public class InputListener : MonoBehaviour
         Vector2 worldPoint = camera.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
 
-        if(mousePosition == Input.mousePosition) // if Click
+        //if(mousePosition == Input.mousePosition) // if Click
+        if(Vector2.Distance(mousePosition, Input.mousePosition)<1)   
         {
             if (hit.collider)
             {

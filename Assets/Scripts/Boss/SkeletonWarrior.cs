@@ -34,7 +34,7 @@ public class SkeletonWarrior : Enemy
 
         stat.moveSpeed *= 10.0f;
 
-        GameUtil.GetChildWithName(gameObject, "Charge").gameObject.SetActive(true);
+        Util.GetChildWithName(gameObject, "Charge").gameObject.SetActive(true);
 
         StartCoroutine(MakeSomeAfterimage());
     }
@@ -44,7 +44,7 @@ public class SkeletonWarrior : Enemy
         forceTarget = null;
         stat.moveSpeed /= 10.0f;
 
-        GameUtil.GetChildWithName(gameObject, "Charge").gameObject.SetActive(false);
+        Util.GetChildWithName(gameObject, "Charge").gameObject.SetActive(false);
     }
 
     IEnumerator MakeSomeAfterimage()

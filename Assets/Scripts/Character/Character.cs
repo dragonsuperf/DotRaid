@@ -45,11 +45,12 @@ public class SkillStateData
     }
 }
 
-
+/*
 public enum CharacterState
 {
-    idle, attack, move, cast, chase, count
+    idle, attack, move, cast, chase, count, dead
 }
+*/
 
 public class Character : Actor
 {
@@ -60,21 +61,24 @@ public class Character : Actor
 
     protected Animator ani;
     EffectManager effectmanager;
+    DungeonManager dungeonManager;
     InputListener _inputListener;
     AStarManager aStarManager;
     float distance;
 
     GameManager gameManager;
-    public GameObject boss;
+    public Enemy boss;
     public List<Character> characters;
     protected int _idx = 0; //캐릭터 고유 index (게임매니저의 인덱스랑 싱크가 맞아야 함)
+    public int IDX { get { return _idx; } private set { } }
     public void SetIDX(int val) { _idx = val; }
 
     public GameObject point;
     private GameObject aStarTarget;
     List<Node> pathNode = new List<Node>();
 
-    private bool isColliding;
+    private bool isCollidingWithPlayer;
+    private bool isCollidingWithEnemy;
     private GameObject arrowSelector;
     private GameObject arrowStart;
     private GameObject arrowEnd;
@@ -86,7 +90,7 @@ public class Character : Actor
 
     public Vector3 curPosition;
     //public CharacterStats stat;
-    public CharacterState charState;
+    //public ActorState charState;
     private Vector2 startPosition;
 
     private LineRenderer line;
@@ -94,6 +98,7 @@ public class Character : Actor
 
     //이걸로 스킬 만드는 타이밍 조절
     public SkillStateData skillStateData = new SkillStateData();
+    private SkillData _lastSkill = new SkillData();
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -102,25 +107,20 @@ public class Character : Actor
         ani = this.GetComponent<Animator>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _inputListener = GameManager.Instance.GetComponent<InputListener>();
-        //aStarManager = GameManager.Instance.GetComponent<AStarManager>();
         aStarManager = GameObject.Find("MapGrid").GetComponent<AStarManager>();
         aStarTarget = new GameObject(); // empty GameObject for Astar pathfinding
-        charState = CharacterState.idle;
+        state = ActorState.idle;
+
         boss = gameManager.GetBoss();
         characters = gameManager.GetChars();
+
         effectmanager = EffectManager.Instance;
+        dungeonManager = DungeonManager.Instance;
+
         aStarPathfinding = GetComponent<AStarPathfinding>(); 
         aStarPathfinding.grid = aStarManager.AStarGrid;
         
         selectiveObject = transform.Find("isSelect").gameObject;
-        line = transform.GetComponent<LineRenderer>();
-        arrowSelector = Resources.Load("Prefabs/arrowSelector") as GameObject;
-        arrowEnd = Resources.Load("Prefabs/arrowHead") as GameObject;
-
-        arrowStart = Instantiate(arrowSelector, new Vector2(0, 0), Quaternion.identity);
-        point = Instantiate(arrowEnd, new Vector2(0, 0), Quaternion.identity);
-        arrowStart.SetActive(false);
-        point.SetActive(false);
 
         StartCoroutine(AttackMotion(1 / this.stat.attackSpeed));
 
@@ -144,6 +144,7 @@ public class Character : Actor
         Attacking();
         CharFlipping();
         OrderLayer();
+        Death();
         
 
         if (this.ani.GetCurrentAnimatorStateInfo(0).IsName("attack"))
@@ -165,7 +166,12 @@ public class Character : Actor
     {
         if(collision.collider.tag == "Player")
         {
-            isColliding = true;
+            isCollidingWithPlayer = true;
+        }
+
+        if(collision.collider.tag == "Enemy")
+        {
+            isCollidingWithEnemy = true;
         }
     }
 
@@ -173,8 +179,45 @@ public class Character : Actor
     {
         if (collision.collider.tag == "Player")
         {
-            isColliding = false;
+            isCollidingWithPlayer = false;
         }
+        if(collision.collider.tag == "Enemy")
+        {
+            isCollidingWithEnemy = false;
+        }
+    }
+
+    void Death()
+    {
+        if(stat.hp < 0)
+        {
+            state = ActorState.dead; //인풋제외 위하여 따로 처리
+        }
+        if(state == ActorState.dead)
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("tomb");
+            gameObject.GetComponent<CircleCollider2D>().enabled = false;
+            gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+            gameObject.GetComponent<Animator>().enabled = false;
+        }
+
+    }
+
+    Transform GetClosestEnemy(List<Enemy> enemies) // 가장 가까운 캐릭터를 찾음
+    {
+        Transform tMin = null;
+        float minDist = Mathf.Infinity;
+        Vector3 currentPos = transform.position;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            float dist = Vector3.Distance(enemies[i].transform.position, currentPos);
+            if (dist < minDist)
+            {
+                tMin = enemies[i].transform;
+                minDist = dist;
+            }
+        }
+        return tMin;
     }
 
 
@@ -182,24 +225,28 @@ public class Character : Actor
     {
         if (_inputListener.selectedUnits.Contains(this))
         {
-            if (Input.GetMouseButtonUp(1))
+            if(state != ActorState.dead) // 안죽은 캐릭터만
             {
-                charState = CharacterState.move;
-                screenPoint = Camera.main.WorldToScreenPoint(transform.position);
-                Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
-                curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
+                if (Input.GetMouseButtonUp(1))
+                {
+                    state = ActorState.move;
+                    screenPoint = Camera.main.WorldToScreenPoint(transform.position);
+                    Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+                    curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
 
-                aStarTarget.transform.position = curPosition;
-            }
+                    aStarTarget.transform.position = curPosition;
+                    pathNode = aStarPathfinding.FindPath(transform.position, curPosition); //찾은 길 노드배열
+                }
 
-            if (Input.GetKeyUp(KeyCode.S))
-            {
-                charState = CharacterState.idle;
-            }
+                if (Input.GetKeyUp(KeyCode.S))
+                {
+                    state = ActorState.idle;
+                }
 
-            if (Input.GetKeyUp(KeyCode.A))
-            {
-                StartCoroutine(Attack());
+                if (Input.GetKeyUp(KeyCode.A))
+                {
+                    StartCoroutine(Attack());
+                }
             }
         }
     }
@@ -215,28 +262,21 @@ public class Character : Actor
         Ray2D ray = new Ray2D(wp, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-        if(hit.collider.tag == "Enemy")
+<<<<<<< HEAD
+        if (hit.collider == null) // 어택땅
         {
-            currentTarget = hit.collider.transform;
+            List<Enemy> enemies = new List<Enemy>();
+            enemies = dungeonManager.EnemiesGroup[dungeonManager.GetCurrentDungeonRoom()];
+            currentTarget = GetClosestEnemy(enemies);
+
+            if (enemies.Count == 0)
+            {
+                curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
+                state = ActorState.move;
+            }
+
         }
-        else if(hit.transform.tag == "Untagged") // No Collider && No Enemy
-        {
-            charState = CharacterState.move;
-            curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
-        }
-
-
-
-        //FocusAttack();
-    }
-
-    void FocusAttack()
-    {
-        Vector2 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Ray2D ray = new Ray2D(wp, Vector2.zero);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-        if (hit.collider.tag == "Enemy")
+        else if (hit.collider.tag == "Enemy") // 강제어택
         {
             currentTarget = hit.collider.transform;
         }
@@ -246,10 +286,8 @@ public class Character : Actor
     //---------------------캐릭터이동--------------------------//
     void Moving()
     {
-        if (charState == CharacterState.move)
+        if (state == ActorState.move)
         {
-            pathNode = aStarPathfinding.FindPath(transform.position, curPosition);
-            //transform.position = Vector2.MoveTowards(transform.position, curPosition, stat.moveSpeed * Time.deltaTime);
             transform.position = Vector2.MoveTowards(transform.position, aStarPathfinding.WorldPointFromNode(pathNode[0]), stat.moveSpeed * Time.deltaTime);
             if(pathNode != null)
             {
@@ -258,25 +296,33 @@ public class Character : Actor
                     pathNode.RemoveAt(0);
                 }
             }
-           
 
-            currentTarget = null;
+            currentTarget = null; /////////////////수정해야함 ... 이거때문에 이동할때 공격하지않음
             ani.SetBool("walk", true);
 
-            if (transform.position == curPosition) //강제 이동 끝나면 idle상태
-            {           
-                charState = CharacterState.idle;
+            if (pathNode.Count == 0)
+            {
+                state = ActorState.idle;
                 ani.SetBool("walk", false);
+                curPosition = transform.position;
             }
 
-            if (Vector2.Distance(transform.position, curPosition) < 2 && isColliding) // 목적지 근처에서 Player끼리 Colliding 중이면 멈춤
+            if (Vector2.Distance(transform.position, curPosition) < 2 && isCollidingWithPlayer) // 목적지 근처에서 Player끼리 Colliding 중이면 멈춤
             {
-                charState = CharacterState.idle;
+                state = ActorState.idle;
                 ani.SetBool("walk", false);
+                curPosition = transform.position;
             }
+
+            if (isCollidingWithEnemy || isCollidingWithPlayer) // 콜리더 충돌중이면 새로운 길 찾음
+            {
+                //pathNode[0].isSolid = true;
+                pathNode = aStarPathfinding.FindPath(transform.position, curPosition);
+            }
+
         }
 
-        if (charState == CharacterState.chase)
+        if (state == ActorState.chase)
         {
             transform.position = Vector2.MoveTowards(transform.position, currentTarget.position, stat.moveSpeed * Time.deltaTime);
             ani.SetBool("walk", true);
@@ -287,9 +333,9 @@ public class Character : Actor
     {
         if (currentTarget != null)
         {
-            if (charState != CharacterState.move && stat.attackRangeRadius > distance) //in attack range
+            if (stat.attackRangeRadius > distance) //in attack range
             {
-                charState = CharacterState.attack;
+                state = ActorState.attack;
             }
             /*
             else if (charState != CharacterState.hold && charState != CharacterState.move && stat.awareRangeRadius > distance) //in aware range
@@ -299,7 +345,7 @@ public class Character : Actor
             */
             else
             {
-                charState = CharacterState.chase;
+                state = ActorState.chase;
             }
         }
     }
@@ -326,7 +372,7 @@ public class Character : Actor
             }
         }
 
-        if (charState == CharacterState.move)
+        if (state == ActorState.move)
         {
             if(curPosition.x < this.transform.position.x)
             {
@@ -355,6 +401,9 @@ public class Character : Actor
         {
             effectmanager.BlastOnPosition(currentTarget.position, 0.7f);
             currentTarget.gameObject.GetComponent<Enemy>().TakeDamage(this.CharPhysicDamage);
+
+            var targetEnemy = currentTarget.gameObject.GetComponent<Enemy>();
+            _lastSkill.inherentCallback.SafeInvoke(targetEnemy); //근딜의 어택 시점
         }
         else
             Debug.Log("attack fail");
@@ -363,7 +412,7 @@ public class Character : Actor
     public IEnumerator AttackMotion(float attackCycle)
     {
 
-        if (charState == CharacterState.attack)
+        if (state == ActorState.attack)
         {
             ani.SetBool("attack", true);
             
@@ -385,7 +434,7 @@ public class Character : Actor
 
         for(int i = 0; i < data.Count; i++)
         {
-            if (data[i]["name"].Equals(this.name))
+            if (this.name.Contains(data[i]["name"].ToString()))
             {
                 //this.stat.level = (int)data[i]["level"];
                 this.stat.hp = (int)data[i]["max_hp"];
