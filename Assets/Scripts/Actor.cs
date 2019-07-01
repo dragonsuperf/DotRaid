@@ -77,13 +77,14 @@ public class Actor : MonoBehaviour
     {
         StopCoroutine("StartTakeDotDamage");
         float StartTime = Time.time;
+        float OriginStartTime = StartTime;
         while (true)
         {
-            if (StartTime + duringTime < Time.time)
+            if (OriginStartTime + duringTime < Time.time)
                 yield break;
             if (StartTime + tickTime < Time.time)
             {
-                Debug.Log("º¸½º¿¡°Ô µµÆ®µô " + tickDamage);
+                Debug.Log("µµÆ®µô " + tickDamage);
                 TakeDamage(tickDamage, type);
                 StartTime = Time.time;
             }

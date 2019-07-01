@@ -24,7 +24,8 @@ public class SinglePoisonSkill : BuffSkillBase
         if (this == null) return;
         if (!SkillManager.Instance.HasSkill(IDX)) return;
         //새로운 타겟으로 갱신필요
-        GameManager.Instance.EnemyList[targetIDX].StartDotCorotine(1,0.5f,15f,DamageType.physic);
+        Debug.Log("enemy.IDX " + enemy.IDX);
+        GameManager.Instance.EnemyList[enemy.IDX].StartDotCorotine(1,0.5f,15f,DamageType.physic);
         SkillManager.Instance.Remove(IDX);
     }
 

@@ -35,7 +35,7 @@ public class SkillStateData
 {
     public bool hasAnimation = false; // 애니메이션 특성 동작에 스킬을 발사해야 할 수 있어서 임시로 만들어둠
     public eSkillState skillState = eSkillState.None;
-    public Action skillMakeCallback = null;
+    public Func<SkillData> skillMakeCallback = null;
 
     public void Clear()
     {
@@ -156,7 +156,12 @@ public class Character : Actor
         if (skillStateData.skillState == eSkillState.NonTarget_Cast)
         {
             Debug.Log("캐스트 끝났을 때 시점");
-            skillStateData.skillMakeCallback.SafeInvoke();
+            skillStateData.skillMakeCallback();
+            skillStateData.Clear();
+        }
+        if(skillStateData.skillState == eSkillState.JustMake)
+        {
+            _lastSkill = skillStateData.skillMakeCallback();
             skillStateData.Clear();
         }
     }
@@ -261,8 +266,7 @@ public class Character : Actor
         Vector2 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(wp, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-<<<<<<< HEAD
+        
         if (hit.collider == null) // 어택땅
         {
             List<Enemy> enemies = new List<Enemy>();
@@ -403,6 +407,7 @@ public class Character : Actor
             currentTarget.gameObject.GetComponent<Enemy>().TakeDamage(this.CharPhysicDamage);
 
             var targetEnemy = currentTarget.gameObject.GetComponent<Enemy>();
+            Debug.Log("일반 공격 target : " + targetEnemy);
             _lastSkill.inherentCallback.SafeInvoke(targetEnemy); //근딜의 어택 시점
         }
         else
